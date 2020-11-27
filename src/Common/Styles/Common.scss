@@ -1,0 +1,127 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  monospace;
+}
+
+#root {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  color: #2c3e50;
+  position: absolute;
+  background: linear-gradient(-55deg, #373739 5px, #a9aeb7, #a2a3a6, #cacaca, rgb(130, 128, 131));
+}
+
+#root, html, body {
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+html, body {
+  position: fixed;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+#copypasted, #download {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+hr {
+  margin: 1.5rem 0;
+}
+
+.upper-text {
+  text-transform: uppercase;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  list-style: none;
+}
+
+i[class*=fa-] {
+  font-style: normal !important;
+}
+
+.bol {
+  font-weight: 900;
+}
+
+.highlight {
+  background: #ffc800;
+}
+
+div::-webkit-scrollbar-track, ul::-webkit-scrollbar-track, ol::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background: rgba(255, 255, 255, .3);
+}
+
+div::-webkit-scrollbar, ul::-webkit-scrollbar, ol::-webkit-scrollbar {
+  width: 8px;
+  background: rgba(255, 255, 255, .3);
+}
+
+div::-webkit-scrollbar-thumb, ul::-webkit-scrollbar-thumb, ol::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background: rgba(0, 0, 0, .3);
+}
+
+div::-webkit-scrollbar-thumb:hover, ul::-webkit-scrollbar-thumb:hover, ol::-webkit-scrollbar-thumb:hover {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background: rgba(0, 0, 0, .5);
+}
+
+.v-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.inline {
+  display: inline-flex;
+}
+
+h4 {
+  margin: 0;
+}
+
+.blur {
+  filter: blur(5px);
+}
+
+.logotype, .option-rubric__icon, .bol, .list-item {
+  font-family: Font Awesome\ 5 Free, Font Awesome\ 5 Brands;
+}
+
+@mixin active-item {
+  background: #777 !important;;
+  color: #fff !important;;
+  transition: background 200ms;
+}
+
+.active-item {
+  @include active-item
+}
