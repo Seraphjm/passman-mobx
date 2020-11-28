@@ -1,4 +1,4 @@
-import {IRoute} from '../../../Router/Models';
+import {IRoute} from 'Router/Models';
 import {Authorization} from '../Pages/Authorization';
 import {AuthorizationForm} from '../Components/AuthorizationForm';
 

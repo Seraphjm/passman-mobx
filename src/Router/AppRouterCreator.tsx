@@ -2,9 +2,9 @@ import React from 'react';
 import {
     Router, Switch, Redirect,
 } from 'react-router-dom';
+import {createBrowserHistory} from 'history';
 import {IRoute} from './Models';
 import {HRoute} from './HRoute';
-import {createBrowserHistory} from 'history';
 
 const history = createBrowserHistory();
 

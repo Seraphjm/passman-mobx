@@ -1,5 +1,5 @@
 import {IRoute} from './Models';
-import {AUTH_ROUTE, AUTH_ROUTE_NAMES} from '../Modules/Auth/Router/Routes';
+import {AUTH_ROUTE, AUTH_ROUTE_NAMES} from 'Modules/Auth/Router/Routes';
 
 /**
  * Список роутов приложения.
