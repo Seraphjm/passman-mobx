@@ -17,5 +17,5 @@ export interface IRoute extends IHRouteProps {
  * @prop lazyComponent Ленивый компонент, созданный через динамический import. Имеет приоритет над свойством component.
  */
 export interface IHRouteProps extends RouteProps {
-    loadChildren?: () => Promise<{ default: ComponentType<unknown>; }>;
+    loadChildren?: () => Promise<{default: ComponentType<unknown>}>;
 }
