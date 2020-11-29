@@ -3,13 +3,14 @@ import {Authorization} from '../Pages/Authorization';
 import {AuthorizationForm} from '../Components/AuthorizationForm';
 
 export const AUTH_ROUTE_NAMES = {
-    AUTH: '/auth',
+    ROOT: '/auth',
     ENTER_PASSWORD: '/auth/enter-password',
     CHANGE_PASSWORD: '/auth/change-password',
 };
 
 export const AUTH_ROUTE: IRoute = {
-    path: AUTH_ROUTE_NAMES.AUTH,
+    path: AUTH_ROUTE_NAMES.ROOT,
+    redirect: AUTH_ROUTE_NAMES.ENTER_PASSWORD,
     component: Authorization,
     routes: [
         {

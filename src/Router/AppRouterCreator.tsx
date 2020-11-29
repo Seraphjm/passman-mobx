@@ -9,11 +9,20 @@ const history = createBrowserHistory();
 export function createAppRouter(config: IRoute[]): JSX.Element {
     function parseRouterConfig(route: IRoute) {
         const {loadChildren, component, routes, redirect = '', path} = route;
+        const isComponent = component || loadChildren;
 
+        // TODO: Нужно больше тернарок! // рассмотреть возможность на рефакторинг.
         return redirect ? (
-            <Redirect from={path} to={redirect} key={path + redirect} />
+            !isComponent ? (
+                <Redirect from={path} to={redirect} key={path + redirect} />
+            ) : (
+                <HRoute {...route} key={path + redirect}>
+                    <Redirect from={path} to={redirect} key={path + redirect} />
+                    {routes?.length && <Switch key={path + 'switch'}>{routes.map(parseRouterConfig)}</Switch>}
+                </HRoute>
+            )
         ) : routes?.length ? (
-            component || loadChildren ? (
+            isComponent ? (
                 <HRoute {...route} key={path}>
                     <Switch>{routes.map(parseRouterConfig)}</Switch>
                 </HRoute>

@@ -5,7 +5,7 @@ import {RouteComponentProps, RouteProps} from 'react-router-dom';
  * Интерфейс роута приложения.
  */
 export interface IRoute extends IHRouteProps {
-    path: string;
+    path?: string;
     redirect?: string;
     component?: ComponentType<RouteComponentProps<any>> | ComponentType<any>;
     routes?: IRoute[];
