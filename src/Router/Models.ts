@@ -3,6 +3,11 @@ import {RouteComponentProps, RouteProps} from 'react-router-dom';
 
 /**
  * Интерфейс роута приложения.
+ *
+ * path Путь роута.
+ * [redirect] Редирект.
+ * [component] Передаваемый компонент. Может быть lazy load.
+ * [routes] Дочерние роуты текущего роута.
  */
 export interface IRoute extends IHRouteProps {
     path?: string;
@@ -14,7 +19,7 @@ export interface IRoute extends IHRouteProps {
 /**
  * Свойства компонента.
  *
- * @prop lazyComponent Ленивый компонент, созданный через динамический import. Имеет приоритет над свойством component.
+ * @prop loadChildren Ленивый компонент, созданный через динамический import. Имеет приоритет над свойством component.
  */
 export interface IHRouteProps extends RouteProps {
     loadChildren?: () => Promise<{default: ComponentType<unknown>}>;
