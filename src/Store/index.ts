@@ -10,6 +10,9 @@ configure({
     disableErrorBoundaries: process.env.NODE_ENV !== 'development',
 });
 
+/**
+ * Корневое состояние приложения.
+ */
 class RootStore implements IRootStoreModel {
     settingsStore: ISettingsStore;
 
