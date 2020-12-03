@@ -1,6 +1,6 @@
 import {IRoute} from 'Router/Models';
-import {Authorization} from '../Pages/Authorization';
-import {AuthorizationForm} from '../Components/AuthorizationForm';
+import {Authorization} from '../Components/Authorization';
+import {AuthorizationPage} from '../Pages/Authorization';
 
 export const AUTH_ROUTE_NAMES = {
     ROOT: '/auth',
@@ -10,12 +10,11 @@ export const AUTH_ROUTE_NAMES = {
 
 export const AUTH_ROUTE: IRoute = {
     path: AUTH_ROUTE_NAMES.ROOT,
-    redirect: AUTH_ROUTE_NAMES.ENTER_PASSWORD,
-    component: Authorization,
+    component: AuthorizationPage,
     routes: [
         {
             path: AUTH_ROUTE_NAMES.ENTER_PASSWORD,
-            component: AuthorizationForm,
+            component: Authorization,
         },
         {
             path: AUTH_ROUTE_NAMES.CHANGE_PASSWORD,

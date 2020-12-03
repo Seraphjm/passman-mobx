@@ -1,5 +1,5 @@
 import {makeAutoObservable} from 'mobx';
-import {ELanguages} from 'Common/Locales/Enums';
+import {ELanguages} from 'Modules/Settings/Enums';
 import {ISettingsStore} from './Models';
 
 export class SettingsStore implements ISettingsStore {

@@ -1,0 +1,76 @@
+.authorization {
+    position: relative;
+
+    .authorization__container {
+        background: #fff;
+        border: 1px solid #aaa;
+        border-radius: 5px;
+        width: 400px;
+        margin: 0 auto;
+        min-height: 230px;
+        box-shadow: 2px 2px 3rem rgba(0, 0, 0, 0.6);
+        display: grid;
+        grid-template-rows: auto 1fr minmax(40px, auto);
+        grid-template-columns: 100%;
+        grid-row-gap: 5px;
+    }
+
+    .spin-wrap + .authorization__container > div {
+        filter: blur(5px);
+    }
+
+    .authorization__container {
+        text-align: right;
+    }
+
+    .authorization__container {
+        text-align: center;
+    }
+
+    .authorization__container {
+        text-align: left;
+    }
+
+    .authorization__footer:global(.right),
+    .authorization__body:global(.right) {
+        align-items: flex-end;
+    }
+
+    .authorization__footer:global(.center),
+    .authorization__body:global(.center) {
+        align-items: center;
+    }
+
+    .authorization__footer:global(.left),
+    .authorization__body:global(.left) {
+        align-items: flex-start;
+    }
+
+    .authorization__header {
+        border-bottom: 1px solid #bbb;
+        padding: 0.5rem 1rem;
+    }
+
+    .authorization__footer,
+    .authorization__body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .authorization__footer,
+    .authorization__body {
+        padding: 0 0.75rem 0 0.75rem;
+    }
+
+    .authorization__footer {
+        border-top: 1px solid #bbb;
+        padding-top: 0.75rem;
+        text-align: center;
+    }
+
+    input,
+    button {
+        height: 30px;
+    }
+}

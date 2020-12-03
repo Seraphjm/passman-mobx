@@ -1,4 +1,4 @@
-import {ELanguages} from 'Common/Locales/Enums';
+import {ELanguages} from 'Modules/Settings/Enums';
 import {IDefaultSettingsStore} from './Models';
 
 /**

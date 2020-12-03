@@ -1,4 +1,5 @@
 import {IDefaultSettingsStore, ISettingsStore} from 'Modules/Settings/Store/Models';
+import {IAuthorizationStore, IDefaultAuthorizationStore} from 'Modules/Auth/Store/Models';
 
 /**
  * Модель состояния приложения.
@@ -7,6 +8,7 @@ import {IDefaultSettingsStore, ISettingsStore} from 'Modules/Settings/Store/Mode
  */
 export interface IStore {
     settings: ISettingsStore;
+    authorization: IAuthorizationStore;
 }
 
 /**
@@ -16,6 +18,7 @@ export interface IStore {
  */
 export interface IDefaultStore {
     settings: IDefaultSettingsStore;
+    authorization: IDefaultAuthorizationStore;
 }
 
 /**
@@ -25,6 +28,7 @@ export interface IDefaultStore {
  */
 export interface IRootStoreModel {
     settingsStore: ISettingsStore;
+    authStore: IAuthorizationStore;
 }
 
 /**

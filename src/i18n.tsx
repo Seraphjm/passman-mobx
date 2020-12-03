@@ -1,6 +1,6 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
 import {IntlProvider} from 'react-intl';
-import {ELanguages} from 'Common/Locales/Enums';
+import {ELanguages} from 'Modules/Settings/Enums';
 import {observer} from 'mobx-react';
 import {useSettings} from 'Modules/Settings/Store/Hooks';
 
