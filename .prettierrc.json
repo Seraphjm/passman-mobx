@@ -13,7 +13,7 @@
     "endOfLine": "lf",
     "overrides": [
         {
-            "files": "*.{less,sass,scss,css}",
+            "files": "*.{sass,scss,css}",
             "options": {
                 "singleQuote": false
             }

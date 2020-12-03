@@ -31,3 +31,12 @@ export enum ESizes {
     MD = 'md',
     LG = 'lg',
 }
+
+/**
+ * Перечисление возможных позиций компонентов внутри шаблона.
+ */
+export enum EPositions {
+    LEFT = 'left',
+    CENTER = 'center',
+    RIGHT = 'right',
+}

@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'Common/Styles/Common.scss';
 import {createAppRouter} from 'Router/AppRouterCreator';
 import {ROUTER_CONFIG} from 'Router/Routes';
 import {RootStoreContext, stores} from 'Store';
 import {IntlWrapper} from 'i18n';
+import 'Common/Styles/Common.scss';
+// TODO: [разделение ui]
+// TODO: утащить в соответствующий провайдер при вынесении ui части в отдельный пакет.
+import 'ui/Styles/common.style.scss';
 
 ReactDOM.render(
     <React.StrictMode>

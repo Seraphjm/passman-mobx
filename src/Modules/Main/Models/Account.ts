@@ -1,4 +1,4 @@
-import {ENotificationPeriodUpdate} from './Enums';
+import {ENotificationPeriodUpdate} from '../Enums';
 import {IBadge} from 'ui/Components/Badge/Models';
 
 /**
