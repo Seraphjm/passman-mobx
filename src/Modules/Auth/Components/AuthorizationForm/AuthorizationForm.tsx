@@ -1,12 +1,20 @@
-import React, {FunctionComponent} from 'react';
+import {FunctionComponent} from 'react';
 import classNames from 'classnames';
 import {IPositions} from 'ui/Common/Models';
 import style from './AuthorizationForm.style.module.scss';
 
+/**
+ * Интерфейс свойств элемента формы авторизации.
+ *
+ * @prop className Имя передаваемого css класса.
+ */
 interface IAuthFormElement {
     className?: string;
 }
 
+/**
+ * Тип свойств области контента формы авторизации.
+ */
 type TAuthContent = IAuthFormElement & IPositions;
 
 /**
@@ -27,5 +35,7 @@ export const AuthorizationBody: FunctionComponent<TAuthContent> = ({children, po
  * Компонент футера шаблона формы авторизации.
  */
 export const AuthorizationFooter: FunctionComponent<TAuthContent> = ({children, position, className}) => (
-    <div className={classNames(style.authorization__footer, position, className)}>{children}</div>
+    <div style={{display: 'block'}} className={classNames(style.authorization__footer, position, className)}>
+        {children}
+    </div>
 );

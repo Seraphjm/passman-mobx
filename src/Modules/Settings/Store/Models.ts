@@ -1,4 +1,4 @@
-import {ELanguages} from 'Modules/Settings/Enums';
+import {ELanguage} from 'Modules/Settings/Enums';
 
 /**
  * Модель дефолтного состояния раздела настроек.
@@ -6,7 +6,7 @@ import {ELanguages} from 'Modules/Settings/Enums';
  * language Выбранная локализация.
  */
 export interface IDefaultSettingsStore {
-    language: ELanguages;
+    language: ELanguage;
 }
 
 /**
@@ -16,13 +16,12 @@ export interface ISettingsStore {
     /**
      * Отслеживаемое состояние выбранной локализации.
      */
-    language: ELanguages;
+    language: ELanguage;
 
     /**
      * Экшн, изменяющий выбранную локализации.
      *
      * @param [language] Переданная локализация на установку.
-     * TODO: any временно.
      */
-    setLanguage(language?: ELanguages | any): void;
+    setLanguage(language?: ELanguage): void;
 }

@@ -1,15 +1,19 @@
-import {makeAutoObservable, action} from 'mobx';
+import {makeAutoObservable, runInAction} from 'mobx';
+import {IDBServiceLayer} from 'Services/Models';
+import {IRootStore} from 'Store/Models';
+import {EEncryptionStatus} from 'Utils/Crypto/Enums';
+import {redirectTo} from 'Router/Utils';
+import {MAIN_ROUTE_NAMES} from 'Modules/Main/Router/Routes';
 import {IAuthorizationStore} from './Models';
 
+/**
+ * Описание роутера модуля главной страницы.
+ */
 export class AuthStore implements IAuthorizationStore {
     /**
      * @inheritDoc
      */
-    secretKey: string = '';
-    /**
-     * @inheritDoc
-     */
-    isLogin: boolean | null = null;
+    password: string = '';
     /**
      * @inheritDoc
      */
@@ -18,43 +22,75 @@ export class AuthStore implements IAuthorizationStore {
      * @inheritDoc
      */
     dbIsEmpty: boolean = false;
+    /**
+     * @inheritDoc
+     */
+    serviceLayer: IDBServiceLayer;
+    /**
+     * @inheritDoc
+     */
+    rootStore: IRootStore;
 
-    constructor() {
-        makeAutoObservable(this);
-        this.authStoreInit();
+    constructor(rootStore: IRootStore, serviceLayer: IDBServiceLayer) {
+        this.serviceLayer = serviceLayer;
+        this.rootStore = rootStore;
+
+        makeAutoObservable(this, {
+            serviceLayer: false,
+            rootStore: false,
+        });
+
+        this.storeInit();
+
+        this.createDB = this.createDB.bind(this);
     }
 
     /**
      * @inheritDoc
      */
-    private authStoreInit = (): void => {
-        // первоначальная подгрузка данных. В частности установка флага dbIsEmpty
-    };
+    *storeInit() {
+        this.dbIsEmpty = yield this.serviceLayer.dbIsEmpty();
+    }
 
     /**
      * @inheritDoc
      */
-    setSecretKey = (key: string): void => {
-        this.secretKey = key;
-    };
-
-    /**
-     * @inheritDoc
-     */
-    checkSecretKey = async () => {
-        // позже тут будет полноценная проверка с блэк джеком и криптографией
-        console.warn('checked:', this.secretKey);
+    logIn = () => {
         this.isChecking = true;
-        new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(this.isChecking);
-            }, 2000);
-        }).then(
-            action(() => {
-                this.isLogin = true;
-                this.isChecking = false;
+        this.rootStore.mainStore
+            .loadAccounts()
+            .then((status: EEncryptionStatus) => {
+                runInAction(() => {
+                    this.isChecking = false;
+                });
+
+                if (status === EEncryptionStatus.SUCCESS) {
+                    redirectTo(MAIN_ROUTE_NAMES.ROOT);
+                }
             })
-        );
+            .catch((err) => {
+                console.error(err);
+
+                runInAction(() => {
+                    this.isChecking = false;
+                });
+            });
+    };
+
+    /**
+     * @inheritDoc
+     */
+    *createDB() {
+        yield this.serviceLayer.createDB(this.password);
+        this.dbIsEmpty = false;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    setPassword = (password: string): void => {
+        // TODO тут следовало бы сразу importKey хранить, а не прокидывать пароль в открытом виде по всему data flow.
+        this.password = password;
     };
 
     /**

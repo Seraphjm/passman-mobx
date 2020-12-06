@@ -7,22 +7,22 @@ import {IBadge} from 'ui/Components/Badge/Models';
  * @prop _id Уникальный идентификатор uuid для аккаунта.
  * @prop accountName Имя аккаунта.
  * @prop section Секция аккаунта.
- * @prop subSection Подсекция, отображаемая чуть ниже основной. Дополнительный фильтр под фильтром section.
- * @prop logotype Логотип.
+ * @prop [subSection] Подсекция, отображаемая чуть ниже основной. Дополнительный фильтр под фильтром section.
+ * @prop [logotype] Логотип.
  * @prop lastUpdate Последнее обновление каких-либо данных в аккаунте.
  * @prop passwordLastUpdate Последнее обновление пароля в аккаунте.
- * @prop settings Настройки в отображении аккаунта. Бейджи-нотификации, выделение и тп.
+ * @prop [settings] Настройки в отображении аккаунта. Бейджи-нотификации, выделение и тп.
  * @prop data Непосредственно сохраняемые данные учётной записи.
  */
 export interface IAccount {
     _id: string;
     accountName: string;
     section: string;
-    subSection: string;
-    logotype: ILogotype;
+    subSection?: string;
+    logotype?: ILogotype;
     lastUpdate: Date;
     passwordLastUpdate: Date;
-    settings: IAccountSettings;
+    settings?: IAccountSettings;
     data: IAccountData;
 }
 
