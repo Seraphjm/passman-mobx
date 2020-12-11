@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react';
+import {FunctionComponent} from 'react';
 import {observer} from 'mobx-react';
 import {useAuthorization} from '../../Store/Hooks';
 import {Spinner} from 'ui/Components/Spiner/Spiner';

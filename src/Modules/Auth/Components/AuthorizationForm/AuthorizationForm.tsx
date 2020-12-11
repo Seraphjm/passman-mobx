@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react';
+import {FunctionComponent} from 'react';
 import classNames from 'classnames';
 import {IPositions} from 'ui/Common/Models';
 import style from './AuthorizationForm.style.module.scss';

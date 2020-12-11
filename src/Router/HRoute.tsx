@@ -1,4 +1,4 @@
-import React, {ComponentType, Suspense} from 'react';
+import {ComponentType, Suspense, lazy, FunctionComponent} from 'react';
 import {RouteComponentProps} from 'react-router';
 import {Route} from 'react-router-dom';
 import {IHRouteProps} from './Models';
@@ -6,14 +6,14 @@ import {IHRouteProps} from './Models';
 /**
  * HOC над стандартным Route с поддержкой lazy load.
  */
-const HOCRoute: React.FunctionComponent<IHRouteProps> = <T extends IHRouteProps>(props: T): JSX.Element => {
+const HOCRoute: FunctionComponent<IHRouteProps> = <T extends IHRouteProps>(props: T): JSX.Element => {
     const {component, children, loadChildren, ...restProps} = props;
 
     if (component || loadChildren) {
         /**
          * Переопределяем тип компонента, чтобы он не кричал на отсутсвие пропсов history и staticContext.
          */
-        const Component = loadChildren ? React.lazy(loadChildren) : (component as ComponentType<RouteComponentProps> | ComponentType<any>);
+        const Component = loadChildren ? lazy(loadChildren) : (component as ComponentType<RouteComponentProps> | ComponentType<any>);
         return (
             <Route
                 {...restProps}

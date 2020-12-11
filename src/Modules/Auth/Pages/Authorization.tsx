@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useRef} from 'react';
+import {FunctionComponent, useRef} from 'react';
 import {AUTH_ROUTE_NAMES} from '../Router/Routes';
 import {Link, useLocation} from 'react-router-dom';
 import {useIntl} from 'react-intl';

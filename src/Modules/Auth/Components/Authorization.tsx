@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FunctionComponent, useState} from 'react';
+import {ChangeEvent, FunctionComponent, useState} from 'react';
 import {useIntl} from 'react-intl';
 import {observer} from 'mobx-react';
 import {TemplateAuthForm} from './AuthorizationForm/TemplateAuthForm';
