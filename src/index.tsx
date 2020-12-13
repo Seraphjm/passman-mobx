@@ -5,14 +5,16 @@ import {ROUTER_CONFIG} from 'Router/Routes';
 import {RootStoreContext, stores} from 'Store';
 import {IntlWrapper} from 'i18n';
 import 'Common/Styles/Common.scss';
+import {UiProvider} from './ui/UiProvider';
 // TODO: [разделение ui]
 // TODO: утащить в соответствующий провайдер при вынесении ui части в отдельный пакет.
-import 'ui/Styles/common.style.scss';
 
 ReactDOM.render(
     <React.StrictMode>
         <RootStoreContext.Provider value={stores}>
-            <IntlWrapper>{createAppRouter(ROUTER_CONFIG)}</IntlWrapper>
+            <IntlWrapper>
+                <UiProvider>{createAppRouter(ROUTER_CONFIG)}</UiProvider>
+            </IntlWrapper>
         </RootStoreContext.Provider>
     </React.StrictMode>,
     document.getElementById('root')

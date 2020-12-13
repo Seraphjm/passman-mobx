@@ -5,6 +5,21 @@
     .auth {
         position: absolute;
     }
+
+    .authorization__input-container {
+        display: grid;
+        grid-template-columns: 1fr auto;
+
+        .ui-lib-input__controller {
+            border-right: 0;
+        }
+    }
+
+    .authorization__button {
+        align-self: end;
+        border-radius: 0 3px 3px 0;
+        border: 1px solid;
+    }
 }
 
 .change-master-key {

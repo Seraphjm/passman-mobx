@@ -18,6 +18,17 @@ export enum EColors {
 }
 
 /**
+ * List of themes.
+ *
+ * LIGHT Светлая.
+ * DARK Тёмная.
+ */
+export enum EThemes {
+    LIGHT = 'theme-light',
+    DARK = 'theme-dark',
+}
+
+/**
  * List of sizes.
  *
  * XS extra small.
@@ -39,4 +50,17 @@ export enum EPositions {
     LEFT = 'left',
     CENTER = 'center',
     RIGHT = 'right',
+}
+
+export enum EKeyCode {
+    UP = 38,
+    DOWN = 40,
+    ENTER = 13,
+}
+
+export enum EMessageType {
+    WAITING = 'waiting',
+    WARNING = 'warning',
+    ERROR = 'error',
+    SUCCESS = 'success',
 }

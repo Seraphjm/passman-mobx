@@ -12,7 +12,6 @@
         display: grid;
         grid-template-rows: auto 1fr minmax(40px, auto);
         grid-template-columns: 100%;
-        grid-row-gap: 5px;
     }
 
     .spin-wrap + .authorization__container > div {
@@ -48,6 +47,11 @@
 
     .authorization__header {
         border-bottom: 1px solid #bbb;
+    }
+
+    .authorization__header,
+    .authorization__footer,
+    .authorization__body {
         padding: 0.5rem 1rem;
     }
 
@@ -56,11 +60,6 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-    }
-
-    .authorization__footer,
-    .authorization__body {
-        padding: 0 0.75rem 0 0.75rem;
     }
 
     .authorization__footer {

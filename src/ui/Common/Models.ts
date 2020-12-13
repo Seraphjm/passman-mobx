@@ -1,9 +1,13 @@
 import {EPositions} from './Enums';
 
 /**
- * Интерфейс возможных позиций компонентов шаблона.
+ * Модель возможных позиций компонентов шаблона.
  */
-
 export interface IPositions {
     position?: EPositions;
+}
+
+export interface IFuzzySortResult {
+    target: string;
+    score: number;
 }
