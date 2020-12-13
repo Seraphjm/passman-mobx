@@ -1,12 +1,13 @@
-import {ELanguages} from 'Modules/Settings/Enums';
+import {IDBServiceLayer} from 'Services/Models';
+import {IRootStore} from 'Store/Models';
 
 /**
  * Модель дефолтного состояния раздела настроек.
  *
- * secretKey Пароль введённый пользователем.
- * isLogin Флаг выполенный вход.
- * isChecking Флаг проверки введённого пароля.
- * isChecking Флаг о существовании базы.
+ * @prop secretKey Пароль введённый пользователем.
+ * @prop isLogin Флаг выполенный вход.
+ * @prop isChecking Флаг проверки введённого пароля.
+ * @prop isChecking Флаг о существовании базы.
  */
 export interface IDefaultAuthorizationStore {
     secretKey: string;
@@ -22,11 +23,7 @@ export interface IAuthorizationStore {
     /**
      * Отслеживаемое состояние введённого пользователем пароля.
      */
-    secretKey: string;
-    /**
-     * Отслеживаемое состояние факта логина.
-     */
-    isLogin: boolean | null;
+    password: string;
     /**
      * Отслеживаемое состояние проверки пользовательского пароля.
      */
@@ -35,18 +32,21 @@ export interface IAuthorizationStore {
      * Отслеживаемое состояние результата проверки наличия базы пользователя.
      */
     dbIsEmpty: boolean;
+    /**
+     * Сервисный слой приложения для работы с базой данных.
+     */
+    serviceLayer: IDBServiceLayer;
+    /**
+     * Экземпляр корневого store.
+     */
+    rootStore: IRootStore;
 
     /**
-     * Экшн, изменяющий пароль.
+     * Экшн, устанавливающий пароль пользователя.
      *
-     * @param key Введённый пользователем пароль.
+     * @param password Введённый пользователем пароль.
      */
-    setSecretKey(key: string): void;
-
-    /**
-     * Экшн, отправляющий введённый пользователем пароль на проверку.
-     */
-    checkSecretKey(): void;
+    setPassword(password: string): void;
 
     /**
      * Экшн, изменяющий мастер-пароль к базе паролей.
@@ -54,4 +54,22 @@ export interface IAuthorizationStore {
      * @param newPassword новый пароль.
      */
     changeMasterPassword(newPassword: string): void;
+
+    /**
+     * Экшн, инициализирующий стор авторизации.
+     */
+    storeInit(): any;
+
+    /**
+     * Экшн, инициализируйющий создание базу данных.
+     */
+    createDB(): void;
+
+    /**
+     * Экшн, осуществляющий вход в приложение.
+     *
+     * Пытается сразу загрузить аккаунты с введённым паролем в пространство mainStore.
+     * При удачном статусе этого действия, делает редирект в пространство MAIN.
+     */
+    logIn(): void;
 }

@@ -1,7 +1,7 @@
 import {FunctionComponent} from 'react';
 import {observer} from 'mobx-react';
-import {useAuthorization} from '../../Store/Hooks';
 import {Spinner} from 'ui/Components/Spiner/Spiner';
+import {useAuthorization} from '../../Store/Hooks';
 import style from './AuthorizationForm.style.module.scss';
 
 /**
