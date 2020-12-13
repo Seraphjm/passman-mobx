@@ -1,12 +1,12 @@
 import {makeAutoObservable} from 'mobx';
-import {ELanguages} from 'Modules/Settings/Enums';
+import {ELanguage} from 'Modules/Settings/Enums';
 import {ISettingsStore} from './Models';
 
 export class SettingsStore implements ISettingsStore {
     /**
      * @inheritDoc
      */
-    language: ELanguages = ELanguages.en_US;
+    language: ELanguage = ELanguage.en_US;
 
     constructor() {
         makeAutoObservable(this);
@@ -15,7 +15,7 @@ export class SettingsStore implements ISettingsStore {
     /**
      * @inheritDoc
      */
-    setLanguage = (language: ELanguages = ELanguages.en_US): void => {
-        this.language = this.language === ELanguages.en_US ? ELanguages.ru_RU : ELanguages.en_US;
+    setLanguage = (language: ELanguage = ELanguage.en_US): void => {
+        this.language = this.language === ELanguage.en_US ? ELanguage.ru_RU : ELanguage.en_US;
     };
 }

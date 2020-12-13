@@ -46,7 +46,8 @@
         align-items: flex-start;
     }
 
-    .authorization__header {
+    .authorization__header,
+    .authorization__footer {
         border-bottom: 1px solid #bbb;
         padding: 0.5rem 1rem;
     }
@@ -58,14 +59,12 @@
         justify-content: center;
     }
 
-    .authorization__footer,
     .authorization__body {
         padding: 0 0.75rem 0 0.75rem;
     }
 
     .authorization__footer {
         border-top: 1px solid #bbb;
-        padding-top: 0.75rem;
         text-align: center;
     }
 
