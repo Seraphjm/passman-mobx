@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useEffect, useState} from 'react';
+import {FunctionComponent, useEffect, useState} from 'react';
 import {IntlProvider} from 'react-intl';
 import {ELanguage} from 'Modules/Settings/Enums';
 import {observer} from 'mobx-react';
