@@ -1,6 +1,6 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
 import {IntlProvider} from 'react-intl';
-import {ELanguages} from 'Modules/Settings/Enums';
+import {ELanguage} from 'Modules/Settings/Enums';
 import {observer} from 'mobx-react';
 import {useSettings} from 'Modules/Settings/Store/Hooks';
 
@@ -15,7 +15,7 @@ interface IMessagesExportModule {
  *
  * @param locale Выбранная локализация для подгрузки.
  */
-function loadLocaleData(locale: ELanguages): Promise<IMessagesExportModule> {
+function loadLocaleData(locale: ELanguage): Promise<IMessagesExportModule> {
     return import(
         /* webpackMode: "lazy" */
         `./Assets/locales/${locale}.json`
@@ -39,11 +39,11 @@ export const IntlWrapper: FunctionComponent = observer(({children}) => {
 
     return (
         <IntlProvider
-            onError={(err: any) => console.log(err)}
+            onError={(err: any) => console.error(err)}
             formats={{}}
             defaultFormats={{}}
             locale={settings.language}
-            defaultLocale={ELanguages.en_US}
+            defaultLocale={ELanguage.en_US}
             messages={messages}
         >
             {children}

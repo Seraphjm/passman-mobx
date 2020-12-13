@@ -1,8 +1,8 @@
+import {EPasswordPatterns} from './Enums';
+
 /**
  * Возвращает строкой случайное значение от 000000 до FFFFFF.
  */
-import {EPasswordPatterns} from './Enums';
-
 export const getRandomHex = (): string => ((Math.random() * 0xffffff) << 0).toString(16);
 
 /**
@@ -38,7 +38,7 @@ export const passwordGenerate = (length: number = 16, pattern: EPasswordPatterns
         .map(() => {
             let result = '';
             while (true) {
-                result = String.fromCharCode(window.crypto.getRandomValues(new Uint8Array(1))[0]);
+                result = String.fromCharCode(crypto.getRandomValues(new Uint8Array(1))[0]);
                 if (currentPatterns.test(result)) return result;
             }
         })

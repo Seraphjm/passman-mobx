@@ -2,12 +2,12 @@ import {ComponentType} from 'react';
 import {RouteComponentProps, RouteProps} from 'react-router-dom';
 
 /**
- * Интерфейс роута приложения.
+ * Модель роута приложения.
  *
- * path Путь роута.
- * [redirect] Редирект.
- * [component] Передаваемый компонент. Может быть lazy load.
- * [routes] Дочерние роуты текущего роута.
+ * @prop path Путь роута.
+ * @prop [redirect] Редирект.
+ * @prop [component] Передаваемый компонент. Может быть lazy load.
+ * @prop [routes] Дочерние роуты текущего роута.
  */
 export interface IRoute extends IHRouteProps {
     path?: string;
@@ -17,7 +17,7 @@ export interface IRoute extends IHRouteProps {
 }
 
 /**
- * Свойства компонента.
+ * Свойства компонента переданного в роут.
  *
  * @prop loadChildren Ленивый компонент, созданный через динамический import. Имеет приоритет над свойством component.
  */
