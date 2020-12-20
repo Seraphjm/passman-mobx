@@ -1,4 +1,5 @@
 import {IEventMessage} from 'ui/Common/Models';
+import {MutableRefObject} from 'react';
 
 /**
  * Модель элемента автокомплита.
@@ -52,6 +53,7 @@ export interface IAutoComplete {
  * @prop [onFocus] Функция обрабатывающая потерю фокуса инпута.
  * @prop [onKeyUp] Функция обрабатывающая onKeyUp инпута.
  * @prop [onKeyDown] Функция обрабатывающая onKeyDown инпута.
+ * @prop [inputRef] Ref на элемент инпута.
  */
 export interface IInput {
     value: string;
@@ -69,4 +71,5 @@ export interface IInput {
     onBlur?: (event: unknown) => void;
     onKeyUp?: (event: unknown) => void;
     onKeyDown?: (event: unknown) => void;
+    inputRef?: any;
 }

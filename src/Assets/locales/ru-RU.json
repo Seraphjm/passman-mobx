@@ -4,7 +4,11 @@
     "AUTH__PLACEHOLDER_ENTER_PASS": "Введите пароль",
     "AUTH__LINK_TO_CHANGE_MASTER_KEY": "Изменить маcтер-пароль",
     "AUTH__LINK_TO_ENTER_PASSWORD": "Вернуться к авторизации",
+    "AUTH__FORM_ERR_AUTH": "Ошибка авторизации",
     "AUTH__FORM_CHANGE_PASSWORD": "Изменение маcтер-пароля",
+    "AUTH__FORM_CH_MK_ERR_COINCIDENCE": "Введённые пароли не совпали :( \n Попробуйте ещё!",
+    "AUTH__FORM_CH_MK_REPEAT": "Повторите введённый пароль",
+    "AUTH__FORM_CH_MK_SUCCESS": "Пароль успешно задан! Авторизуйтесь!",
 
     "COMMON__CHANGE": "Изменить",
     "COMMON__HIDE_SYMBOLS": "Скрывать символы"

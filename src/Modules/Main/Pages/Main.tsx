@@ -13,11 +13,7 @@ const Main: FunctionComponent = observer(() => {
         <div id="main">
             <br />
             <Link to={AUTH_ROUTE_NAMES.ROOT}>GO TO Auth</Link>
-            <ul>
-                {main.accounts.map((account) => (
-                    <li>{account.accountName}</li>
-                ))}
-            </ul>
+            <ul>{main.accounts.length && main.accounts.map((account) => <li>{account.accountName}</li>)}</ul>
         </div>
     );
 });

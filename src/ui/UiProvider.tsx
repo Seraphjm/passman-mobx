@@ -16,5 +16,5 @@ export interface IUiProvider {
  * По готовности перейдёт в отдельный пакет.
  */
 export const UiProvider: FunctionComponent<IUiProvider> = ({children, theme = EThemes.LIGHT}) => (
-    <div className={`ui-lib-${theme}`}>{children}</div>
+    <div className={`ui-lib ui-lib-${theme}`}>{children}</div>
 );

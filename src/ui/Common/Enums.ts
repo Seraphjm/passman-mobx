@@ -68,12 +68,14 @@ export enum EKeyCode {
 /**
  * Перечисление типов событийных сообщений.
  *
+ * INFO Ро умолчанию.
  * WAITING Ожидание.
  * WARNING Внимание.
  * ERROR Ошибка.
  * SUCCESS Успех.
  */
 export enum EMessageType {
+    INFO = 'info',
     WAITING = 'waiting',
     WARNING = 'warning',
     ERROR = 'error',

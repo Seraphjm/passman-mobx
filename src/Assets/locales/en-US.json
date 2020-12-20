@@ -4,7 +4,11 @@
     "AUTH__PLACEHOLDER_ENTER_PASS": "Enter password",
     "AUTH__LINK_TO_CHANGE_MASTER_KEY": "Change master-password",
     "AUTH__LINK_TO_ENTER_PASSWORD": "Come back to authorization",
+    "AUTH__FORM_ERR_AUTH": "Error authorization",
     "AUTH__FORM_CHANGE_PASSWORD": "Changes master-password",
+    "AUTH__FORM_CH_MK_ERR_COINCIDENCE": "The entered passwords did not match :( \n Try again!",
+    "AUTH__FORM_CH_MK_REPEAT": "Repeat the entered password",
+    "AUTH__FORM_CH_MK_SUCCESS": "The password was set successfully! Sign in!",
 
     "COMMON__CHANGE": "Change",
     "COMMON__HIDE_SYMBOLS": "Hide symbols"

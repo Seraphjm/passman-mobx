@@ -35,7 +35,5 @@ export const AuthorizationBody: FunctionComponent<TAuthContent> = ({children, po
  * Компонент футера шаблона формы авторизации.
  */
 export const AuthorizationFooter: FunctionComponent<TAuthContent> = ({children, position, className}) => (
-    <div style={{display: 'block'}} className={classNames(style.authorization__footer, position, className)}>
-        {children}
-    </div>
+    <div className={classNames(style.authorization__footer, position, className)}>{children}</div>
 );
