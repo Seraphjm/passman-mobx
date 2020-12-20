@@ -1,0 +1,8 @@
+.ui-lib-highlight__container {
+    pointer-events: none;
+    user-select: none;
+
+    .ui-lib-highlight {
+        background: #ffc800;
+    }
+}
