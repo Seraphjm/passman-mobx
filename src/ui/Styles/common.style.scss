@@ -28,3 +28,89 @@
         white-space: pre-line;
     }
 }
+
+.ui-lib__ripple {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 100%;
+    transform: scale(0.2);
+    animation: ripple 0.75s ease-out;
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    from {
+        opacity: 1;
+    }
+    to {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+.ui-lib__flat {
+    background: #fff;
+    color: #000;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.33);
+    outline: none !important;
+    position: relative;
+    cursor: pointer;
+    transition: box-shadow 300ms;
+    overflow: hidden;
+
+    &.animate {
+        animation: animate-warning-button 4s ease-out 1s 2;
+    }
+
+    &:disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled),
+    &:focus:not(:disabled) {
+        box-shadow: 1px 6px 15px rgba(0, 0, 0, 0.5);
+    }
+}
+
+.es {
+    > .ui-lib__flat,
+    &.ui-lib__flat {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+}
+
+.sm {
+    > .ui-lib__flat,
+    &.ui-lib__flat {
+        font-size: 1rem;
+        padding: 0.25rem 0.5rem;
+    }
+}
+
+.md {
+    > .ui-lib__flat,
+    &.ui-lib__flat {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+    }
+}
+
+.lg {
+    > .ui-lib__flat,
+    &.ui-lib__flat {
+        font-size: 1.25rem;
+        padding: 0.75rem 1.5rem;
+    }
+}
+
+.el {
+    > .ui-lib__flat,
+    &.ui-lib__flat {
+        font-size: 1.5rem;
+        padding: 0.75rem 1.5rem;
+    }
+}
