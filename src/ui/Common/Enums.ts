@@ -52,12 +52,27 @@ export enum EPositions {
     RIGHT = 'right',
 }
 
+/**
+ * Перечисление keyCode из event.
+ *
+ * UP Стрелка вверх.
+ * DOWN Стрелка вниз.
+ * ENTER Кнопка ввода.
+ */
 export enum EKeyCode {
     UP = 38,
     DOWN = 40,
     ENTER = 13,
 }
 
+/**
+ * Перечисление типов событийных сообщений.
+ *
+ * WAITING Ожидание.
+ * WARNING Внимание.
+ * ERROR Ошибка.
+ * SUCCESS Успех.
+ */
 export enum EMessageType {
     WAITING = 'waiting',
     WARNING = 'warning',

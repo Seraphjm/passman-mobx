@@ -17,10 +17,6 @@ export const Authorization: FunctionComponent = observer(() => {
     // eslint-disable-next-line
     const [error, setError] = useState(false);
 
-    const setKey = (password: string) => {
-        auth.setSecretKey(password);
-    };
-
     const requestAccess = (password: string) => {
         console.log(password);
     };
@@ -34,19 +30,18 @@ export const Authorization: FunctionComponent = observer(() => {
             <AuthorizationBody position={EPositions.CENTER}>
                 <div className="authorization__input-container">
                     <Input
-                        value={auth.secretKey}
+                        value={auth.password}
                         type="password"
                         placeholder={formatMessage({id: 'AUTH__PLACEHOLDER_ENTER_PASS'})}
                         disabled={auth.isChecking}
                         autoFocus={true}
-                        onInput={setKey}
+                        onInput={auth.setPassword}
                         onEnter={requestAccess}
-                        autoComplete={['Vladimir', 'Natali', 'Aleksey', 'Alexandr', 'Anton', 'Svetlana', 'Valera', 'Igor', 'Nikolay']}
                     />
 
                     <button
-                        onClick={auth.checkSecretKey}
-                        disabled={!auth.secretKey}
+                        onClick={auth.logIn}
+                        disabled={!auth.password}
                         className={`authorization__button fas fa-${auth.dbIsEmpty ? 'check' : 'sign-in-alt'}`}
                     />
                 </div>

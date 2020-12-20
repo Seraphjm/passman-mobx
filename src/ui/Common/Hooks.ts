@@ -1,6 +1,10 @@
-import {KeyboardEvent, MutableRefObject, useEffect, useRef} from 'react';
-import {EKeyCode} from './Enums';
+import {MutableRefObject, useEffect, useRef} from 'react';
 
+/**
+ * Хук, возвращающий предыдущее значение переданного value.
+ *
+ * @param value Переданное значение.
+ */
 export const usePrevious = <T = unknown>(value: T): T | undefined => {
     const ref = useRef<T>();
     useEffect(() => {
@@ -9,6 +13,12 @@ export const usePrevious = <T = unknown>(value: T): T | undefined => {
     return ref.current;
 };
 
+/**
+ * Хук, контроллирующий скролл контейнера со списком из элементов.
+ *
+ * @param refContainer Контейнер со скроллом.
+ * @param selectedItem Выбранный элемент.
+ */
 export const useRemoteScrollControl = <T extends HTMLElement>(
     refContainer: MutableRefObject<T | undefined>,
     selectedItem: number | null

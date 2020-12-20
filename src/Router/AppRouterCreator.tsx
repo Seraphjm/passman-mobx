@@ -1,11 +1,18 @@
-import React from 'react';
 import {Router, Switch, Redirect} from 'react-router-dom';
 import {createBrowserHistory} from 'history';
 import {IRoute} from './Models';
 import {HRoute} from './HRoute';
 
-const history = createBrowserHistory();
+/**
+ * Объект history.
+ */
+export const history = createBrowserHistory();
 
+/**
+ * Функция, парсящая конфиг роутера, и составляющая на его основе древо react-router.
+ *
+ * @param config Конфигурация роутера приложения.
+ */
 export function createAppRouter(config: IRoute[]): JSX.Element {
     function parseRouterConfig(route: IRoute) {
         const {loadChildren, component, routes, redirect = '', path} = route;

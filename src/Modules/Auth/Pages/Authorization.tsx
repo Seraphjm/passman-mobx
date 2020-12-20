@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useRef} from 'react';
+import {FunctionComponent, useRef} from 'react';
 import {AUTH_ROUTE_NAMES} from '../Router/Routes';
 import {Link, useLocation} from 'react-router-dom';
 import {useIntl} from 'react-intl';
@@ -23,7 +23,12 @@ export const AuthorizationPage: FunctionComponent = ({children}) => {
             translation: 'AUTH__LINK_TO_ENTER_PASSWORD',
             to: AUTH_ROUTE_NAMES.ENTER_PASSWORD,
         },
+        [AUTH_ROUTE_NAMES.ROOT]: {
+            translation: 'AUTH__LINK_TO_ENTER_PASSWORD',
+            to: AUTH_ROUTE_NAMES.ENTER_PASSWORD,
+        },
     });
+
     const currentMap = current[pathname];
 
     return (

@@ -1,17 +1,18 @@
-import React, {FunctionComponent, useState} from 'react';
-import '../Pages/Authorization.style.scss';
+import {FunctionComponent, useState} from 'react';
 import {useIntl} from 'react-intl';
+import {Link} from 'react-router-dom';
+import {observer} from 'mobx-react';
+import {EPositions} from 'ui/Common/Enums';
 import {useAuthorization} from '../Store/Hooks';
 import {TemplateAuthForm} from './AuthorizationForm/TemplateAuthForm';
 import {AuthorizationBody, AuthorizationFooter, AuthorizationHeader} from './AuthorizationForm/AuthorizationForm';
-import {EPositions} from 'ui/Common/Enums';
-import {Link} from 'react-router-dom';
 import {AUTH_ROUTE_NAMES} from '../Router/Routes';
+import '../Pages/Authorization.style.scss';
 
 /**
  * Форма изменения пароля пользователя.
  */
-const ChangeMasterKey: FunctionComponent = () => {
+const ChangeMasterKey: FunctionComponent = observer(() => {
     const {formatMessage} = useIntl();
     const auth = useAuthorization();
     // eslint-disable-next-line
@@ -76,12 +77,12 @@ const ChangeMasterKey: FunctionComponent = () => {
                     <input onChange={hideSymbols} type="checkbox" />
                 </label>
 
-                <button onClick={changeMasterPassword} disabled={!auth.secretKey}>
+                <button onClick={changeMasterPassword} disabled={!auth.password}>
                     {formatMessage({id: 'COMMON__CHANGE'})}
                 </button>
             </AuthorizationFooter>
         </TemplateAuthForm>
     );
-};
+});
 
 export default ChangeMasterKey;
