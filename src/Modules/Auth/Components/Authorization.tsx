@@ -1,8 +1,7 @@
 import {FunctionComponent, useEffect, useRef, useState} from 'react';
 import {useIntl} from 'react-intl';
 import {observer} from 'mobx-react';
-import {Input} from 'ui';
-import {EMessageType, EPositions} from 'ui/Common/Enums';
+import {ESizes, Input, Button, EMessageType, EPositions} from 'ui';
 import {IEventMessage} from 'ui/Common/Models';
 import classNames from 'classnames';
 import {AuthorizationBody, AuthorizationFooter, AuthorizationHeader} from './AuthorizationForm/AuthorizationForm';
@@ -113,10 +112,12 @@ export const Authorization: FunctionComponent = observer(() => {
                         message={{type: message?.type}}
                     />
 
-                    <button
+                    <Button
                         onClick={checkAccess}
                         disabled={!auth.password}
-                        className={`authorization__button fas fa-${auth.dbIsEmpty ? 'check' : 'sign-in-alt'}`}
+                        icon={`fas fa-${auth.dbIsEmpty ? 'check' : 'sign-in-alt'}`}
+                        className="authorization__button"
+                        size={ESizes.SM}
                     />
                 </div>
             </AuthorizationBody>
