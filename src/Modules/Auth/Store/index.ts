@@ -57,7 +57,7 @@ export class AuthStore implements IAuthorizationStore {
      */
     logIn = () => {
         this.isChecking = true;
-        this.rootStore.mainStore
+        return this.rootStore.mainStore
             .loadAccounts()
             .then((status: EEncryptionStatus) => {
                 runInAction(() => {
@@ -66,14 +66,14 @@ export class AuthStore implements IAuthorizationStore {
 
                 if (status === EEncryptionStatus.SUCCESS) {
                     redirectTo(MAIN_ROUTE_NAMES.ROOT);
-                }
+                } else throw new Error();
             })
-            .catch((err) => {
-                console.error(err);
-
+            .catch(() => {
                 runInAction(() => {
                     this.isChecking = false;
                 });
+
+                throw Error('auth error');
             });
     };
 
@@ -81,8 +81,10 @@ export class AuthStore implements IAuthorizationStore {
      * @inheritDoc
      */
     *createDB() {
+        this.isChecking = true;
         yield this.serviceLayer.createDB(this.password);
         this.dbIsEmpty = false;
+        this.isChecking = false;
     }
 
     /**

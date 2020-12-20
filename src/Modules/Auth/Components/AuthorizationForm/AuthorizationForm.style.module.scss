@@ -6,11 +6,10 @@
         border: 1px solid #aaa;
         border-radius: 5px;
         width: 400px;
-        margin: 0 auto;
         min-height: 230px;
         box-shadow: 2px 2px 3rem rgba(0, 0, 0, 0.6);
         display: grid;
-        grid-template-rows: auto 1fr minmax(40px, auto);
+        grid-template-rows: auto minmax(160px, 1fr) minmax(40px, auto);
         grid-template-columns: 100%;
     }
 
@@ -70,5 +69,14 @@
     input,
     button {
         height: 30px;
+    }
+
+    .auth__message_container {
+        &:global(.error) {
+            color: var(--color-danger);
+        }
+        &:global(.success) {
+            color: var(--color-success);
+        }
     }
 }

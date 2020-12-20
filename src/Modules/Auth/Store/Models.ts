@@ -71,5 +71,5 @@ export interface IAuthorizationStore {
      * Пытается сразу загрузить аккаунты с введённым паролем в пространство mainStore.
      * При удачном статусе этого действия, делает редирект в пространство MAIN.
      */
-    logIn(): void;
+    logIn(): Promise<any>;
 }

@@ -1,4 +1,16 @@
-import {FormEvent, forwardRef, FunctionComponent, useEffect, useRef, useState, KeyboardEvent, FocusEvent, ChangeEvent} from 'react';
+import {
+    FormEvent,
+    forwardRef,
+    FunctionComponent,
+    useEffect,
+    useRef,
+    useState,
+    KeyboardEvent,
+    FocusEvent,
+    ChangeEvent,
+    RefAttributes,
+    ForwardRefExoticComponent,
+} from 'react';
 import classNames from 'classnames';
 import {go} from 'fuzzysort';
 import {useRemoteScrollControl} from 'ui/Common/Hooks';
@@ -8,6 +20,13 @@ import {Highlight} from 'ui/Components/Highlight/Highlight';
 import {IAutoComplete, ICompleteItem, IInput} from './Models';
 import {IFuzzySortResult} from 'ui/Common/Models';
 import './Input.style.scss';
+
+/**
+ * Экспортируемый контейнер компонента, предоставляющий ref элемента input.
+ */
+export const Input: ForwardRefExoticComponent<IInput & RefAttributes<HTMLInputElement>> = forwardRef<HTMLInputElement, IInput>(
+    (props, ref) => <InputComp inputRef={ref} {...props} />
+);
 
 /**
  * Контейнер компонента, предоставляющий его текущий ref.
@@ -22,7 +41,7 @@ const InputContainer: any = forwardRef<HTMLDivElement, IInput>(({children, class
 /**
  * UI компонент инпута с поддержкой автокомплита с нечётким поиском.
  */
-export const Input: FunctionComponent<IInput> = ({
+const InputComp: FunctionComponent<IInput> = ({
     className,
     message,
     value = '',
@@ -38,6 +57,7 @@ export const Input: FunctionComponent<IInput> = ({
     onEnter,
     type,
     disabled,
+    inputRef,
 }) => {
     const ref = useRef<HTMLElement>();
     /** Флаг открытия автокомплита */
@@ -194,6 +214,7 @@ export const Input: FunctionComponent<IInput> = ({
     return (
         <InputContainer ref={ref} className={className} message={message}>
             <input
+                ref={inputRef}
                 type={type}
                 className="ui-lib-input__controller"
                 placeholder={'\u2063'}

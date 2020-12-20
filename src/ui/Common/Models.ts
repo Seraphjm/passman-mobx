@@ -21,10 +21,10 @@ export interface IFuzzySortResult {
 /**
  * Модель событийного сообщения.
  *
- * @prop type Тип события.
- * @prop text Сообщение к событию.
+ * @prop [type] Тип события.
+ * @prop [text] Сообщение к событию.
  */
 export interface IEventMessage {
-    type: EMessageType;
-    text: string;
+    type?: EMessageType;
+    text?: string;
 }
