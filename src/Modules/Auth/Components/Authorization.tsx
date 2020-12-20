@@ -1,10 +1,12 @@
-import {ChangeEvent, FunctionComponent, useState} from 'react';
+import React, {FunctionComponent, useState} from 'react';
 import {useIntl} from 'react-intl';
 import {observer} from 'mobx-react';
-import {EPositions} from 'ui/Common/Enums';
 import {TemplateAuthForm} from './AuthorizationForm/TemplateAuthForm';
 import {AuthorizationBody, AuthorizationFooter, AuthorizationHeader} from './AuthorizationForm/AuthorizationForm';
+import {EPositions} from 'ui/Common/Enums';
 import {useAuthorization} from '../Store/Hooks';
+import {Input} from 'ui';
+// import {EMessageType} from 'ui/Components/Input/Enums';
 
 /**
  * Форма авторизации пользователя.
@@ -15,11 +17,8 @@ export const Authorization: FunctionComponent = observer(() => {
     // eslint-disable-next-line
     const [error, setError] = useState(false);
 
-    /**
-     * Метод установки пароля пользователя.
-     */
-    const setPassword = ({target}: ChangeEvent<HTMLInputElement>) => {
-        auth.setPassword(target.value);
+    const requestAccess = (password: string) => {
+        console.log(password);
     };
 
     return (
@@ -29,14 +28,15 @@ export const Authorization: FunctionComponent = observer(() => {
             </AuthorizationHeader>
 
             <AuthorizationBody position={EPositions.CENTER}>
-                <div className="authorization__inputContainer">
-                    <input
+                <div className="authorization__input-container">
+                    <Input
                         value={auth.password}
                         type="password"
                         placeholder={formatMessage({id: 'AUTH__PLACEHOLDER_ENTER_PASS'})}
                         disabled={auth.isChecking}
                         autoFocus={true}
-                        onInput={setPassword}
+                        onInput={auth.setPassword}
+                        onEnter={requestAccess}
                     />
 
                     <button
@@ -47,17 +47,7 @@ export const Authorization: FunctionComponent = observer(() => {
                 </div>
             </AuthorizationBody>
 
-            <AuthorizationFooter position={EPositions.CENTER}>
-                {error && <b>{error}</b>}
-                <button
-                    disabled={!auth.dbIsEmpty || !auth.password}
-                    onClick={auth.createDB}
-                    className={`authorization__button fas fa-${auth.dbIsEmpty ? 'check' : 'sign-in-alt'}`}
-                >
-                    CREATE
-                </button>
-                {error && <b>{error}</b>}
-            </AuthorizationFooter>
+            <AuthorizationFooter position={EPositions.CENTER}>{error && <b>{error}</b>}</AuthorizationFooter>
         </TemplateAuthForm>
     );
 });

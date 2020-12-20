@@ -44,3 +44,10 @@ export const passwordGenerate = (length: number = 16, pattern: EPasswordPatterns
         })
         .join('');
 };
+
+/**
+ * Функция проверяющая, что переданное значение является функцией.
+ *
+ * @param value Проверяемое значение.
+ */
+export const isFunction = (value: unknown): boolean => typeof value === 'function';
