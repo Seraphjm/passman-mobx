@@ -14,7 +14,7 @@ import {
 import classNames from 'classnames';
 import {go} from 'fuzzysort';
 import {useRemoteScrollControl} from 'ui/Common/Hooks';
-import {isFunction} from 'Utils/Utils';
+import {isFunction} from 'ui/Utils';
 import {EKeyCode} from 'ui/Common/Enums';
 import {Highlight} from 'ui/Components/Highlight/Highlight';
 import {IAutoComplete, ICompleteItem, IInput} from './Models';

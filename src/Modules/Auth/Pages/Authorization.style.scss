@@ -18,8 +18,9 @@
 
     .authorization__button {
         align-self: end;
-        border-radius: 0 3px 3px 0;
-        border: 1px solid;
+        .ui-lib__flat {
+            border-radius: 0 3px 3px 0;
+        }
     }
 }
 

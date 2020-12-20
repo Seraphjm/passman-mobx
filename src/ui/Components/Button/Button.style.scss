@@ -1,0 +1,24 @@
+.ui-lib-button__icon.logotype {
+    font-size: initial;
+    margin-right: initial;
+}
+
+.ui-lib-button__icon,
+.ui-lib-button__content {
+    pointer-events: none;
+    user-select: none;
+}
+
+.ui-lib-button {
+    &.right {
+        direction: rtl;
+    }
+}
+
+.ui-lib-button.danger {
+    .ui-lib__flat {
+        background: #dc211a !important;
+        color: #fff;
+        text-shadow: #2d2b27aa 2px 2px 3px;
+    }
+}
