@@ -19,6 +19,10 @@ export class MainStore implements IMainStore {
      * @inheritDoc
      */
     serviceLayer: IMainService;
+    /**
+     * @inheritDoc
+     */
+    search: string = '';
 
     constructor(rootStore: IRootStore, serviceLayer: IMainService) {
         this.serviceLayer = serviceLayer;
@@ -30,6 +34,13 @@ export class MainStore implements IMainStore {
         });
 
         this.setAccounts = this.setAccounts.bind(this);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    get searchedAccounts() {
+        return this.search ? [] : this.accounts;
     }
 
     /**

@@ -10,6 +10,8 @@
     "AUTH__FORM_CH_MK_REPEAT": "Repeat the entered password",
     "AUTH__FORM_CH_MK_SUCCESS": "The password was set successfully! Sign in!",
 
+    "MAIN__ACCOUNT_NOTHING_FOUND": "Nothing found :(",
+
     "COMMON__CHANGE": "Change",
     "COMMON__HIDE_SYMBOLS": "Hide symbols"
 }

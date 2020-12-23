@@ -1,0 +1,12 @@
+#main {
+    display: grid;
+    grid-template-columns: 200px auto;
+    grid-template-rows: 35px auto;
+    grid-column-gap: 10px;
+    height: 100%;
+}
+
+.header {
+    grid-column: span 2;
+    grid-row: 1;
+}

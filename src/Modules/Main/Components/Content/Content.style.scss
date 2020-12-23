@@ -1,0 +1,21 @@
+.content {
+    overflow-y: auto;
+
+    & > .accounts-container {
+        padding-right: 10px;
+        padding-top: 14px;
+    }
+
+    .accounts-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+        grid-gap: 2rem;
+        height: fit-content;
+        margin-bottom: 2.5rem;
+    }
+
+    .nothing-found {
+        align-items: center;
+        height: 100%;
+    }
+}

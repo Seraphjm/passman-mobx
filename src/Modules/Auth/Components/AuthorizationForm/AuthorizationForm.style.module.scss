@@ -1,6 +1,15 @@
 .authorization {
     position: relative;
 
+    .spin-wrap + .authorization__container > div {
+        filter: blur(5px);
+    }
+
+    input,
+    button {
+        height: 30px;
+    }
+
     .authorization__container {
         background: #fff;
         border: 1px solid #aaa;
@@ -12,71 +21,50 @@
         grid-template-rows: auto minmax(160px, 1fr) minmax(40px, auto);
         grid-template-columns: 100%;
     }
+}
 
-    .spin-wrap + .authorization__container > div {
-        filter: blur(5px);
+.authorization__footer:global(.right),
+.authorization__body:global(.right) {
+    align-items: flex-end;
+}
+
+.authorization__footer:global(.center),
+.authorization__body:global(.center) {
+    align-items: center;
+}
+
+.authorization__footer:global(.left),
+.authorization__body:global(.left) {
+    align-items: flex-start;
+}
+
+.authorization__header,
+.authorization__footer {
+    border-bottom: 1px solid #bbb;
+}
+
+.authorization__header,
+.authorization__footer,
+.authorization__body {
+    padding: 0.5rem 1rem;
+}
+
+.authorization__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.authorization__footer {
+    border-top: 1px solid #bbb;
+    text-align: center;
+}
+
+.auth__message_container {
+    &:global(.error) {
+        color: var(--color-danger);
     }
-
-    .authorization__container {
-        text-align: right;
-    }
-
-    .authorization__container {
-        text-align: center;
-    }
-
-    .authorization__container {
-        text-align: left;
-    }
-
-    .authorization__footer:global(.right),
-    .authorization__body:global(.right) {
-        align-items: flex-end;
-    }
-
-    .authorization__footer:global(.center),
-    .authorization__body:global(.center) {
-        align-items: center;
-    }
-
-    .authorization__footer:global(.left),
-    .authorization__body:global(.left) {
-        align-items: flex-start;
-    }
-
-    .authorization__header,
-    .authorization__footer {
-        border-bottom: 1px solid #bbb;
-    }
-
-    .authorization__header,
-    .authorization__footer,
-    .authorization__body {
-        padding: 0.5rem 1rem;
-    }
-
-    .authorization__body {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .authorization__footer {
-        border-top: 1px solid #bbb;
-        text-align: center;
-    }
-
-    input,
-    button {
-        height: 30px;
-    }
-
-    .auth__message_container {
-        &:global(.error) {
-            color: var(--color-danger);
-        }
-        &:global(.success) {
-            color: var(--color-success);
-        }
+    &:global(.success) {
+        color: var(--color-success);
     }
 }

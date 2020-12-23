@@ -1,0 +1,45 @@
+@import "ui/Styles/variables.style";
+
+%header__icons {
+    font-size: 1.5rem;
+    text-shadow: 0 0 8px #000;
+}
+
+.header__control-accounts,
+.header__container,
+.header__control-tools {
+    display: flex;
+}
+
+.header__container {
+    justify-content: space-between;
+}
+
+.header__item {
+    @extend %v-center;
+    padding: 0 0.5rem;
+    cursor: pointer;
+    user-select: none;
+    transition-property: color, background;
+    transition-duration: 400ms;
+}
+
+.header__control-tools {
+    .header__item {
+        padding: 0 0.75rem;
+    }
+}
+
+.header__item:hover {
+    background: #4f708b;
+}
+
+.header__item:active {
+    background: #2c4259;
+    transition: background 200ms;
+}
+
+.header__icon {
+    @extend %header__icons;
+    padding: 0.25rem 0.4rem;
+}
