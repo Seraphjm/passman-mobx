@@ -7,11 +7,14 @@ import {IAccount} from '../Models/Account';
  * @prop accounts Список аккаунтов пользователя.
  * @prop loadAccounts Экшн, загружающий аккаунты из базы данных.
  * @prop setAccounts Экшн, изменяющий состояние аккаунтов в базе данных.
+ * @prop searchedAccounts Геттер todo, изменяющий состояние аккаунтов в базе данных.
  */
 export interface IMainStore {
     accounts: IAccount[];
+    search: string;
     loadAccounts(): Promise<EEncryptionStatus>;
     setAccounts(a: any, b: any, c: any): any;
+    searchedAccounts: IAccount[];
 }
 
 /**

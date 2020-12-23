@@ -1,3 +1,5 @@
+$z-index: 9999;
+
 .spinner-box {
     margin: auto;
     border-radius: 100%;
@@ -12,7 +14,8 @@
 
     &:before {
         content: "";
-        background: #5a5a5a;
+        background: #000;
+        z-index: $z-index;
         display: block;
         opacity: 0.5;
         filter: blur(5px);
@@ -24,7 +27,7 @@
 .spinner-wrap,
 .spinner-block,
 .spin-success {
-    z-index: 999;
+    z-index: $z-index;
 }
 
 .spinner-block,

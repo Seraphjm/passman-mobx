@@ -10,6 +10,8 @@
     "AUTH__FORM_CH_MK_REPEAT": "Повторите введённый пароль",
     "AUTH__FORM_CH_MK_SUCCESS": "Пароль успешно задан! Авторизуйтесь!",
 
+    "MAIN__ACCOUNT_NOTHING_FOUND": "Ничего не найдено :(",
+
     "COMMON__CHANGE": "Изменить",
     "COMMON__HIDE_SYMBOLS": "Скрывать символы"
 }

@@ -1,21 +1,18 @@
 import {FunctionComponent} from 'react';
-import {Link} from 'react-router-dom';
-import {AUTH_ROUTE_NAMES} from 'Modules/Auth/Router/Routes';
-import {observer} from 'mobx-react';
-import {useMain} from '../Store/Hooks';
+import {Header} from '../Components/Header/Header';
+import {Content} from '../Components/Content/Content';
+import {SideBar} from '../Components/Sidebar/Sidebar';
+import './Main.style.scss';
 
 /**
  * Главная страница приложения, предоставляющая его основной функционал.
  */
-const Main: FunctionComponent = observer(() => {
-    const main = useMain();
-    return (
-        <div id="main">
-            <br />
-            <Link to={AUTH_ROUTE_NAMES.ROOT}>GO TO Auth</Link>
-            <ul>{main.accounts.length && main.accounts.map((account) => <li>{account.accountName}</li>)}</ul>
-        </div>
-    );
-});
+const Main: FunctionComponent = () => (
+    <div id="main">
+        <Header />
+        <SideBar />
+        <Content />
+    </div>
+);
 
 export default Main;
