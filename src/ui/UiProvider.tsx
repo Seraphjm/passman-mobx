@@ -1,4 +1,4 @@
-import {FunctionComponent} from 'react';
+import React, {FunctionComponent} from 'react';
 import {EThemes} from './Common/Enums';
 import 'ui/Styles/common.style.scss';
 
@@ -16,5 +16,8 @@ export interface IUiProvider {
  * По готовности перейдёт в отдельный пакет.
  */
 export const UiProvider: FunctionComponent<IUiProvider> = ({children, theme = EThemes.LIGHT}) => (
-    <div className={`ui-lib ui-lib-${theme}`}>{children}</div>
+    <>
+        <div className={`ui-lib ui-lib-${theme}`}>{children}</div>
+        <div id="ui-lib-modal-portal" />
+    </>
 );
