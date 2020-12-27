@@ -1,8 +1,8 @@
 import {FunctionComponent, useEffect} from 'react';
 import {observer} from 'mobx-react';
-import {Button, ESizes, Input, Modal, ModalBody, ModalFooter, ModalHeader, Select, SelectItem} from 'ui';
+import {Button, ESizes, Input, Modal, ModalBody, ModalFooter, ModalHeader, Select, Option} from 'ui';
 import {useIntl} from 'react-intl';
-import {IModal} from 'ui/Components/Modal/Modal';
+import {IModal} from 'ui/Components/Modal/Models';
 import {useMain} from '../../../../Store/Hooks';
 
 export const AddAccountModal: FunctionComponent<IModal> = observer(({onClose, isOpen}) => {
@@ -30,11 +30,11 @@ export const AddAccountModal: FunctionComponent<IModal> = observer(({onClose, is
             <ModalHeader onClose={onClose}>{formatMessage({id: 'MAIN__MODAL_ADD_FORM_NAME'})}</ModalHeader>
             <ModalBody>
                 <Select onChange={setCategory} value={accountPrototype.category} placeholder="select value">
-                    <SelectItem value={'Наташа'}>Наташа</SelectItem>
-                    <SelectItem value={'Антон'}>Антон</SelectItem>
-                    <SelectItem value={'Сергей'}>Сергей</SelectItem>
-                    <SelectItem value={'Валера'}>Валера</SelectItem>
-                    <SelectItem value={'Константин'}>Константин</SelectItem>
+                    <Option value={'Наташа'}>Наташа</Option>
+                    <Option value={'Антон'}>Антон</Option>
+                    <Option value={'Сергей'}>Сергей</Option>
+                    <Option value={'Валера'}>Валера</Option>
+                    <Option value={'Константин'}>Константин</Option>
                 </Select>
                 <div>{formatMessage({id: 'MAIN__MODAL_ADD_SELECT_SOME_ITEM'})}</div>
 

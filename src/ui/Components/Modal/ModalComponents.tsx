@@ -1,40 +1,8 @@
 import {FunctionComponent} from 'react';
 import classNames from 'classnames';
-import {EModalContentPosition} from './Enums';
 import {isFunction} from 'ui/Utils';
+import {ICommonProps, IModalFooter, IModalHeader} from './Models';
 import './ModalComponents.style.scss';
-
-/**
- * Общая модель для контентных компонентов модального окна.
- *
- * @prop [className] CSS класс.
- */
-interface ICommonProps {
-    className?: string;
-}
-
-/**
- * Модель свойства позиционирования в контентном компоненте.
- *
- * @prop [contentPosition] Позиция контента ВНУТРИ компонента. Реализован на justify-content|flex. API аналогичное.
- */
-interface IPosition {
-    contentPosition?: EModalContentPosition;
-}
-
-/**
- * Модель для контентного компонента модального окна - Header.
- *
- * @prop onClose Обработчик закрытия модального окна.
- */
-interface IModalHeader extends ICommonProps, IPosition {
-    onClose: () => void;
-}
-
-/**
- * Модель для контентного компонента модального окна - Footer.
- */
-interface IModalFooter extends ICommonProps, IPosition {}
 
 /**
  * Контентный компонет модального окна Header.

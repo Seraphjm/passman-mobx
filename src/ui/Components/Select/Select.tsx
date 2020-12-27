@@ -1,56 +1,81 @@
 import {Children, cloneElement, FormEvent, FunctionComponent, KeyboardEvent, useEffect, useRef, useState} from 'react';
 import classNames from 'classnames';
-import {isFunction} from 'ui/Utils';
-import {IEventMessage, IFuzzySortResult} from 'ui/Common/Models';
+import {InputFilled} from 'ui/Common/InnerComponents/InputFilled/InputFilled';
+import {InputMessage} from 'ui/Common/InnerComponents/InputMessage/InputMessage';
+import {InputPlaceholder} from 'ui/Common/InnerComponents/InputPlaceholder/InputPlaceholder';
+import {getPositionProps, isFunction} from 'ui/Utils';
+import {IFuzzySortResult, IPositionProps} from 'ui/Common/Models';
 import {Highlight} from 'ui/Components/Highlight/Highlight';
 import {go} from 'fuzzysort';
-import {useRemoteScrollControl} from 'ui/Common/Hooks';
+import {useHiddenListFromWindow, useRemoteScrollControl} from 'ui/Common/Hooks';
 import {EKeyCode} from 'ui/Common/Enums';
+import {IOption, ISelect} from './Models';
 import './Select.style.scss';
 
-interface ISelect {
-    value: string;
-    onChange: (v: any) => void;
-    className?: string;
-    placeholder?: string;
-    required?: boolean;
-    message?: IEventMessage;
-}
+// TODO.TYPES TODO.REFACTOR: заевбавси, доделать.
 
-function getMaxHeight<T>(eventContainer: T) {
-    //@ts-ignore
-    const {y, height} = eventContainer.target.getBoundingClientRect();
-    const heightContainer = document.body.clientHeight || 200;
-
-    return heightContainer - y - height * 2;
-}
-
-export const Select: FunctionComponent<ISelect> = ({onChange, placeholder, className, required, value, message, children}) => {
-    const controllerRef = useRef<any>();
-    const containerRef = useRef<any>();
-    const listRef = useRef<any>();
+/**
+ * UI Компонент select.
+ */
+export const Select: FunctionComponent<ISelect<any>> = ({onChange, placeholder, className, required, value, message, children}) => {
+    /** Скрытый контроллер компонента. На нём обвязана вся логика. */
+    const controllerRef = useRef<HTMLInputElement>();
+    /** Контейнер компонента. Нужен для отслеживания событий и установки размерностей внешнего контейнера. */
+    const containerRef = useRef<HTMLDivElement>();
+    /** Контейнер списка. Необходимо для удалённого контроля скролла по хоткеям. */
+    const listRef = useRef<HTMLUListElement>();
+    /** Необходимо для поиска и фильтрации потомков с заданным value, если такой будет предоставлен посредством
+     *  ввода. */
     const [childes, setChildes] = useState(children);
+    /** Необходимо для фильтрации потомков по введённому значению. */
     const [localValue, setLocalValue] = useState<string | null>(null);
+    /** Флаг того, что на контроллер установлен фокус. */
     const [focus, setFocus] = useState<boolean>(false);
-    const [maxHeight, setMaxHeight] = useState<number>(200);
-    /** Значение выбранное с помощью мышки */
+    /** Параметры размерностей и положения спискового контейнера. */
+    const [style, setStyle] = useState<IPositionProps>();
+    /** Значение выбранное с помощью мышки. */
     const [mouseSelected, setMouseSelected] = useState<number | null>(null);
+    /** Выбранный элемент из выпадающего списка. */
     const [selectedItem, setSelectedItem] = useState<number | null>(null);
 
+    /**
+     * Установка слушателя скрытие выпадающего списка по клику вне элемента.
+     * В общем-то костыль. Поанализировать потом на то, как можно это сделать менее топорным способом.
+     */
     useEffect(() => {
         window.addEventListener('click', disableFocus);
         return () => window.removeEventListener('click', disableFocus);
     }, []);
 
-    const disableFocus = (e: any) => {
-        if (e.target !== containerRef.current) setFocus(false);
+    /**
+     * Метод, снимающий фокус с контроллера компонента.
+     *
+     * @param event Входящее событие.
+     */
+    const disableFocus = (event: Event) => {
+        if (event.target !== containerRef.current && event.target !== listRef.current) {
+            controllerRef.current?.blur();
+            setFocus(false);
+        }
     };
 
+    /**
+     * Здесь осуществляется поиск по потомкам по введённому значению.
+     * Очевидно, что поиск идёт по тому, что видит пользователь, а не по переданному value/
+     */
     useEffect(() => {
         setChildes(search(localValue, Children.toArray(children)));
     }, [localValue, children]);
 
+    /**
+     * Хук, отвечающий за контроль спискового скролла хоткеями.
+     */
     useRemoteScrollControl(listRef, selectedItem);
+
+    /**
+     * Хук, отслеживающий window-события, и скрывающий выпадающий список по ним.
+     */
+    useHiddenListFromWindow(disableFocus);
 
     /**
      * Реализация нечёткого поиска по списку автокомплита.
@@ -70,32 +95,54 @@ export const Select: FunctionComponent<ISelect> = ({onChange, placeholder, class
         return filtered.length ? filtered.sort((a, b) => (a.score < b.score ? 1 : -1)).map(({obj}) => obj) : childes;
     };
 
+    /**
+     * Обработчик изменения состояния компонента select.
+     * TODO.TYPES посмотреть, как можно типизировать такие кейсы (дженерик описан на props.onChange).
+     */
     const onChangeHandler = (v: unknown) => {
-        //@ts-ignore
         isFunction(onChange) && onChange(v);
-        controllerRef?.current.blur();
+        controllerRef.current?.blur();
     };
 
+    /**
+     * Обработчик мыши на покидание области контейнера выпадающего списка.
+     */
     const mouseHandlerLeave = () => {
         setMouseSelected(null);
     };
 
+    /**
+     * Обработчик мыши на наведение на элемент выпадающего списка.
+     *
+     * @param target Текущий элемент под указателем мыши.
+     */
     const mouseHandlerOver = ({target}: any) => {
         const index = target.dataset.index;
         index !== undefined && setMouseSelected(+index);
     };
 
-    const onClickHandler = (e: any) => {
+    /**
+     * Обработчик клика по компоненту.
+     * Задача: скрыть или показать выпадающий список.
+     *
+     * @param event Событие по клику.
+     */
+    const onClickHandler = (event: Event) => {
         if (!focus) {
-            controllerRef?.current.focus();
-            setMaxHeight(getMaxHeight(e));
+            controllerRef.current?.focus();
+            setStyle(getPositionProps<Event>(event, '1rem'));
         } else {
-            controllerRef?.current.blur();
+            controllerRef.current?.blur();
         }
 
         setFocus(!focus);
     };
 
+    /**
+     * Обработчик onKeyDown. В основном содержит логику для навигационных клавиш.
+     *
+     * @param e Событие полученное при вводе.
+     */
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         const {keyCode} = e;
         // @ts-ignore
@@ -133,12 +180,22 @@ export const Select: FunctionComponent<ISelect> = ({onChange, placeholder, class
         }
     };
 
+    /**
+     * Обработчик ввода передающий значение из инпута в onInput.
+     *
+     * @param e Событие из контроллера.
+     */
     const onInputHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         // @ts-ignore
         const incomingValue = localValue === null ? e.nativeEvent.data : e.currentTarget.value;
         setLocalValue(incomingValue);
     };
 
+    /**
+     * Обработчик потери фокуса.
+     *
+     * @param e Событие полученное из фокуса.
+     */
     const onBlurHandler = (e: FormEvent<HTMLInputElement>) => {
         setLocalValue(null);
         if (mouseSelected !== null) {
@@ -149,11 +206,13 @@ export const Select: FunctionComponent<ISelect> = ({onChange, placeholder, class
     };
 
     return (
+        //@ts-ignore
         <div ref={containerRef} className={classNames('ui-lib-select', className, required, message?.type)} onClick={onClickHandler}>
             <input
                 placeholder={'\u2063'}
                 onKeyDown={onKeyDownHandler}
-                className="ui-lib-select__hidden-controller"
+                className="ui-lib-select__hidden-controller ui-lib__input--controller"
+                //@ts-ignore
                 ref={controllerRef}
                 value={localValue === null ? value : localValue}
                 onInput={onInputHandler}
@@ -161,25 +220,26 @@ export const Select: FunctionComponent<ISelect> = ({onChange, placeholder, class
             />
 
             {placeholder && (
-                <div className="ui-lib-select__placeholder">
+                <InputPlaceholder>
                     {placeholder}
                     {localValue && <span className="font-monospace"> | icon-search: {localValue}</span>}
-                </div>
+                </InputPlaceholder>
             )}
 
-            <div className="ui-lib-select__value" tabIndex={0}>
+            <div className="ui-lib-select__value text-ellipsis" tabIndex={0}>
                 {value}
                 <div className="ui-lib-select__arrow">^</div>
             </div>
 
-            <div className="ui-lib-select__filled" />
+            <InputFilled />
 
-            {message && <div className="ui-lib-select__message">{message.text}</div>}
+            {message && <InputMessage>{message.text}</InputMessage>}
 
             <ul
+                //@ts-ignore
                 ref={listRef}
-                style={{maxHeight, width: containerRef.current?.offsetWidth}}
-                className="ui-lib-select__list"
+                style={{...style, width: containerRef.current?.offsetWidth}}
+                className="ui-lib__drop-list"
                 onMouseOver={mouseHandlerOver}
                 onMouseLeave={mouseHandlerLeave}
             >
@@ -191,16 +251,13 @@ export const Select: FunctionComponent<ISelect> = ({onChange, placeholder, class
     );
 };
 
-interface ISelectItem {
-    index?: never;
-    search?: never;
-    active?: never;
-    value?: unknown;
-}
-
-export const SelectItem: FunctionComponent<ISelectItem> = (props) => {
+/**
+ * UI компонент option для выпадающего списка select.
+ */
+export const Option: FunctionComponent<IOption> = (props) => {
     return (
-        <li data-value={props.value} data-index={props.index} className={classNames('ui-lib-select__item', {active: props.active})}>
+        <li data-value={props.value} data-index={props.index} className={classNames('ui-lib-option', {active: props.active})}>
+            {props.icon && <div className="ui-lib-select__item-icon">{props.icon}</div>}
             <Highlight search={props.search || ''} text={`${props.children}`} />
         </li>
     );

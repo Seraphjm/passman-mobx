@@ -1,0 +1,24 @@
+.ui-lib__input-filled {
+    position: absolute;
+    height: 3px;
+    background: var(--color-info);
+    width: 0;
+    transition: 0.5s;
+    bottom: 1rem;
+}
+
+.ui-lib__input--controller:not(:placeholder-shown) ~ .ui-lib__input-filled {
+    width: 100%;
+}
+
+.danger > .ui-lib__input-filled {
+    background: var(--color-danger);
+}
+
+.warning > .ui-lib__input-filled {
+    background: var(--color-warning);
+}
+
+.success > .ui-lib__input-filled {
+    background: var(--color-success);
+}

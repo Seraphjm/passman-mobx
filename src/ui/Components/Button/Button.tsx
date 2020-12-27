@@ -1,4 +1,4 @@
-import {FunctionComponent, useState} from 'react';
+import {FunctionComponent, useState, MouseEvent} from 'react';
 import classNames from 'classnames';
 import {calcRipplePosition, cancelEvent, isFunction} from 'ui/Utils';
 import {IButton} from './Models';
@@ -35,8 +35,8 @@ export const Button: FunctionComponent<IButton> = ({
     /**
      * Обработчик клика по кнопке.
      */
-    const onClickHandler = async (e: any) => {
-        cancelEvent(e);
+    const onClickHandler = async (e: MouseEvent) => {
+        cancelEvent<any>(e);
 
         await setRipple({...ripple, display: 'none'});
         const style = await calcRipplePosition(e);

@@ -1,0 +1,36 @@
+.ui-lib__input-placeholder {
+    color: #bbb;
+    user-select: none;
+    position: absolute;
+    top: 2.35rem;
+    left: 0.5rem;
+    transition: transform 0.3s;
+    pointer-events: none;
+    white-space: nowrap;
+
+    &.required:after {
+        content: "*";
+        color: var(--color-danger);
+        cursor: text;
+        margin-left: 3px;
+    }
+}
+
+.ui-lib__input--controller:focus + .ui-lib__input-placeholder,
+.ui-lib__input--controller:not(:placeholder-shown) + .ui-lib__input-placeholder {
+    color: #2d2b27;
+    transform: translate(0.25rem, -1.75rem);
+}
+
+.danger > .ui-lib__input-placeholder {
+    color: var(--color-danger) !important;
+}
+
+.warning > .ui-lib__input-placeholder {
+    color: var(--color-warning) !important;
+}
+
+.success > .ui-lib__input-placeholder {
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    color: var(--color-success) !important;
+}

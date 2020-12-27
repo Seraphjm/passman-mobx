@@ -1,72 +1,42 @@
-.ui-lib-auto-complete {
-    border: 1px solid #bbb;
-    position: fixed;
-    z-index: 1;
-    overflow-y: auto;
-    background: #fff;
-    cursor: pointer;
-}
+.ui-lib-input {
+    position: relative;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+    display: inline-block;
 
-.ui-lib-auto-complete__item {
-    padding: 0 0.5rem;
-    text-align: left;
-    font-family: monospace;
-    font-size: 1.25rem;
-    user-select: none;
-    pointer-events: all;
-
-    &:hover,
-    &.active-item {
-        background: rgba(0, 0, 0, 0.15);
+    &.animated {
+        animation: animateInput 0.5s ease-in;
+        transition: transform 0.3s;
     }
-}
 
-.ui-lib-input__filled {
-    height: 4px;
-    background: var(--color-info);
-    position: absolute;
-    top: 3.75rem;
-    width: 0;
-    transition: 0.5s;
+    &.error {
+        .ui-lib-input__controller {
+            border: 1px solid var(--color-danger);
+        }
+    }
+
+    &.warning {
+        .ui-lib-input__controller {
+            border: 1px solid var(--color-warning);
+        }
+    }
+
+    &.success {
+        .ui-lib-input__controller {
+            border: 1px solid var(--color-success);
+        }
+    }
+
+    .ui-lib-option {
+        padding: 0 0.5rem;
+    }
 }
 
 .ui-lib-input__controller {
     padding: 0.2rem 0.5rem 3px;
     border: 1px solid #bbb;
     outline: none;
-
-    &:focus + .ui-lib-placeholder,
-    &:not(:placeholder-shown) + .ui-lib-placeholder {
-        top: 0.5rem;
-        color: #2d2b27;
-        left: 0.5rem;
-    }
-
-    &:not(:placeholder-shown) ~ .ui-lib-input__filled {
-        width: 100%;
-    }
-}
-
-.ui-lib-placeholder {
-    color: #bbb;
-    user-select: none;
-    position: absolute;
-    top: calc(2rem + 4px);
-    left: calc(0.5rem + 2px);
-    transition: 0.3s;
-    pointer-events: none;
-    white-space: nowrap;
-    text-align: left;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    width: calc(100% - 10px);
-
-    &.required:after {
-        content: "*";
-        color: var(--color-danger);
-        cursor: text;
-        margin-left: 3px;
-    }
+    height: 2rem;
 }
 
 @keyframes animateInput {
@@ -84,71 +54,5 @@
     }
     100% {
         transform: translateX(0.5rem);
-    }
-}
-
-.ui-lib-message {
-    text-align: left;
-    padding-left: 0.5rem;
-    font-size: 0.8rem;
-}
-
-.ui-lib-input {
-    position: relative;
-    padding-top: 2rem;
-    overflow: hidden;
-
-    &.animated {
-        animation: animateInput 0.5s ease-in;
-        transition: transform 0.3s;
-    }
-
-    &.error {
-        .ui-lib-message,
-        .ui-lib-placeholder {
-            color: var(--color-danger);
-        }
-
-        .ui-lib-input__controller {
-            border: 1px solid var(--color-danger);
-        }
-
-        .ui-lib-input__filled {
-            background: var(--color-danger);
-        }
-    }
-
-    &.warning {
-        .ui-lib-message,
-        .ui-lib-placeholder {
-            color: var(--color-warning);
-        }
-
-        .ui-lib-input__controller {
-            border: 1px solid var(--color-warning);
-        }
-
-        .ui-lib-input__filled {
-            background: var(--color-warning);
-        }
-    }
-
-    &.success {
-        .ui.ui-lib-message {
-            text-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .ui-lib-message,
-        .ui-lib-placeholder {
-            color: var(--color-success);
-        }
-
-        .ui-lib-input__controller {
-            border: 1px solid var(--color-success);
-        }
-
-        .ui-lib-input__filled {
-            background: var(--color-success);
-        }
     }
 }

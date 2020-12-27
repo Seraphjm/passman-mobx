@@ -1,23 +1,8 @@
 import {FunctionComponent} from 'react';
 import {ModalPortal} from './Modal.portal';
 import classNames from 'classnames';
-import {ESizes} from 'ui/Common/Enums';
+import {IModal} from './Models';
 import './Modal.style.scss';
-
-/**
- * Модель модального окна.
- *
- * @prop isOpen Флаг показа модального окна.
- * @prop onClose Обработчик закрытия модального окна.
- * @prop [className] css класс.
- * @prop [size] Размерности модального окна. Устанавливает max-width.
- */
-export interface IModal {
-    isOpen: boolean;
-    onClose: () => void;
-    className?: string;
-    size?: ESizes;
-}
 
 /**
  * Компонент модального окна.

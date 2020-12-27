@@ -3,11 +3,20 @@ import sanitizeHtml from 'sanitize-html';
 import {highlight, single} from 'fuzzysort';
 import './Highlight.style.scss';
 
+/**
+ * Модель компонента.
+ *
+ * @prop text Текст.
+ * @prop search Поисковое значение.
+ */
 interface IHighlight {
     text: string;
     search: string;
 }
 
+/**
+ * Компонент подсветки текста для нечёткого поиска.
+ */
 export const Highlight: FunctionComponent<IHighlight> = (props) => {
     const sanitizeText: string = useMemo(
         () =>

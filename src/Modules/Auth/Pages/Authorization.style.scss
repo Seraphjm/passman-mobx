@@ -9,7 +9,6 @@
     .authorization__input-container {
         display: grid;
         grid-template-columns: 1fr auto;
-        padding-bottom: 2rem;
 
         .ui-lib-input__controller {
             border-right: 0;
@@ -17,7 +16,6 @@
     }
 
     .authorization__button {
-        align-self: end;
         .ui-lib__flat {
             border-radius: 0 3px 3px 0;
         }
