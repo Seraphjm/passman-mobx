@@ -3,6 +3,8 @@ import {useIntl} from 'react-intl';
 import {Link} from 'react-router-dom';
 import {observer} from 'mobx-react';
 import {EPositions} from 'ui/Common/Enums';
+import {SVGIcon} from 'ui';
+import {faLongArrowAltLeft} from '@fortawesome/free-solid-svg-icons';
 import {useAuthorization} from '../Store/Hooks';
 import {TemplateAuthForm} from './AuthorizationForm/TemplateAuthForm';
 import {AuthorizationBody, AuthorizationFooter, AuthorizationHeader} from './AuthorizationForm/AuthorizationForm';
@@ -43,7 +45,7 @@ const ChangeMasterKey: FunctionComponent = observer(() => {
         <TemplateAuthForm>
             <AuthorizationHeader className="inline">
                 <Link style={{marginRight: '.75rem'}} to={AUTH_ROUTE_NAMES.ENTER_PASSWORD}>
-                    <i className="fas fa-long-arrow-alt-left" />
+                    <SVGIcon icon={faLongArrowAltLeft} />
                 </Link>
                 <h4>{formatMessage({id: 'AUTH__FORM_CHANGE_PASSWORD'})}</h4>
             </AuthorizationHeader>
