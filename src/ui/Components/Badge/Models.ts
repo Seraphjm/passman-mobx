@@ -6,14 +6,14 @@ import {EBadgeCounterPosition} from './Enums';
  *
  * @prop type Color type.
  * @prop text Badge text.
- * @prop [forceSize] Force size for badge. Default badges scale to match the size of the immediate parent element by using relative font sizing
+ * @prop [size] Force size for badge. Default badges scale to match the size of the immediate parent element by using relative font sizing
  * @prop [counter] Add badge counter.
  * @prop [counterPosition] set counter position.
  */
 export interface IBadge {
     type: EColors;
     text: string;
-    forceSize?: ESizes;
+    size?: ESizes;
     counter?: number;
     counterPosition?: EBadgeCounterPosition;
 }

@@ -1,24 +1,27 @@
 import {
+    ChangeEvent,
+    FocusEvent,
     FormEvent,
     forwardRef,
+    ForwardRefExoticComponent,
     FunctionComponent,
+    KeyboardEvent,
+    RefAttributes,
     useEffect,
     useRef,
     useState,
-    KeyboardEvent,
-    FocusEvent,
-    ChangeEvent,
-    RefAttributes,
-    ForwardRefExoticComponent,
 } from 'react';
 import classNames from 'classnames';
 import {go} from 'fuzzysort';
-import {useRemoteScrollControl} from 'ui/Common/Hooks';
-import {isFunction} from 'ui/Utils';
+import {InputPlaceholder} from 'ui/Common/InnerComponents/InputPlaceholder/InputPlaceholder';
+import {InputFilled} from 'ui/Common/InnerComponents/InputFilled/InputFilled';
+import {InputMessage} from 'ui/Common/InnerComponents/InputMessage/InputMessage';
+import {useHiddenListFromWindow, useRemoteScrollControl} from 'ui/Common/Hooks';
+import {isFunction, getPositionProps} from 'ui/Utils';
 import {EKeyCode} from 'ui/Common/Enums';
 import {Highlight} from 'ui/Components/Highlight/Highlight';
+import {IFuzzySortResult, IPositionProps} from 'ui/Common/Models';
 import {IAutoComplete, ICompleteItem, IInput} from './Models';
-import {IFuzzySortResult} from 'ui/Common/Models';
 import './Input.style.scss';
 
 /**
@@ -37,7 +40,7 @@ const InputContainer: any = forwardRef<HTMLDivElement, IInput>(({children, class
     </div>
 ));
 
-// TODO: отвзять состояние автокомплита от инпута. Попытку делал, но получилось не очень эффективно.
+// TODO.REFACTOR: отвзять состояние автокомплита от инпута. Попытку делал, но получилось не очень эффективно.
 /**
  * UI компонент инпута с поддержкой автокомплита с нечётким поиском.
  */
@@ -68,8 +71,8 @@ const InputComp: FunctionComponent<IInput> = ({
     const [selectedItem, setSelectedItem] = useState<number | null>(null);
     /** Значение выбранное с помощью мышки */
     const [mouseSelected, setMouseSelected] = useState<number | null>(null);
-    /** Значение максимальной высоты для контейнера автокомплита */
-    const [maxHeight, setMaxHeight] = useState<number>(200);
+    /** Значение параметров положения и размерностей для контейнера автокомплита */
+    const [style, setStyle] = useState<IPositionProps>();
     /** Флаг использования навигационных кнопок в автокомплите */
     const [usedKey, setUsedKey] = useState<boolean>(false);
 
@@ -92,18 +95,24 @@ const InputComp: FunctionComponent<IInput> = ({
     }, [value, usedKey]);
 
     /**
+     * Хук, отслеживающий window-события, и скрывающий выпадающий список по ним.
+     */
+    useHiddenListFromWindow(onBlurHandler);
+
+    /**
      * Реализация нечёткого поиска по списку автокомплита.
      *
      * @param value Текущее значение введённое в инпут.
      * @param autoComplete Список для автокомплита по которому произойдёт поиск.
      */
     const search = (value: string, autoComplete: string[]): string[] => {
+        if (!value) return autoComplete;
         //@ts-ignore
         const filtered: IFuzzySortResult[] = go(value, autoComplete, {
             limit: 100,
         });
 
-        return filtered.sort((a, b) => (a.score < b.score ? 1 : -1)).map(({target}) => target);
+        return filtered.length ? filtered.sort((a, b) => (a.score < b.score ? 1 : -1)).map(({target}) => target) : autoComplete;
     };
 
     /**
@@ -115,7 +124,7 @@ const InputComp: FunctionComponent<IInput> = ({
         if (autoComplete?.length) {
             if (selectedItem !== null) setSelectedItem(null);
 
-            setAutoCompleteList(value ? search(value, autoComplete) : autoComplete);
+            setAutoCompleteList(search(value, autoComplete));
         }
 
         onInput(value);
@@ -128,10 +137,7 @@ const InputComp: FunctionComponent<IInput> = ({
      */
     const onFocusHandler = (e: FocusEvent<HTMLInputElement>) => {
         if (autoCompleteList.length) {
-            const {y, height} = e.target.getBoundingClientRect();
-            const heightContainer = document.body.clientHeight || 200;
-
-            setMaxHeight(heightContainer - y - height * 2);
+            setStyle(getPositionProps<any>(e));
             setAutoCompleteIsOpen(true);
         }
 
@@ -144,7 +150,9 @@ const InputComp: FunctionComponent<IInput> = ({
      *
      * @param e Событие полученное из фокуса.
      */
-    const onBlurHandler = (e: FocusEvent<HTMLInputElement>) => {
+    function onBlurHandler(e: FocusEvent<HTMLInputElement>) {
+        if (e.target.className === 'ui-lib-auto-complete') return;
+
         if (autoCompleteList?.length) {
             if (mouseSelected !== null) {
                 onInput(autoCompleteList[mouseSelected]);
@@ -158,7 +166,7 @@ const InputComp: FunctionComponent<IInput> = ({
 
         //@ts-ignore ложноположительное срабатывание.
         if (isFunction(onBlur)) onBlur(e);
-    };
+    }
 
     /**
      * Обработчик onKeyDown. В основном содержит логику для автокомплита.
@@ -216,7 +224,7 @@ const InputComp: FunctionComponent<IInput> = ({
             <input
                 ref={inputRef}
                 type={type}
-                className="ui-lib-input__controller"
+                className="ui-lib-input__controller ui-lib__input--controller"
                 placeholder={'\u2063'}
                 value={value}
                 onInput={onInputHandler}
@@ -228,23 +236,22 @@ const InputComp: FunctionComponent<IInput> = ({
                 disabled={disabled}
             />
 
-            {placeholder && <span className={classNames('ui-lib-placeholder', {required})}>{placeholder}</span>}
+            {placeholder && <InputPlaceholder required={required}>{placeholder}</InputPlaceholder>}
 
-            <div className="ui-lib-input__filled" />
+            <InputFilled />
 
             {!!autoCompleteList.length && (
                 <AutoComplete
                     isOpen={autoCompleteIsOpen}
                     autoComplete={autoCompleteList}
                     selectedItem={selectedItem}
-                    width={ref?.current?.offsetWidth}
-                    maxHeight={maxHeight}
+                    style={{...style, width: ref?.current?.offsetWidth}}
                     setMouseSelected={setMouseSelected}
                     value={value}
                 />
             )}
 
-            {message?.text && <div className="ui-lib-message">{message.text}</div>}
+            {message?.text && <InputMessage>{message.text}</InputMessage>}
         </InputContainer>
     );
 };
@@ -253,7 +260,7 @@ const InputComp: FunctionComponent<IInput> = ({
  * Компонент автокомплита.
  */
 const AutoComplete: FunctionComponent<IAutoComplete> = (props) => {
-    const {width = 200, maxHeight = 200, setMouseSelected, selectedItem} = props;
+    const {style, setMouseSelected, selectedItem} = props;
     const ref = useRef<HTMLElement>();
 
     useRemoteScrollControl(ref, selectedItem);
@@ -263,26 +270,25 @@ const AutoComplete: FunctionComponent<IAutoComplete> = (props) => {
      *
      * @param target Текущий элемент под указателем мыши.
      */
-    const mouseHandler = ({target}: ChangeEvent<HTMLElement>): void => {
+    const mouseHandlerOver = ({target}: ChangeEvent<HTMLElement>): void => {
         const index = target.dataset.index;
-        console.log(index);
         index !== undefined && setMouseSelected(+index);
     };
 
     /**
      * Обработчик мыши на покидание области контейнера.
      */
-    const mouseHandlerOver = (): void => {
+    const mouseHandlerLeave = (): void => {
         setMouseSelected(null);
     };
 
     return props.isOpen ? (
         <ListContainer
             ref={ref}
-            className="ui-lib-auto-complete"
-            style={{width, maxHeight}}
-            onMouseOver={mouseHandler}
-            onMouseLeave={mouseHandlerOver}
+            className="ui-lib__drop-list"
+            style={style}
+            onMouseOver={mouseHandlerOver}
+            onMouseLeave={mouseHandlerLeave}
         >
             {props.autoComplete.map((item: string, i: number) => (
                 <CompleteItem value={props.value} key={item} isActive={selectedItem === i} index={i}>
@@ -306,7 +312,7 @@ export const ListContainer: any = forwardRef<HTMLUListElement, IAutoComplete>((p
  * Компонент элемента из списка автокомплита.
  */
 const CompleteItem: FunctionComponent<ICompleteItem> = (props) => (
-    <li data-index={props.index} className={classNames('ui-lib-auto-complete__item', {'active-item': props.isActive})}>
+    <li data-index={props.index} className={classNames('ui-lib-option', {'active-item': props.isActive})}>
         <Highlight search={props.value || ''} text={`${props.children}`} />
     </li>
 );

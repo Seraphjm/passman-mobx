@@ -1,8 +1,12 @@
 import {FunctionComponent} from 'react';
 import {redirectTo} from 'Router/Utils';
 import {SETTINGS_ROUTE_NAMES} from 'Modules/Settings/Router/Routes';
+import {observer} from 'mobx-react';
 
-export const Tools: FunctionComponent = () => {
+/**
+ * Панель управления приложением. От открытия настроек до расширенных глобальных фич с аккаунтами.
+ */
+export const ApplicationManagerPanel: FunctionComponent = observer(() => {
     const openSettings = () => {
         redirectTo(SETTINGS_ROUTE_NAMES.ROOT);
     };
@@ -14,4 +18,4 @@ export const Tools: FunctionComponent = () => {
             <li onClick={openSettings} className="header__icon header__item fa fa-cog" />
         </ul>
     );
-};
+});

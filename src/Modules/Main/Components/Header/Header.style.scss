@@ -17,6 +17,12 @@
     display: flex;
 }
 
+.header__control-accounts {
+    .header__item {
+        text-transform: uppercase;
+    }
+}
+
 .header__item {
     @extend %v-center;
     padding: 0 0.5rem;
@@ -24,6 +30,10 @@
     user-select: none;
     transition-property: color, background;
     transition-duration: 400ms;
+
+    &:not(:hover).accounts_is_empty {
+        animation: active-item-animation ease-in-out infinite 3s;
+    }
 }
 
 .header__control-tools {
@@ -49,4 +59,16 @@
     @extend %header__icons;
     font-size: 1.5rem;
     padding: 0.25rem 0.4rem;
+}
+
+@keyframes active-item-animation {
+    0% {
+        background: #678cab;
+    }
+    50% {
+        background: #2c4259;
+    }
+    100% {
+        background: #678cab;
+    }
 }

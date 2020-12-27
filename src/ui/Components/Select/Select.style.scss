@@ -1,0 +1,67 @@
+.ui-lib-select {
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+
+    .ui-lib__drop-list {
+        display: none;
+    }
+
+    .ui-lib-option {
+        padding: 0.5rem 1rem;
+    }
+
+    &.danger {
+        .ui-lib-select__value {
+            border-color: var(--color-danger);
+        }
+    }
+
+    &.success {
+        .ui-lib-select__value {
+            border-color: var(--color-success);
+        }
+    }
+
+    &.warning {
+        .ui-lib-select__value {
+            border-color: var(--color-warning);
+        }
+    }
+}
+
+.ui-lib-select__hidden-controller {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    height: 2rem;
+
+    &:focus ~ .ui-lib__drop-list {
+        display: initial;
+    }
+
+    &:focus ~ .ui-lib-select__value > .ui-lib-select__arrow {
+        transform: rotateZ(180deg);
+    }
+}
+
+.ui-lib-select__arrow {
+    grid-column: 2;
+    transition: transform 250ms;
+}
+
+.ui-lib-select__value {
+    border: 1px dashed;
+    border-bottom: 3px solid #b5b5b5;
+    padding: 0.2rem 0.5rem;
+    height: 2rem;
+    text-align: left;
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-column-gap: 0.5rem;
+}

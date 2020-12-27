@@ -1,0 +1,18 @@
+.ui-lib__input-message {
+    position: absolute;
+    margin-left: 0.5rem;
+    font-size: 0.75rem;
+}
+
+.danger > .ui-lib__input-message {
+    color: var(--color-danger);
+}
+
+.warning > .ui-lib__input-message {
+    color: var(--color-warning);
+}
+
+.success > .ui-lib__input-message {
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    color: var(--color-success);
+}

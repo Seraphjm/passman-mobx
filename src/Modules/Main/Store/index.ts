@@ -2,15 +2,21 @@ import {makeAutoObservable, runInAction} from 'mobx';
 import {IMainStore} from './Models';
 import {IRootStore} from 'Store/Models';
 import {EEncryptionStatus} from 'Utils/Crypto/Enums';
+import {ESetMode} from 'Services/Enums';
+import {set} from 'Utils/Utils';
 import {IMainService} from '../Services/Models';
 import {IAccount} from '../Models/Account';
-import {ESetMode} from '../../../Services/Enums';
+import {getDefaultAccountPrototype} from './Consts';
 
 export class MainStore implements IMainStore {
     /**
      * @inheritDoc
      */
     rootStore: IRootStore;
+    /**
+     * @inheritDoc
+     */
+    accountPrototype: IAccount = getDefaultAccountPrototype();
     /**
      * @inheritDoc
      */
@@ -42,6 +48,20 @@ export class MainStore implements IMainStore {
     get searchedAccounts() {
         return this.search ? [] : this.accounts;
     }
+
+    /**
+     * @inheritDoc
+     */
+    setFieldAccountPrototype = (path: string, data: any) => {
+        set<IAccount>(this.accountPrototype, path, data);
+    };
+
+    /**
+     * @inheritDoc
+     */
+    resetAccountPrototype = () => {
+        this.accountPrototype = getDefaultAccountPrototype();
+    };
 
     /**
      * @inheritDoc
