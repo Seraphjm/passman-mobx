@@ -2,6 +2,8 @@ import {FunctionComponent, useState} from 'react';
 import {observer} from 'mobx-react';
 import {useIntl} from 'react-intl';
 import classNames from 'classnames';
+import {faKeycdn} from '@fortawesome/free-brands-svg-icons';
+import {SVGIcon, ESizes} from 'ui';
 import {useMain} from '../../../../Store/Hooks';
 import {AddAccountModal} from '../Modals/AddAccount.modal';
 
@@ -22,7 +24,9 @@ export const AccountsControlPanel: FunctionComponent = observer(() => {
     return (
         <>
             <ul className="header__control-accounts">
-                <li className="header__icon fab fa-keycdn" />
+                <li className="header__icon">
+                    <SVGIcon icon={faKeycdn} size={ESizes.MD} />
+                </li>
                 <li
                     onClick={openAddAccount}
                     className={classNames('header__item', {

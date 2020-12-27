@@ -4,12 +4,19 @@
     height: 100%;
 }
 
+#ui-lib-modal-portal,
+.ui-lib {
+    color: var(--font-color);
+}
+
 .ui-lib,
 #ui-lib-modal-portal {
     --color-danger: #ca0000;
     --color-warning: #db8e00;
     --color-success: #0ca400;
     --color-info: #1671ce;
+
+    --font-color: #2c3e50;
 }
 
 .ui-lib {

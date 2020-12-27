@@ -1,0 +1,42 @@
+.svg-inline--fa {
+    display: inline-block;
+    font-size: inherit;
+    height: 1rem;
+    overflow: visible;
+    vertical-align: -0.125em;
+}
+
+svg:not(:root).svg-inline--fa {
+    overflow: visible;
+}
+
+.ui-lib-svg-icon {
+    &.success {
+        color: var(--color-success);
+    }
+    &.danger {
+        color: var(--color-danger);
+    }
+    &.warning {
+        color: var(--color-warning);
+    }
+    &.info {
+        color: var(--color-info);
+    }
+
+    &.xs {
+        height: 0.75rem;
+    }
+
+    &.sm {
+        height: 1.25rem;
+    }
+
+    &.md {
+        height: 1.5rem;
+    }
+
+    &.lg {
+        height: 2rem;
+    }
+}

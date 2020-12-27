@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import {AuthorizationBody, AuthorizationFooter, AuthorizationHeader} from './AuthorizationForm/AuthorizationForm';
 import {TemplateAuthForm} from './AuthorizationForm/TemplateAuthForm';
 import {useAuthorization} from '../Store/Hooks';
+import {faCheck, faSignInAlt} from '@fortawesome/free-solid-svg-icons';
 import style from './AuthorizationForm/AuthorizationForm.style.module.scss';
 
 /**
@@ -115,7 +116,9 @@ export const Authorization: FunctionComponent = observer(() => {
                     <Button
                         onClick={checkAccess}
                         disabled={!auth.password}
-                        icon={`fas fa-${auth.dbIsEmpty ? 'check' : 'sign-in-alt'}`}
+                        icon={{
+                            icon: auth.dbIsEmpty ? faCheck : faSignInAlt,
+                        }}
                         className="authorization__button"
                         size={ESizes.SM}
                     />

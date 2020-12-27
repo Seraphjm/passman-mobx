@@ -1,8 +1,9 @@
 import {FunctionComponent, useEffect} from 'react';
 import {observer} from 'mobx-react';
-import {Button, ESizes, Input, Modal, ModalBody, ModalFooter, ModalHeader, Select, Option} from 'ui';
+import {Button, ESizes, Input, Modal, ModalBody, ModalFooter, ModalHeader, Select, Option, SVGIcon} from 'ui';
 import {useIntl} from 'react-intl';
 import {IModal} from 'ui/Components/Modal/Models';
+import {faAddressBook, faDownload} from '@fortawesome/free-solid-svg-icons';
 import {useMain} from '../../../../Store/Hooks';
 
 export const AddAccountModal: FunctionComponent<IModal> = observer(({onClose, isOpen}) => {
@@ -11,10 +12,12 @@ export const AddAccountModal: FunctionComponent<IModal> = observer(({onClose, is
 
     useEffect(() => {
         return resetAccountPrototype;
+        // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
         !isOpen && resetAccountPrototype();
+        // eslint-disable-next-line
     }, [isOpen]);
 
     const set = (v: string) => {
@@ -47,12 +50,15 @@ export const AddAccountModal: FunctionComponent<IModal> = observer(({onClose, is
                             <textarea />
                         </div>
 
+                        <div>
+                            <SVGIcon icon={faAddressBook} />
+                        </div>
                         <div>SET ICONS</div>
                     </div>
                 )}
             </ModalBody>
             <ModalFooter>
-                <Button icon="fas fa-download">{formatMessage({id: 'MAIN__MODAL_ADD_ACTION_ADD_ACCOUNT'})}</Button>
+                <Button icon={{icon: faDownload}}>{formatMessage({id: 'MAIN__MODAL_ADD_ACTION_ADD_ACCOUNT'})}</Button>
             </ModalFooter>
         </Modal>
     );
