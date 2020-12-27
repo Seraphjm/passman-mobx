@@ -1,0 +1,18 @@
+%v-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+%fixed_fill_placement {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+%normalize_text_container {
+    word-break: break-word;
+    white-space: pre-wrap;
+}

@@ -1,9 +1,11 @@
 import {FunctionComponent} from 'react';
-import {HeaderControl} from './HeaderControl';
+import {Accounts} from './HeaderControl/Components/Accounts';
+import {Tools} from './HeaderControl/Components/Tools';
 import './Header.style.scss';
 
 export const Header: FunctionComponent = () => (
     <div className="header">
-        <HeaderControl />
+        <Accounts />
+        <Tools />
     </div>
 );

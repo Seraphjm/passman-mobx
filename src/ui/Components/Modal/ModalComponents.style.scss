@@ -1,0 +1,76 @@
+@import "ui/Styles/variables";
+@import "ui/Styles/extends";
+@import "./variables";
+
+@mixin padding {
+    padding: 1rem 1.5rem;
+}
+
+@mixin common_props {
+    @extend %normalize_text_container;
+    display: flex;
+    flex-direction: row;
+}
+
+.ui-lib-modal__header {
+    @include padding;
+    @include common_props;
+
+    position: sticky;
+    top: -$modal-container-padding-top;
+    background: inherit;
+    border-radius: 5px 5px 0 0;
+
+    border-bottom: 1px solid $container-border-color;
+    display: grid;
+    grid-template-columns: 1fr 1.5rem;
+}
+
+.ui-lib-modal__header_close {
+    margin: -0.25rem -0.5rem 0 0;
+    text-align: right;
+    transition: color 400ms;
+    cursor: pointer;
+
+    &:hover {
+        color: var(--color-danger);
+    }
+}
+
+.ui-lib-modal__body,
+.ui-lib-modal__footer {
+    @include padding;
+    @include common_props;
+}
+
+.ui-lib-modal__footer {
+    border-top: 1px solid $container-border-color;
+}
+
+.ui-lib-modal__header_content,
+.ui-lib-modal__body,
+.ui-lib-modal__footer {
+    &.flex-start {
+        justify-content: flex-start;
+    }
+
+    &.center {
+        justify-content: center;
+    }
+
+    &.flex-end {
+        justify-content: flex-end;
+    }
+
+    &.space-between {
+        justify-content: space-between;
+    }
+
+    &.space-around {
+        justify-content: space-around;
+    }
+
+    &.space-evenly {
+        justify-content: space-evenly;
+    }
+}

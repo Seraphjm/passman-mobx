@@ -1,0 +1,44 @@
+// TODO инкапсулировать размерности в sass или предоставить глобальный доступ через css переменные?
+$small: 576px;
+$medium: 768px;
+$large: 992px;
+$extra-large: 1200px;
+
+/** Реализует адаптивность для конкретных элементов на конкретных размерах */
+@mixin extra-small {
+    @media (max-width: $small) {
+        @content;
+    }
+}
+
+@mixin small {
+    @media (min-width: $small) {
+        @content;
+    }
+}
+
+@mixin medium {
+    @media (min-width: $medium) {
+        @content;
+    }
+}
+
+@mixin large {
+    @media (min-width: $large) {
+        @content;
+    }
+}
+
+@mixin extra-large {
+    @media (min-width: $extra-large) {
+        @content;
+    }
+}
+
+/**
+ * Перекрывает ширину стандартной адаптивности.
+ * Например, для установки в ручном режиме максимальной ширины модального окна.
+ */
+@mixin override-media-size($width) {
+    max-width: $width;
+}

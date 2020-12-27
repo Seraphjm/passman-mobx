@@ -21,7 +21,8 @@
     height: 100%;
 }
 
-.ui-lib {
+.ui-lib,
+#ui-lib-modal-portal {
     --color-danger: #ca0000;
     --color-warning: #db8e00;
     --color-success: #0ca400;
@@ -43,15 +44,6 @@
     pointer-events: none;
 }
 
-@keyframes ripple {
-    from {
-        opacity: 1;
-    }
-    to {
-        transform: scale(2);
-        opacity: 0;
-    }
-}
 .ui-lib__flat {
     background: #fff;
     color: #000;
@@ -116,5 +108,15 @@
     &.ui-lib__flat {
         font-size: 1.5rem;
         padding: 0.75rem 1.5rem;
+    }
+}
+
+@keyframes ripple {
+    from {
+        opacity: 1;
+    }
+    to {
+        transform: scale(2);
+        opacity: 0;
     }
 }
