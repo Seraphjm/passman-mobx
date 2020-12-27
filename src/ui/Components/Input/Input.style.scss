@@ -1,7 +1,6 @@
 .ui-lib-auto-complete {
     border: 1px solid #bbb;
     position: fixed;
-    width: 100%;
     z-index: 1;
     overflow-y: auto;
     background: #fff;
@@ -24,7 +23,7 @@
 
 .ui-lib-input__filled {
     height: 4px;
-    background: #1671ce;
+    background: var(--color-info);
     position: absolute;
     top: 3.75rem;
     width: 0;
@@ -32,7 +31,6 @@
 }
 
 .ui-lib-input__controller {
-    width: 100%;
     padding: 0.2rem 0.5rem 3px;
     border: 1px solid #bbb;
     outline: none;
@@ -65,7 +63,7 @@
 
     &.required:after {
         content: "*";
-        color: #f00;
+        color: var(--color-danger);
         cursor: text;
         margin-left: 3px;
     }
@@ -121,13 +119,13 @@
     }
 
     &.warning {
-        .ui-lib-input__controller {
-            border: 1px solid var(--color-warning);
-        }
-
         .ui-lib-message,
         .ui-lib-placeholder {
             color: var(--color-warning);
+        }
+
+        .ui-lib-input__controller {
+            border: 1px solid var(--color-warning);
         }
 
         .ui-lib-input__filled {

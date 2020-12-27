@@ -13,7 +13,9 @@ export const Content: FunctionComponent = observer(() => {
         <div className="content">
             {searchedAccounts.length ? (
                 <div className="accounts-container">
-                    <AccountCard />
+                    {searchedAccounts.map((account) => (
+                        <AccountCard key={account._id} account={account} />
+                    ))}
                 </div>
             ) : (
                 <div className="nothing-found v-center">{formatMessage({id: 'MAIN__ACCOUNT_NOTHING_FOUND'})}</div>

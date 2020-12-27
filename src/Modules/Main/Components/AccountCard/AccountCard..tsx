@@ -1,6 +1,10 @@
 import {FunctionComponent} from 'react';
-import {observer} from 'mobx-react';
+import {IAccount} from '../../Models/Account';
 
-export const AccountCard: FunctionComponent = observer(() => {
-    return <div>ACCOUNT CARD</div>;
-});
+interface IProps {
+    account: IAccount;
+}
+
+export const AccountCard: FunctionComponent<IProps> = ({account}) => {
+    return <div>{account.accountName}</div>;
+};

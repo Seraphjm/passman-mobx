@@ -7,22 +7,34 @@ import './ModalComponents.style.scss';
 /**
  * Общая модель для контентных компонентов модального окна.
  *
- * @prop [contentPosition] Позиция контента ВНУТРИ компонента. Реализован на justify-content|flex. API аналогичное.
  * @prop [className] CSS класс.
  */
-interface IProps {
-    contentPosition?: EModalContentPosition;
+interface ICommonProps {
     className?: string;
 }
 
 /**
- * Дополненная модель для контентного компонента модального окна - Header.
+ * Модель свойства позиционирования в контентном компоненте.
+ *
+ * @prop [contentPosition] Позиция контента ВНУТРИ компонента. Реализован на justify-content|flex. API аналогичное.
+ */
+interface IPosition {
+    contentPosition?: EModalContentPosition;
+}
+
+/**
+ * Модель для контентного компонента модального окна - Header.
  *
  * @prop onClose Обработчик закрытия модального окна.
  */
-interface IModalHeader extends IProps {
+interface IModalHeader extends ICommonProps, IPosition {
     onClose: () => void;
 }
+
+/**
+ * Модель для контентного компонента модального окна - Footer.
+ */
+interface IModalFooter extends ICommonProps, IPosition {}
 
 /**
  * Контентный компонет модального окна Header.
@@ -37,13 +49,13 @@ export const ModalHeader: FunctionComponent<IModalHeader> = (props) => (
 /**
  * Контентный компонет модального окна Body.
  */
-export const ModalBody: FunctionComponent<IProps> = (props) => (
-    <div className={classNames('ui-lib-modal__body', props.contentPosition, props.className)}>{props.children}</div>
+export const ModalBody: FunctionComponent<ICommonProps> = (props) => (
+    <div className={classNames('ui-lib-modal__body', props.className)}>{props.children}</div>
 );
 
 /**
  * Контентный компонет модального окна Footer.
  */
-export const ModalFooter: FunctionComponent<IProps> = (props) => (
+export const ModalFooter: FunctionComponent<IModalFooter> = (props) => (
     <div className={classNames('ui-lib-modal__footer', props.contentPosition, props.className)}>{props.children}</div>
 );

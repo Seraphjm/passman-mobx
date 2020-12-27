@@ -1,11 +1,14 @@
 import {FunctionComponent} from 'react';
-import {Accounts} from './HeaderControl/Components/Accounts';
-import {Tools} from './HeaderControl/Components/Tools';
+import {AccountsControlPanel} from './HeaderControl/Components/AccountsControlPanel';
+import {ApplicationManagerPanel} from './HeaderControl/Components/ApplicationManagerPanel';
 import './Header.style.scss';
 
+/**
+ * Компонент header приложения. Здесь располагаются инструменты для управления аккаунтами и приложением.
+ */
 export const Header: FunctionComponent = () => (
     <div className="header">
-        <Accounts />
-        <Tools />
+        <AccountsControlPanel />
+        <ApplicationManagerPanel />
     </div>
 );

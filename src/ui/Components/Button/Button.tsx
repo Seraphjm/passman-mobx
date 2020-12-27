@@ -1,7 +1,6 @@
 import {FunctionComponent, useState} from 'react';
 import classNames from 'classnames';
 import {calcRipplePosition, cancelEvent, isFunction} from 'ui/Utils';
-import {ESizes} from 'ui/Common/Enums';
 import {IButton} from './Models';
 import './Button.style.scss';
 
@@ -21,7 +20,7 @@ interface IState {
  */
 export const Button: FunctionComponent<IButton> = ({
     children,
-    size = ESizes.MD,
+    size,
     iconPos,
     type,
     className,
@@ -51,10 +50,12 @@ export const Button: FunctionComponent<IButton> = ({
         <div className={classNames('ui-lib-button', size, type, iconPos, className)}>
             <button disabled={disabled} onClick={onClickHandler} className={classNames('ui-lib__flat', {animate})}>
                 {icon && <span className={classNames(icon, 'logotype', 'ui-lib-button__icon')} />}
-                <span className={classNames('ui-lib-button__content')}>
-                    {children}
-                    {additionalContent}
-                </span>
+                {children && (
+                    <span className={classNames('ui-lib-button__content')}>
+                        {children}
+                        {additionalContent && additionalContent}
+                    </span>
+                )}
                 <span className="ui-lib__ripple" style={ripple} />
             </button>
         </div>

@@ -12,7 +12,7 @@ import './Modal.style.scss';
  * @prop [className] css класс.
  * @prop [size] Размерности модального окна. Устанавливает max-width.
  */
-interface IModal {
+export interface IModal {
     isOpen: boolean;
     onClose: () => void;
     className?: string;

@@ -51,3 +51,26 @@ export const passwordGenerate = (length: number = 16, pattern: EPasswordPatterns
  * @param value Проверяемое значение.
  */
 export const isFunction = (value: unknown): boolean => typeof value === 'function';
+
+/**
+ * Более легковесный аналог lodash.set.
+ *
+ * @param object Объект в котором необходимо установить свойство.
+ * @param path Путь до свойства. Описывается через <<.>>.
+ * @param data Данные, которые необходимо установить по указанному свойству.
+ *
+ * @example set(obj, 'prop.nested.value', 42)
+ */
+export const set = <T>(object: T, path: string, data: unknown) => {
+    if (typeof path !== 'string' || !object || data == null) return;
+
+    const keys = path.split('.');
+    const lastIndex = keys.length - 1;
+    let i = 0;
+    let nested = object;
+
+    while (nested && i < keys.length) {
+        // @ts-ignore todo не очевидно как типизировать, если вообще возможно.
+        i !== lastIndex ? (nested = nested[keys[i++]]) : (nested[keys[i++]] = data);
+    }
+};

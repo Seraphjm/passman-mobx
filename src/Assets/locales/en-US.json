@@ -10,8 +10,17 @@
     "AUTH__FORM_CH_MK_REPEAT": "Repeat the entered password",
     "AUTH__FORM_CH_MK_SUCCESS": "The password was set successfully! Sign in!",
 
-    "MAIN__ACCOUNT_NOTHING_FOUND": "Nothing found :(",
+    "COMMON__ACTION_CHANGE": "Change",
+    "COMMON__ACTION_ADD": "Add",
+    "COMMON__ACTION_EDIT": "Edit",
+    "COMMON__ACTION_DELETE": "Delete",
+    "COMMON__ACTION_CANCEL": "Cancel",
+    "COMMON__ACTION_MOVE": "Move",
 
-    "COMMON__CHANGE": "Change",
-    "COMMON__HIDE_SYMBOLS": "Hide symbols"
+    "COMMON__LABEL_HIDE_SYMBOLS": "Hide symbols",
+
+    "MAIN__ACCOUNT_NOTHING_FOUND": "Nothing found :(",
+    "MAIN__MODAL_ADD_FORM_NAME": "Add an account",
+    "MAIN__MODAL_ADD_SELECT_SOME_ITEM": "Select something from the list to start creating your account",
+    "MAIN__MODAL_ADD_ACTION_ADD_ACCOUNT": "Добавить аккаунт"
 }

@@ -63,6 +63,10 @@ export enum EKeyCode {
     UP = 38,
     DOWN = 40,
     ENTER = 13,
+    BACK_SPACE = 8,
+    SPACE = 32,
+    RIGHT = 39,
+    LEFT = 37,
 }
 
 /**

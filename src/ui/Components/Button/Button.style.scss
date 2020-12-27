@@ -1,3 +1,10 @@
+@import "ui/Styles/mixins";
+
+@mixin common-mode {
+    color: #fff;
+    text-shadow: #2d2b27aa 2px 2px 3px;
+}
+
 .ui-lib-button__icon.logotype {
     font-size: initial;
     margin-right: initial;
@@ -13,12 +20,34 @@
     &.right {
         direction: rtl;
     }
-}
 
-.ui-lib-button.danger {
-    .ui-lib__flat {
-        background: #dc211a !important;
-        color: #fff;
-        text-shadow: #2d2b27aa 2px 2px 3px;
+    & > .ui-lib__flat {
+        @include flat-md;
+
+        align-items: center;
+        display: grid;
+        grid-auto-flow: column;
+        grid-column-gap: 0.5rem;
+    }
+
+    &.danger {
+        .ui-lib__flat {
+            background: var(--color-danger);
+            @include common-mode;
+        }
+    }
+
+    &.warning {
+        .ui-lib__flat {
+            background: var(--color-warning);
+            @include common-mode;
+        }
+    }
+
+    &.success {
+        .ui-lib__flat {
+            background: var(--color-success);
+            @include common-mode;
+        }
     }
 }

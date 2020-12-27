@@ -98,12 +98,13 @@ const InputComp: FunctionComponent<IInput> = ({
      * @param autoComplete Список для автокомплита по которому произойдёт поиск.
      */
     const search = (value: string, autoComplete: string[]): string[] => {
+        if (!value) return autoComplete;
         //@ts-ignore
         const filtered: IFuzzySortResult[] = go(value, autoComplete, {
             limit: 100,
         });
 
-        return filtered.sort((a, b) => (a.score < b.score ? 1 : -1)).map(({target}) => target);
+        return filtered.length ? filtered.sort((a, b) => (a.score < b.score ? 1 : -1)).map(({target}) => target) : autoComplete;
     };
 
     /**
@@ -115,7 +116,7 @@ const InputComp: FunctionComponent<IInput> = ({
         if (autoComplete?.length) {
             if (selectedItem !== null) setSelectedItem(null);
 
-            setAutoCompleteList(value ? search(value, autoComplete) : autoComplete);
+            setAutoCompleteList(search(value, autoComplete));
         }
 
         onInput(value);
@@ -263,16 +264,15 @@ const AutoComplete: FunctionComponent<IAutoComplete> = (props) => {
      *
      * @param target Текущий элемент под указателем мыши.
      */
-    const mouseHandler = ({target}: ChangeEvent<HTMLElement>): void => {
+    const mouseHandlerOver = ({target}: ChangeEvent<HTMLElement>): void => {
         const index = target.dataset.index;
-        console.log(index);
         index !== undefined && setMouseSelected(+index);
     };
 
     /**
      * Обработчик мыши на покидание области контейнера.
      */
-    const mouseHandlerOver = (): void => {
+    const mouseHandlerLeave = (): void => {
         setMouseSelected(null);
     };
 
@@ -281,8 +281,8 @@ const AutoComplete: FunctionComponent<IAutoComplete> = (props) => {
             ref={ref}
             className="ui-lib-auto-complete"
             style={{width, maxHeight}}
-            onMouseOver={mouseHandler}
-            onMouseLeave={mouseHandlerOver}
+            onMouseOver={mouseHandlerOver}
+            onMouseLeave={mouseHandlerLeave}
         >
             {props.autoComplete.map((item: string, i: number) => (
                 <CompleteItem value={props.value} key={item} isActive={selectedItem === i} index={i}>

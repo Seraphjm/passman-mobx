@@ -9,18 +9,18 @@
 @mixin common_props {
     @extend %normalize_text_container;
     display: flex;
-    flex-direction: row;
 }
 
 .ui-lib-modal__header {
     @include padding;
     @include common_props;
 
+    font-size: 1.2rem;
+    font-weight: 600;
     position: sticky;
     top: -$modal-container-padding-top;
     background: inherit;
     border-radius: 5px 5px 0 0;
-
     border-bottom: 1px solid $container-border-color;
     display: grid;
     grid-template-columns: 1fr 1.5rem;
@@ -37,14 +37,19 @@
     }
 }
 
-.ui-lib-modal__body,
-.ui-lib-modal__footer {
-    @include padding;
-    @include common_props;
+.ui-lib-modal__body {
+    flex-direction: column;
 }
 
 .ui-lib-modal__footer {
     border-top: 1px solid $container-border-color;
+    justify-content: flex-end;
+}
+
+.ui-lib-modal__body,
+.ui-lib-modal__footer {
+    @include padding;
+    @include common_props;
 }
 
 .ui-lib-modal__header_content,
