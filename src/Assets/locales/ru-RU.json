@@ -10,8 +10,18 @@
     "AUTH__FORM_CH_MK_REPEAT": "Повторите введённый пароль",
     "AUTH__FORM_CH_MK_SUCCESS": "Пароль успешно задан! Авторизуйтесь!",
 
+    "COMMON__ACTION_CHANGE": "Изменить",
+    "COMMON__ACTION_ADD": "Добавить",
+    "COMMON__ACTION_EDIT": "Изменить",
+    "COMMON__ACTION_DELETE": "Удалить",
+    "COMMON__ACTION_CANCEL": "Отмена",
+    "COMMON__ACTION_MOVE": "Переместить",
+
+    "COMMON__LABEL_HIDE_SYMBOLS": "Скрывать символы",
+
     "MAIN__ACCOUNT_NOTHING_FOUND": "Ничего не найдено :(",
 
-    "COMMON__CHANGE": "Изменить",
-    "COMMON__HIDE_SYMBOLS": "Скрывать символы"
+    "MAIN__MODAL_ADD_FORM_NAME": "Добавление аккаунта",
+    "MAIN__MODAL_ADD_SELECT_SOME_ITEM": "Выберите что-нибудь из списка, чтобы приступить к созданию аккаунта",
+    "MAIN__MODAL_ADD_ACTION_ADD_ACCOUNT": "Добавить аккаунт"
 }

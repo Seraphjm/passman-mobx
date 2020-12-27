@@ -6,8 +6,8 @@ import {IBadge} from 'ui/Components/Badge/Models';
  *
  * @prop _id Уникальный идентификатор uuid для аккаунта.
  * @prop accountName Имя аккаунта.
- * @prop section Секция аккаунта.
- * @prop [subSection] Подсекция, отображаемая чуть ниже основной. Дополнительный фильтр под фильтром section.
+ * @prop category Секция аккаунта.
+ * @prop [subCategory] Подсекция, отображаемая чуть ниже основной. Дополнительный фильтр под фильтром category.
  * @prop [logotype] Логотип.
  * @prop lastUpdate Последнее обновление каких-либо данных в аккаунте.
  * @prop passwordLastUpdate Последнее обновление пароля в аккаунте.
@@ -17,8 +17,8 @@ import {IBadge} from 'ui/Components/Badge/Models';
 export interface IAccount {
     _id: string;
     accountName: string;
-    section: string;
-    subSection?: string;
+    category: string;
+    subCategory?: string;
     logotype?: ILogotype;
     lastUpdate: Date;
     passwordLastUpdate: Date;
@@ -29,15 +29,15 @@ export interface IAccount {
 /**
  * Модель логотипа.
  *
- * @prop logo Логотип. Представляет из себя строку css к определённой иконке.
+ * @prop [logo] Логотип. Представляет из себя строку css к определённой иконке.
  * @prop color Цвет иконки.
- * @prop image Изображение прикреплённое пользователем. Имеет приоритет над logo.
+ * @prop [image] Изображение прикреплённое пользователем. Имеет приоритет над logo.
  * TODO На текущий момент не очевидно как лучше реализовать хранение. До тех пор, тип: any;
  */
 export interface ILogotype {
-    logo: string;
+    logo?: string;
     color: string;
-    image: any;
+    image?: any;
 }
 
 /**
@@ -91,12 +91,12 @@ export interface IAccountNotifications {
  *
  * @prop enabled Флаг активности уведомления.
  * @prop default Дефолтное значение показа уведомления с последнего обновления пароля.
- * @prop period Возможные периоды показа уведомления о смене пароля по прошедшему периоду.
+ * @prop [period] Возможные периоды показа уведомления о смене пароля по прошедшему периоду.
  */
 export interface IPasswordNeedUpdate {
     enabled: boolean;
     default: ENotificationPeriodUpdate.SIX_MOUTH;
-    period: ENotificationPeriodUpdate;
+    period?: ENotificationPeriodUpdate;
 }
 
 /**

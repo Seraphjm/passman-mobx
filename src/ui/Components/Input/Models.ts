@@ -21,8 +21,7 @@ export interface ICompleteItem {
  * @prop selectedItem Выбранный элемент из списка.
  * @prop value Искомое значение.
  * @prop autoComplete Список элементов для автокомплита.
- * @prop [width] Ширина контейнера.
- * @prop maxHeight Максимальная высота контейнера.
+ * @prop [style] Ширина контейнера.
  * @prop setMouseSelected Функция устанавливающее выбранное значение по ховеру мыши.
  */
 export interface IAutoComplete {
@@ -30,8 +29,7 @@ export interface IAutoComplete {
     selectedItem: number | null;
     value: string;
     autoComplete: string[];
-    width?: number;
-    maxHeight: number;
+    style?: any;
     setMouseSelected: (v: number | null) => void;
 }
 

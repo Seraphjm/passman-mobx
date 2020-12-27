@@ -50,3 +50,23 @@ export const useRemoteScrollControl = <T extends HTMLElement>(
         // eslint-disable-next-line
     }, [selectedItem]);
 };
+
+/**
+ * Хук, добавляющий слушатель на события resize и scroll.
+ * Необходим обычно для выпадающих списков.
+ *
+ * @param callback CB на событие.
+ */
+export const useHiddenListFromWindow = (callback: (event: any) => void): void => {
+    useEffect(() => {
+        window.addEventListener('scroll', callback, true);
+        window.addEventListener('resize', callback);
+
+        return () => {
+            window.removeEventListener('scroll', callback, true);
+            window.removeEventListener('resize', callback);
+        };
+        // didMount
+        // eslint-disable-next-line
+    }, []);
+};

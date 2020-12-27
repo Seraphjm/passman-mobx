@@ -1,1 +1,8 @@
+// TODO инкапсулировать размерности в sass или предоставить глобальный доступ через css переменные?
+$extra-small: 320px;
+$small: 576px;
+$medium: 768px;
+$large: 992px;
+$extra-large: 1200px;
+
 $container-border-color: #adafb0;

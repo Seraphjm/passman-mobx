@@ -73,12 +73,12 @@ const ChangeMasterKey: FunctionComponent = observer(() => {
 
             <AuthorizationFooter position={EPositions.CENTER}>
                 <label>
-                    {formatMessage({id: 'COMMON__HIDE_SYMBOLS'})}
+                    {formatMessage({id: 'COMMON__LABEL_HIDE_SYMBOLS'})}
                     <input onChange={hideSymbols} type="checkbox" />
                 </label>
 
                 <button onClick={changeMasterPassword} disabled={!auth.password}>
-                    {formatMessage({id: 'COMMON__CHANGE'})}
+                    {formatMessage({id: 'COMMON__ACTION_CHANGE'})}
                 </button>
             </AuthorizationFooter>
         </TemplateAuthForm>

@@ -1,8 +1,4 @@
-// TODO инкапсулировать размерности в sass или предоставить глобальный доступ через css переменные?
-$small: 576px;
-$medium: 768px;
-$large: 992px;
-$extra-large: 1200px;
+@import "ui/Styles/variables";
 
 /** Реализует адаптивность для конкретных элементов на конкретных размерах */
 @mixin extra-small {
@@ -41,4 +37,32 @@ $extra-large: 1200px;
  */
 @mixin override-media-size($width) {
     max-width: $width;
+}
+
+/**
+ * Базовые типо-размеры для flat компонентов.
+ */
+@mixin flat-es {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+}
+
+@mixin flat-sm {
+    font-size: 1rem;
+    padding: 0.25rem 0.5rem;
+}
+
+@mixin flat-md {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+}
+
+@mixin flat-lg {
+    font-size: 1.25rem;
+    padding: 0.75rem 1.5rem;
+}
+
+@mixin flat-el {
+    font-size: 1.5rem;
+    padding: 0.75rem 1.5rem;
 }

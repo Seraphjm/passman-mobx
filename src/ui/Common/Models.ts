@@ -28,3 +28,15 @@ export interface IEventMessage {
     type?: EMessageType;
     text?: string;
 }
+
+export interface IRipplePosition {
+    height: number;
+    width: number;
+    top: number;
+    left: number;
+}
+
+export interface IPositionProps {
+    maxHeight: number;
+    top: string;
+}

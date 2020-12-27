@@ -1,21 +1,4 @@
-@keyframes animate-warning-button {
-    0% {
-        background: rgba(255, 227, 57, 0.74);
-        box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-    }
-    25% {
-        box-shadow: 0 0 8px rgba(255, 227, 57, 0.85);
-    }
-    50% {
-        box-shadow: 0 0 8px rgba(255, 218, 16, 0.91);
-    }
-    75% {
-        box-shadow: 0 0 8px rgba(255, 227, 57, 0.85);
-    }
-    100% {
-        box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-    }
-}
+@import "ui/Styles/mixins";
 
 .ui-lib {
     height: 100%;
@@ -26,6 +9,7 @@
     --color-danger: #ca0000;
     --color-warning: #db8e00;
     --color-success: #0ca400;
+    --color-info: #1671ce;
 }
 
 .ui-lib {
@@ -47,7 +31,7 @@
 .ui-lib__flat {
     background: #fff;
     color: #000;
-    border: 1px solid #ccc;
+    border: none;
     border-radius: 0.25rem;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.33);
     outline: none !important;
@@ -71,43 +55,72 @@
     }
 }
 
+.ui-lib__drop-list {
+    border: 1px solid #bbb;
+    position: fixed;
+    cursor: pointer;
+    background: #fff;
+    overflow-y: auto;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.ui-lib-option {
+    overflow: hidden;
+    word-break: break-word;
+    font-family: monospace;
+    transition: background 0.5s;
+    font-size: 1.25rem;
+    user-select: none;
+    pointer-events: all;
+
+    &:hover,
+    &.active-item {
+        background: rgba(0, 0, 0, 0.15);
+    }
+}
+
+.font-monospace {
+    font-family: monospace;
+}
+
+.text-ellipsis {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
 .es {
     > .ui-lib__flat,
     &.ui-lib__flat {
-        font-size: 0.75rem;
-        padding: 0.25rem 0.5rem;
+        @include flat-es;
     }
 }
 
 .sm {
     > .ui-lib__flat,
     &.ui-lib__flat {
-        font-size: 1rem;
-        padding: 0.25rem 0.5rem;
+        @include flat-sm;
     }
 }
 
 .md {
     > .ui-lib__flat,
     &.ui-lib__flat {
-        font-size: 1rem;
-        padding: 0.5rem 1rem;
+        @include flat-md;
     }
 }
 
 .lg {
     > .ui-lib__flat,
     &.ui-lib__flat {
-        font-size: 1.25rem;
-        padding: 0.75rem 1.5rem;
+        @include flat-lg;
     }
 }
 
 .el {
     > .ui-lib__flat,
     &.ui-lib__flat {
-        font-size: 1.5rem;
-        padding: 0.75rem 1.5rem;
+        @include flat-el;
     }
 }
 
@@ -118,5 +131,24 @@
     to {
         transform: scale(2);
         opacity: 0;
+    }
+}
+
+@keyframes animate-warning-button {
+    0% {
+        background: rgba(255, 227, 57, 0.74);
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+    }
+    25% {
+        box-shadow: 0 0 8px rgba(255, 227, 57, 0.85);
+    }
+    50% {
+        box-shadow: 0 0 8px rgba(255, 218, 16, 0.91);
+    }
+    75% {
+        box-shadow: 0 0 8px rgba(255, 227, 57, 0.85);
+    }
+    100% {
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
     }
 }

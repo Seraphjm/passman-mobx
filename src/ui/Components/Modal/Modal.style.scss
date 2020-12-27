@@ -1,5 +1,6 @@
 @import "ui/Styles/extends";
 @import "ui/Styles/mixins";
+@import "ui/Styles/variables";
 @import "./variables";
 
 .ui-lib-modal {
@@ -28,23 +29,23 @@
     grid-template-rows: minmax(2.5rem, auto) minmax(160px, 1fr) minmax(2.5rem, auto);
 
     &.es {
-        @include override-media-size(25vw);
+        @include override-media-size($extra-small);
     }
 
     &.sm {
-        @include override-media-size(33vw);
+        @include override-media-size($small);
     }
 
     &.md {
-        @include override-media-size(66vw);
+        @include override-media-size($medium);
     }
 
     &.lg {
-        @include override-media-size(80vw);
+        @include override-media-size($large);
     }
 
     &.el {
-        @include override-media-size(98vw);
+        @include override-media-size($extra-large);
     }
 
     @include extra-small {
