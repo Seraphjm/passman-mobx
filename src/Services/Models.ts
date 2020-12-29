@@ -20,16 +20,6 @@ export interface IDBServiceLayer {
     deleteDB: () => Promise<IResponse>;
 
     /**
-     * TODO
-     */
-    generateCrypt: () => any;
-
-    /**
-     * TODO
-     */
-    deleteCrypt: () => any;
-
-    /**
      * Метод, возвращающий расшифрованные данные из указанной зашифрованной сущности в БД.
      *
      * @param storage Шифрованная сущность, из которой запрашираются данные.
@@ -44,18 +34,14 @@ export interface IDBServiceLayer {
      * @param password Пароль пользователя.
      * @param transferData Переданные данные, которые необходимо зашифровать и записать.
      */
-    setEncryptedData: <T>(
-        storage: ECryptoStorage,
-        password: string,
-        transferData: T | IInitStores<T>
-    ) => Promise<IResponse<T | IInitStores<T>>>;
+    setEncryptedData: <T>(storage: ECryptoStorage, password: string, transferData: T) => Promise<IResponse<T>>;
 
     /**
      * Метод, возвращающий открыте данные из указанной сущности в БД.
      *
      * @param storage Сущность, из которой запрашираются открытые данные.
      */
-    getOpenData: <T = unknown>(storage: EStoreName) => Promise<T>;
+    getOpenData: <T = unknown>(storage: EStoreName) => Promise<IResponse<T>>;
 
     /**
      * Метод, возвращающий открыте данные из указанной сущности в БД.
@@ -91,12 +77,14 @@ export interface IResponse<T = unknown> {
 }
 
 /**
- * Модель данных которые записываются в различные сущности при инициализации indexedDB.
+ * Модель модуля иконки.
  *
- * @prop _id статичный идентификатор объекта по которому осуществляется доступ к зашифрованным данным.
- * @prop data Инициализационные данные.
+ * icon Массив svg данных иконки.
+ * prefix Префикс иконки.
+ * iconName Имя иконки.
  */
-export interface IInitStores<T> {
-    _id: ECryptoStorage;
-    data: T;
+export interface ISVGIcon {
+    icon: any[];
+    prefix: string;
+    iconName: string;
 }

@@ -1,13 +1,17 @@
 import {deleteDB as idbDeleteDB, openDB} from 'idb';
-import {ICryptoStore, IDBServiceLayer, IInitStores, IResponse} from './Models';
-import {BASE_NAME, KEY_PATH} from './Consts';
+import {ICryptoStore, IDBServiceLayer, IResponse} from './Models';
+import {ICategory} from 'Modules/Main/Store/Models';
+import {BASE_NAME, defaultCategories, KEY_PATH} from './Consts';
 import {ECryptoStorage, EDBMode, EResponseStatus, EStoreName} from './Enums';
 import {IDBPDatabase} from 'idb/build/esm/entry';
 import {decrypt, encrypt} from 'Utils/Crypto';
-import {ICryptoInitData, IEncryptionResponse} from '../Utils/Crypto/Models';
+import {ICryptoInitData, IEncryptionResponse} from 'Utils/Crypto/Models';
 import {updateStorage} from './Utils';
 import {EEncryptionStatus} from '../Utils/Crypto/Enums';
 
+/**
+ * Сервсиный слой приложения, работующий непосредственно с indexedDB и api криптографии.
+ */
 export const ServiceLayer = ((): IDBServiceLayer => {
     /**
      * Промисифицированный объект indexedDB. Приватное поле.
@@ -59,8 +63,9 @@ export const ServiceLayer = ((): IDBServiceLayer => {
      */
     function createDB(password: string): Promise<IResponse> {
         return dbPromise
-            .then((db: IDBPDatabase) => {
-                db.transaction(EStoreName.CRYPT, EDBMode.READ_WRITE)
+            .then(async (db: IDBPDatabase) => {
+                await db
+                    .transaction(EStoreName.CRYPT, EDBMode.READ_WRITE)
                     .objectStore(EStoreName.CRYPT)
                     .add({
                         iv: crypto.getRandomValues(new Uint8Array(12)),
@@ -68,15 +73,14 @@ export const ServiceLayer = ((): IDBServiceLayer => {
                     });
             })
             .then(serviceInit)
-            .then(() => {
-                setEncryptedData<IInitStores<[]>>(ECryptoStorage.ACCOUNTS, password, {
-                    _id: ECryptoStorage.ACCOUNTS,
-                    data: [],
-                });
-                setEncryptedData(ECryptoStorage.USER_CATEGORIES, password, {
-                    _id: ECryptoStorage.USER_CATEGORIES,
-                    data: [],
-                });
+            .then(() =>
+                Promise.all([
+                    setEncryptedData<[]>(ECryptoStorage.ACCOUNTS, password, []),
+                    setEncryptedData(ECryptoStorage.USER_CATEGORIES, password, []),
+                ])
+            )
+            .then(async () => {
+                await setOpenData<ICategory[]>(EStoreName.CATEGORIES, defaultCategories);
             })
             .then(() => {
                 return {status: EResponseStatus.SUCCESS};
@@ -114,12 +118,7 @@ export const ServiceLayer = ((): IDBServiceLayer => {
     }
 
     /**
-     * @inheritDoc
-     */
-    function generateCrypt() {}
-
-    /**
-     * @inheritDoc
+     * Приватный метод, удаляющий iv и salt.
      */
     async function deleteCrypt() {
         iv = new Uint8Array();
@@ -138,8 +137,8 @@ export const ServiceLayer = ((): IDBServiceLayer => {
     function getEncryptedData<T>(storage: ECryptoStorage, password: string): Promise<IEncryptionResponse<T>> {
         return dbPromise
             .then((db: IDBPDatabase) => db.transaction(storage, EDBMode.READ_ONLY).objectStore(storage).get(storage))
-            .then(({data}: ICryptoStore) =>
-                !data
+            .then(({data}: ICryptoStore) => {
+                return data === undefined
                     ? ({status: EEncryptionStatus.SUCCESS, data: []} as any)
                     : decrypt<T>(
                           password,
@@ -148,19 +147,15 @@ export const ServiceLayer = ((): IDBServiceLayer => {
                               iv,
                           },
                           data
-                      )
-            );
+                      );
+            });
     }
 
     /**
      * @inheritDoc
      */
-    async function setEncryptedData<T>(
-        storage: ECryptoStorage,
-        password: string,
-        transferData: T | IInitStores<T>
-    ): Promise<IResponse<T | IInitStores<T>>> {
-        const encryptedData = await encrypt<T | IInitStores<T>>(
+    async function setEncryptedData<T>(storage: ECryptoStorage, password: string, transferData: T): Promise<IResponse<T>> {
+        const encryptedData = await encrypt<T>(
             password,
             {
                 iv,
@@ -181,8 +176,20 @@ export const ServiceLayer = ((): IDBServiceLayer => {
     /**
      * @inheritDoc
      */
-    function getOpenData<T = unknown>(storage: EStoreName): Promise<T> {
-        return dbPromise.then((db: IDBPDatabase) => db.transaction(storage, EDBMode.READ_ONLY).objectStore(storage).get(storage));
+    function getOpenData<T = unknown>(storage: EStoreName): Promise<IResponse<T>> {
+        return dbPromise
+            .then((db: IDBPDatabase) => db.transaction(storage, EDBMode.READ_ONLY).objectStore(storage).get(storage))
+            .then(
+                ({data}: IResponse<T>) => ({
+                    status: EResponseStatus.SUCCESS,
+                    data,
+                }),
+                (message) => ({
+                    status: EResponseStatus.ERROR,
+                    message,
+                })
+            )
+            .catch((message) => ({status: EResponseStatus.ERROR, message}));
     }
 
     /**
@@ -196,8 +203,6 @@ export const ServiceLayer = ((): IDBServiceLayer => {
         dbIsEmpty,
         createDB,
         deleteDB,
-        generateCrypt,
-        deleteCrypt,
         getEncryptedData,
         setEncryptedData,
         getOpenData,

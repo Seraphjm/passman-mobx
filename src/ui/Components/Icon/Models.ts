@@ -27,18 +27,3 @@ export interface ISVGIcon {
     color?: EColors;
     className?: string;
 }
-
-/**
- * Модель svg-иконоки, которая принимается в качестве свойства в компонент, который её использует.
- * Отличие от ISVGIcon в отсутсвии возможности передать класс, т.к. это внесёт больше хаоса внутри используемого
- * компонента.
- *
- * @prop icon Модуль иконки.
- * @prop [icon.size]  Размеры иконки.
- * @prop [icon.color] Цвет иконки.
- */
-export interface IPropsIcon {
-    icon: IIcon;
-    size?: ESizes;
-    color?: EColors;
-}

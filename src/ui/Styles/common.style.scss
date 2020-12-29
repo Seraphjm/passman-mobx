@@ -1,5 +1,6 @@
 @import "ui/Styles/mixins";
-
+/* TODO.STYLES избавиться вообще от всех цветов, указанных через #HEX.
+   TODO: Стандартизировать и вынести в css переменные. Необходимо для наиболее простого создание тем */
 .ui-lib {
     height: 100%;
 }
@@ -69,22 +70,6 @@
     background: #fff;
     overflow-y: auto;
     z-index: 1;
-    pointer-events: none;
-}
-
-.ui-lib-option {
-    overflow: hidden;
-    word-break: break-word;
-    font-family: monospace;
-    transition: background 0.5s;
-    font-size: 1.25rem;
-    user-select: none;
-    pointer-events: all;
-
-    &:hover,
-    &.active-item {
-        background: rgba(0, 0, 0, 0.15);
-    }
 }
 
 .font-monospace {

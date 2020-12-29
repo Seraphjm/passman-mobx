@@ -1,4 +1,4 @@
-import {Children, cloneElement, FormEvent, FunctionComponent, KeyboardEvent, useEffect, useRef, useState} from 'react';
+import {Children, cloneElement, FormEvent, FunctionComponent, KeyboardEvent, ReactNode, useEffect, useRef, useState} from 'react';
 import classNames from 'classnames';
 import {InputFilled} from 'ui/Common/InnerComponents/InputFilled/InputFilled';
 import {InputMessage} from 'ui/Common/InnerComponents/InputMessage/InputMessage';
@@ -8,16 +8,27 @@ import {IFuzzySortResult, IPositionProps} from 'ui/Common/Models';
 import {Highlight} from 'ui/Components/Highlight/Highlight';
 import {go} from 'fuzzysort';
 import {useHiddenListFromWindow, useRemoteScrollControl} from 'ui/Common/Hooks';
-import {EKeyCode} from 'ui/Common/Enums';
+import {EKeyCode, ESizes} from 'ui/Common/Enums';
+import {faChevronUp, faSearch} from '@fortawesome/free-solid-svg-icons';
 import {IOption, ISelect} from './Models';
 import './Select.style.scss';
+import {SVGIcon} from '../Icon';
 
 // TODO.TYPES TODO.REFACTOR: заевбавси, доделать.
 
 /**
  * UI Компонент select.
  */
-export const Select: FunctionComponent<ISelect<any>> = ({onChange, placeholder, className, required, value, message, children}) => {
+export const Select: FunctionComponent<ISelect<any, any>> = ({
+    onChange,
+    placeholder,
+    className,
+    required,
+    value,
+    message,
+    children,
+    dataBind,
+}) => {
     /** Скрытый контроллер компонента. На нём обвязана вся логика. */
     const controllerRef = useRef<HTMLInputElement>();
     /** Контейнер компонента. Нужен для отслеживания событий и установки размерностей внешнего контейнера. */
@@ -83,8 +94,10 @@ export const Select: FunctionComponent<ISelect<any>> = ({onChange, placeholder, 
      * @param value Текущее значение введённое в инпут.
      * @param childes Список для автокомплита по которому произойдёт поиск.
      */
-    const search = (value: string | null, childes: any): string[] => {
-        if (!value) return childes;
+    const search = (value: string | null, childes: ReactNode[]): ReactNode[] => {
+        //@ts-ignore
+        const sortedChildes = childes.sort((a: ReactNode, b: ReactNode) => (a?.props.children > b?.props.children ? 1 : -1));
+        if (!value) return sortedChildes;
 
         //@ts-ignore
         const filtered: IFuzzySortResult[] = go(value, childes, {
@@ -92,7 +105,7 @@ export const Select: FunctionComponent<ISelect<any>> = ({onChange, placeholder, 
             limit: 100,
         });
         //@ts-ignore
-        return filtered.length ? filtered.sort((a, b) => (a.score < b.score ? 1 : -1)).map(({obj}) => obj) : childes;
+        return filtered.length ? filtered.sort((a, b) => (a.score < b.score ? 1 : -1)).map(({obj}) => obj) : sortedChildes;
     };
 
     /**
@@ -100,7 +113,7 @@ export const Select: FunctionComponent<ISelect<any>> = ({onChange, placeholder, 
      * TODO.TYPES посмотреть, как можно типизировать такие кейсы (дженерик описан на props.onChange).
      */
     const onChangeHandler = (v: unknown) => {
-        isFunction(onChange) && onChange(v);
+        isFunction(onChange) && onChange(v, dataBind || null);
         controllerRef.current?.blur();
     };
 
@@ -188,6 +201,8 @@ export const Select: FunctionComponent<ISelect<any>> = ({onChange, placeholder, 
     const onInputHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         // @ts-ignore
         const incomingValue = localValue === null ? e.nativeEvent.data : e.currentTarget.value;
+        selectedItem !== null && setSelectedItem(null);
+        mouseSelected !== null && setMouseSelected(null);
         setLocalValue(incomingValue);
     };
 
@@ -222,13 +237,20 @@ export const Select: FunctionComponent<ISelect<any>> = ({onChange, placeholder, 
             {placeholder && (
                 <InputPlaceholder>
                     {placeholder}
-                    {localValue && <span className="font-monospace"> | icon-search: {localValue}</span>}
+                    {localValue && (
+                        <span className="font-monospace">
+                            {' '}
+                            | <SVGIcon icon={faSearch} size={ESizes.XS} />: {localValue}
+                        </span>
+                    )}
                 </InputPlaceholder>
             )}
 
             <div className="ui-lib-select__value text-ellipsis" tabIndex={0}>
                 {value}
-                <div className="ui-lib-select__arrow">^</div>
+                <div className="ui-lib-select__arrow">
+                    <SVGIcon icon={faChevronUp} size={ESizes.XS} />
+                </div>
             </div>
 
             <InputFilled />
@@ -254,11 +276,9 @@ export const Select: FunctionComponent<ISelect<any>> = ({onChange, placeholder, 
 /**
  * UI компонент option для выпадающего списка select.
  */
-export const Option: FunctionComponent<IOption> = (props) => {
-    return (
-        <li data-value={props.value} data-index={props.index} className={classNames('ui-lib-option', {active: props.active})}>
-            {props.icon && <div className="ui-lib-select__item-icon">{props.icon}</div>}
-            <Highlight search={props.search || ''} text={`${props.children}`} />
-        </li>
-    );
-};
+export const Option: FunctionComponent<IOption> = (props) => (
+    <li data-value={props.value} data-index={props.index} className={classNames('ui-lib-option', {active: props.active})}>
+        {props.icon && <div className="ui-lib-option__icon">{props.icon}</div>}
+        <Highlight search={props.search || ''} text={`${props.children}`} />
+    </li>
+);

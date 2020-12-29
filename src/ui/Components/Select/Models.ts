@@ -9,14 +9,16 @@ import {IEventMessage} from '../../Common/Models';
  * @prop [placeholder] placeholder.
  * @prop [required] Флаг обязательности заполнения.
  * @prop [message] Сообщение для вывода информации в компонент.
+ * @prop [dataBind] Прикреплённые данные к инпуту, которые будет переданны в onChange вторым параметром.
  */
-export interface ISelect<T = unknown> {
+export interface ISelect<T = unknown, B = unknown> {
     value: string;
-    onChange: (v: T) => void;
+    onChange: (v: T, dataBind?: B) => void;
     className?: string;
     placeholder?: string;
     required?: boolean;
     message?: IEventMessage;
+    dataBind?: B;
 }
 
 /**
@@ -26,12 +28,12 @@ export interface ISelect<T = unknown> {
  * @prop [search] Служебное свойство. Необходимо для подсветки при поиске.
  * @prop [active] Служебное свойство. Необходимо для подсветки активного элемента клавишами навигации.
  * @prop value Значение переданное в option.
- * @prop [icon] Иконка переданная в option. TODO.any
+ * @prop [icon] Иконка переданная в option.
  */
 export interface IOption<T = unknown> {
     index?: never;
     search?: never;
     active?: never;
     value: T;
-    icon?: any;
+    icon?: JSX.Element;
 }

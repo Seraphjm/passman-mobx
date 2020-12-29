@@ -5,21 +5,24 @@ import classNames from 'classnames';
 import {faKeycdn} from '@fortawesome/free-brands-svg-icons';
 import {SVGIcon, ESizes} from 'ui';
 import {useMain} from '../../../../Store/Hooks';
-import {AddAccountModal} from '../Modals/AddAccount.modal';
+import {AddAccountModal} from '../../../Modals/AddAccount.modal';
 
 /**
- * Панель управления аккаунтами.
+ * Панель управления аккаунтами в заголовке.
  */
 export const AccountsControlPanel: FunctionComponent = observer(() => {
     const main = useMain();
-    const [open, setOpen] = useState<boolean>(false);
     const {formatMessage} = useIntl();
+    /** Состояние активности модального окна добавления аккаунта */
+    const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
 
     const openAddAccount = () => {
-        setOpen(true);
+        setAddModalOpen(true);
     };
 
-    const closeHandler = () => setOpen(false);
+    const disable = false;
+
+    const closeAddModal = () => setAddModalOpen(false);
 
     return (
         <>
@@ -30,18 +33,18 @@ export const AccountsControlPanel: FunctionComponent = observer(() => {
                 <li
                     onClick={openAddAccount}
                     className={classNames('header__item', {
-                        accounts_is_empty: !main.accounts.length && !open,
+                        accounts_is_empty: !main.accounts.length && !addModalOpen,
                     })}
                 >
                     {formatMessage({id: 'COMMON__ACTION_ADD'})}
                 </li>
-                <li className="header__item">{formatMessage({id: 'COMMON__ACTION_EDIT'})}</li>
-                <li className="header__item">{formatMessage({id: 'COMMON__ACTION_MOVE'})}</li>
-                <li className="header__item">{formatMessage({id: 'COMMON__ACTION_DELETE'})}</li>
-                <li className="header__item">{formatMessage({id: 'COMMON__ACTION_CANCEL'})}</li>
+                {disable && <li className="header__item">{formatMessage({id: 'COMMON__ACTION_EDIT'})}</li>}
+                {disable && <li className="header__item">{formatMessage({id: 'COMMON__ACTION_MOVE'})}</li>}
+                {disable && <li className="header__item">{formatMessage({id: 'COMMON__ACTION_DELETE'})}</li>}
+                {disable && <li className="header__item">{formatMessage({id: 'COMMON__ACTION_CANCEL'})}</li>}
             </ul>
 
-            <AddAccountModal isOpen={open} onClose={closeHandler} />
+            <AddAccountModal isOpen={addModalOpen} onClose={closeAddModal} />
         </>
     );
 });
