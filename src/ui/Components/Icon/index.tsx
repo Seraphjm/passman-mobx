@@ -9,10 +9,10 @@ import './Icon.style.scss';
  * @supported В качестве зависимости использует иконки из пакета @fortawesome.
  */
 export const SVGIcon: FunctionComponent<ISVGIcon> = (props) => {
-    // eslint-disable-next-line
     const {
         icon,
         icon: {
+            // eslint-disable-next-line
             icon: [v1, v2, empty, before, d],
         },
     } = props;

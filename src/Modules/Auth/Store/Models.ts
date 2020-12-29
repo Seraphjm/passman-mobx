@@ -1,5 +1,6 @@
 import {IDBServiceLayer} from 'Services/Models';
 import {IRootStore} from 'Store/Models';
+import {IResponse} from 'Services/Models';
 
 /**
  * Модель дефолтного состояния раздела настроек.
@@ -58,12 +59,12 @@ export interface IAuthorizationStore {
     /**
      * Экшн, инициализирующий стор авторизации.
      */
-    storeInit(): any;
+    storeInit(): Generator<Promise<boolean>> | boolean;
 
     /**
      * Экшн, инициализируйющий создание базу данных.
      */
-    createDB(): void;
+    createDB(): Generator<Promise<IResponse>>;
 
     /**
      * Экшн, осуществляющий вход в приложение.
@@ -71,5 +72,5 @@ export interface IAuthorizationStore {
      * Пытается сразу загрузить аккаунты с введённым паролем в пространство mainStore.
      * При удачном статусе этого действия, делает редирект в пространство MAIN.
      */
-    logIn(): Promise<any>;
+    logIn(): Promise<void>;
 }

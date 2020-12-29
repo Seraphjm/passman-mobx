@@ -1,7 +1,7 @@
 import {FunctionComponent, useEffect, useRef, useState} from 'react';
 import {useIntl} from 'react-intl';
 import {observer} from 'mobx-react';
-import {ESizes, Input, Button, EMessageType, EPositions} from 'ui';
+import {ESizes, Input, Button, EMessageType, EPositions, SVGIcon} from 'ui';
 import {IEventMessage} from 'ui/Common/Models';
 import classNames from 'classnames';
 import {AuthorizationBody, AuthorizationFooter, AuthorizationHeader} from './AuthorizationForm/AuthorizationForm';
@@ -41,27 +41,34 @@ export const Authorization: FunctionComponent = observer(() => {
         // eslint-disable-next-line
     }, []);
 
+    /**
+     * Метод, определяющий режим режим работы окна авторизации (создать новую бд/запросить доступ).
+     */
     const checkAccess = () => {
         auth.dbIsEmpty ? createDB() : requestAccess();
     };
 
-    /** Метод, выполняющий вход в учётную запись */
+    /**
+     * Метод, выполняющий вход в учётную запись
+     */
     const requestAccess = () => {
         animate && setAnimate(false);
         auth.logIn().then(
             () => {
-                console.log('EVENT:SUCCESS');
+                // todo.NOTIFICATION //maybe
             },
             () => {
                 setAnimate(true);
                 setMessage({type: EMessageType.ERROR, text: formatMessage({id: 'AUTH__FORM_ERR_AUTH'})});
                 //@ts-ignore
-                ref?.current?.focus();
+                ref.current?.focus();
             }
         );
     };
 
-    /** Метод, создающий БД */
+    /**
+     * Метод, создающий БД
+     */
     const createDB = async () => {
         animate && setAnimate(false);
         // если пароль вводится первый раз
@@ -89,7 +96,7 @@ export const Authorization: FunctionComponent = observer(() => {
         }
 
         //@ts-ignore
-        ref?.current?.focus();
+        ref.current?.focus();
     };
 
     return (
@@ -112,13 +119,10 @@ export const Authorization: FunctionComponent = observer(() => {
                         onEnter={checkAccess}
                         message={{type: message?.type}}
                     />
-
                     <Button
                         onClick={checkAccess}
                         disabled={!auth.password}
-                        icon={{
-                            icon: auth.dbIsEmpty ? faCheck : faSignInAlt,
-                        }}
+                        icon={<SVGIcon icon={auth.dbIsEmpty ? faCheck : faSignInAlt} />}
                         className="authorization__button"
                         size={ESizes.SM}
                     />

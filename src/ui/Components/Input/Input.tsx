@@ -61,6 +61,7 @@ const InputComp: FunctionComponent<IInput> = ({
     type,
     disabled,
     inputRef,
+    dataBind,
 }) => {
     const ref = useRef<HTMLElement>();
     /** Флаг открытия автокомплита */
@@ -106,13 +107,14 @@ const InputComp: FunctionComponent<IInput> = ({
      * @param autoComplete Список для автокомплита по которому произойдёт поиск.
      */
     const search = (value: string, autoComplete: string[]): string[] => {
-        if (!value) return autoComplete;
+        const sortedChildes = autoComplete.sort((a, b) => (a > b ? 1 : -1));
+        if (!value) return sortedChildes;
         //@ts-ignore
         const filtered: IFuzzySortResult[] = go(value, autoComplete, {
             limit: 100,
         });
 
-        return filtered.length ? filtered.sort((a, b) => (a.score < b.score ? 1 : -1)).map(({target}) => target) : autoComplete;
+        return filtered.length ? filtered.sort((a, b) => (a.score < b.score ? 1 : -1)).map(({target}) => target) : sortedChildes;
     };
 
     /**
@@ -122,12 +124,12 @@ const InputComp: FunctionComponent<IInput> = ({
      */
     const onInputHandler = ({currentTarget: {value}}: FormEvent<HTMLInputElement>) => {
         if (autoComplete?.length) {
-            if (selectedItem !== null) setSelectedItem(null);
+            selectedItem !== null && setSelectedItem(null);
+            mouseSelected !== null && setMouseSelected(null);
 
             setAutoCompleteList(search(value, autoComplete));
         }
-
-        onInput(value);
+        onInput(value, dataBind || null);
     };
 
     /**

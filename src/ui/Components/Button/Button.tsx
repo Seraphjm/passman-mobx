@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import {calcRipplePosition, cancelEvent, isFunction} from 'ui/Utils';
 import {IButton} from './Models';
 import './Button.style.scss';
-import {SVGIcon} from '../Icon';
 
 /**
  * Модель состояния риппера.
@@ -50,11 +49,7 @@ export const Button: FunctionComponent<IButton> = ({
     return (
         <div className={classNames('ui-lib-button', size, type, iconPos, className)}>
             <button disabled={disabled} onClick={onClickHandler} className={classNames('ui-lib__flat', {animate})}>
-                {icon && (
-                    <span className="logotype ui-lib-button__icon">
-                        <SVGIcon size={icon.size} color={icon.color} icon={icon.icon} />
-                    </span>
-                )}
+                {icon && <span className="logotype ui-lib-button__icon">{icon}</span>}
                 {children && (
                     <span className={classNames('ui-lib-button__content')}>
                         {children}

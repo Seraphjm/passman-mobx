@@ -1,13 +1,16 @@
 import {makeAutoObservable, runInAction} from 'mobx';
-import {IMainStore} from './Models';
+import {ICategory, IMainStore} from './Models';
 import {IRootStore} from 'Store/Models';
 import {EEncryptionStatus} from 'Utils/Crypto/Enums';
-import {ESetMode} from 'Services/Enums';
+import {EResponseStatus, ESetMode} from 'Services/Enums';
 import {set} from 'Utils/Utils';
 import {IMainService} from '../Services/Models';
 import {IAccount} from '../Models/Account';
 import {getDefaultAccountPrototype} from './Consts';
 
+/**
+ * Стор главной страницы приложеия.
+ */
 export class MainStore implements IMainStore {
     /**
      * @inheritDoc
@@ -28,6 +31,10 @@ export class MainStore implements IMainStore {
     /**
      * @inheritDoc
      */
+    categories: ICategory[] = [];
+    /**
+     * @inheritDoc
+     */
     search: string = '';
 
     constructor(rootStore: IRootStore, serviceLayer: IMainService) {
@@ -39,7 +46,7 @@ export class MainStore implements IMainStore {
             rootStore: false,
         });
 
-        this.setAccounts = this.setAccounts.bind(this);
+        this.addAccount = this.addAccount.bind(this);
     }
 
     /**
@@ -52,7 +59,14 @@ export class MainStore implements IMainStore {
     /**
      * @inheritDoc
      */
-    setFieldAccountPrototype = (path: string, data: any) => {
+    get protoCategoryFields() {
+        return this.categories.find((category) => category.name === this.accountPrototype.category)?.fields || [];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    setFieldAccountPrototype = <T = unknown>(path: string, data: T) => {
         set<IAccount>(this.accountPrototype, path, data);
     };
 
@@ -71,6 +85,7 @@ export class MainStore implements IMainStore {
             if (response.status === EEncryptionStatus.SUCCESS) {
                 runInAction(() => {
                     this.accounts = response.data || [];
+                    // todo.NOTIFICATION
                 });
             }
 
@@ -80,7 +95,25 @@ export class MainStore implements IMainStore {
     /**
      * @inheritDoc
      */
-    *setAccounts(accounts: IAccount[]) {
-        this.accounts = yield this.serviceLayer.setAccounts(accounts, ESetMode.ADD, this.rootStore.authStore.password);
+    loadCategories = (): Promise<EResponseStatus> =>
+        this.serviceLayer.getCategories().then((response) => {
+            runInAction(() => {
+                this.categories = response.data || [];
+            });
+            return response.status;
+        });
+
+    /**
+     * @inheritDoc
+     */
+    *addAccount() {
+        const response = yield this.serviceLayer.setAccounts([{...this.accountPrototype}], ESetMode.ADD, this.rootStore.authStore.password);
+
+        if (response.status === EEncryptionStatus.SUCCESS) {
+            this.accounts = response.data;
+            // todo.NOTIFICATION
+        }
+
+        this.accountPrototype = getDefaultAccountPrototype();
     }
 }

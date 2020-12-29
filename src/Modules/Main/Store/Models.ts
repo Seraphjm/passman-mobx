@@ -1,4 +1,7 @@
 import {EEncryptionStatus} from 'Utils/Crypto/Enums';
+import {ISVGIcon} from 'Services/Models';
+import {EResponseStatus} from 'Services/Enums';
+import {IResponse} from 'Services/Models';
 import {IAccount} from '../Models/Account';
 
 /**
@@ -6,19 +9,24 @@ import {IAccount} from '../Models/Account';
  *
  * @prop accountPrototype Прототип аккаунта. Применяется при добавлении или изменении аккаунта.
  * @prop accounts Список аккаунтов пользователя.
+ * @prop categories Список доступных категорий.
  * @prop loadAccounts Экшн, загружающий аккаунты из базы данных.
- * @prop setAccounts Экшн, изменяющий состояние аккаунтов в базе данных.
+ * @prop loadCategories Экшн, загружающий дефолтные категории из БД.
+ * @prop addAccount Экшн, добавляющий новый аккаунт в базу данных.
  * @prop searchedAccounts Геттер изменяющий состояние аккаунтов в базе данных.
  */
 export interface IMainStore {
     accountPrototype: IAccount;
     accounts: IAccount[];
+    categories: ICategory[];
     search: string;
     loadAccounts(): Promise<EEncryptionStatus>;
-    setAccounts(a: any, b: any, c: any): any;
+    loadCategories(): Promise<EResponseStatus>;
+    addAccount(): Generator<Promise<IResponse<IAccount[]>>>;
     setFieldAccountPrototype(path: string, data: any): void;
     resetAccountPrototype(): void;
     searchedAccounts: IAccount[];
+    protoCategoryFields: IFieldsCategory[];
 }
 
 /**
@@ -28,4 +36,30 @@ export interface IMainStore {
  */
 export interface IDefaultMainStore {
     accounts: IAccount[];
+}
+
+/**
+ * Модель поля из списка полей текущей категории.
+ *
+ * @prop name Имя поля.
+ * @prop placeholder placeholder поля.
+ * @prop [required] Флаг обязательности заполнения поля.
+ */
+export interface IFieldsCategory {
+    name: string;
+    placeholder: string;
+    required?: boolean;
+}
+
+/**
+ * Модель категории.
+ *
+ * @prop name Имя категории.
+ * @prop icon Иконка категории.
+ * @prop fields Список полей соответствующих категории.
+ */
+export interface ICategory {
+    name: string;
+    icon: ISVGIcon;
+    fields: IFieldsCategory[];
 }

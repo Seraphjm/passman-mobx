@@ -1,5 +1,4 @@
 import {ESizes, EPositions, EMessageType} from 'ui/Common/Enums';
-import {IPropsIcon} from 'ui/Components/Icon/Models';
 
 /**
  * Модель свойств состояния компонента кнопки.
@@ -21,7 +20,7 @@ export interface IButton {
     className?: string;
     disabled?: boolean;
     onClick?: () => void;
-    icon?: IPropsIcon;
+    icon?: JSX.Element;
     additionalContent?: JSX.Element;
     animate?: boolean;
 }

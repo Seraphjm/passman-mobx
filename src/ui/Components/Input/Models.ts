@@ -1,5 +1,4 @@
 import {IEventMessage} from 'ui/Common/Models';
-import {MutableRefObject} from 'react';
 
 /**
  * Модель элемента автокомплита.
@@ -52,10 +51,11 @@ export interface IAutoComplete {
  * @prop [onKeyUp] Функция обрабатывающая onKeyUp инпута.
  * @prop [onKeyDown] Функция обрабатывающая onKeyDown инпута.
  * @prop [inputRef] Ref на элемент инпута.
+ * @prop [dataBind] Прикреплённые данные к инпуту, которые будет переданны в onInput вторым параметром.
  */
-export interface IInput {
+export interface IInput<T = unknown> {
     value: string;
-    onInput: (value: string) => void;
+    onInput: (value: string, bindData?: T | any) => void; // TODO.TYPES
     message?: IEventMessage;
     autoComplete?: string[];
     placeholder?: string;
@@ -70,4 +70,5 @@ export interface IInput {
     onKeyUp?: (event: unknown) => void;
     onKeyDown?: (event: unknown) => void;
     inputRef?: any;
+    dataBind?: T;
 }

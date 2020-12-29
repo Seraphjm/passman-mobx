@@ -1,5 +1,5 @@
 import {IDefaultMainStore} from './Models';
-import {passwordGenerate} from 'Utils/Utils';
+import {getRandomHex, passwordGenerate} from 'Utils/Utils';
 import {ENotificationPeriodUpdate} from '../Enums';
 import {IAccount} from '../Models/Account';
 
@@ -10,9 +10,12 @@ export const defaultMain: IDefaultMainStore = {
     accounts: [],
 };
 
+/**
+ * Функция возвращающая дефолтное состояние прототипа аккаунта.
+ * Функция? - необходимо для запуска функции генерации пароля.
+ */
 export const getDefaultAccountPrototype = (): IAccount => ({
-    _id: '',
-    accountName: '',
+    _id: getRandomHex(),
     category: '',
     subCategory: '',
     logotype: {
@@ -31,6 +34,7 @@ export const getDefaultAccountPrototype = (): IAccount => ({
         },
     },
     data: {
+        name: '',
         site: '',
         phone: '',
         password: passwordGenerate(),

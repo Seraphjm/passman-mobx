@@ -1,5 +1,6 @@
 import {makeAutoObservable, runInAction} from 'mobx';
-import {IDBServiceLayer} from 'Services/Models';
+import {EResponseStatus} from 'Services/Enums';
+import {IDBServiceLayer, IResponse} from 'Services/Models';
 import {IRootStore} from 'Store/Models';
 import {EEncryptionStatus} from 'Utils/Crypto/Enums';
 import {redirectTo} from 'Router/Utils';
@@ -48,39 +49,38 @@ export class AuthStore implements IAuthorizationStore {
     /**
      * @inheritDoc
      */
-    *storeInit() {
+    *storeInit(): Generator<Promise<boolean>> | boolean {
         this.dbIsEmpty = yield this.serviceLayer.dbIsEmpty();
     }
 
     /**
      * @inheritDoc
      */
-    logIn = () => {
+    logIn = (): Promise<void> => {
         this.isChecking = true;
-        return this.rootStore.mainStore
-            .loadAccounts()
-            .then((status: EEncryptionStatus) => {
+        return Promise.all([this.rootStore.mainStore.loadAccounts(), this.rootStore.mainStore.loadCategories()])
+            .then(([loadAccountsStatus, loadCategoriesStatus]) => {
                 runInAction(() => {
                     this.isChecking = false;
                 });
 
-                if (status === EEncryptionStatus.SUCCESS) {
-                    redirectTo(MAIN_ROUTE_NAMES.ROOT);
-                } else throw new Error();
+                if (loadAccountsStatus === EEncryptionStatus.SUCCESS && loadCategoriesStatus === EResponseStatus.SUCCESS) {
+                    redirectTo(MAIN_ROUTE_NAMES.ROOT); // todo.NOTIFICATION
+                } else throw new Error(); // todo.NOTIFICATION
             })
             .catch(() => {
                 runInAction(() => {
                     this.isChecking = false;
                 });
 
-                throw Error('auth error');
+                throw Error('auth error'); // todo.NOTIFICATION
             });
     };
 
     /**
      * @inheritDoc
      */
-    *createDB() {
+    *createDB(): Generator<Promise<IResponse>> {
         this.isChecking = true;
         yield this.serviceLayer.createDB(this.password);
         this.dbIsEmpty = false;
@@ -91,7 +91,8 @@ export class AuthStore implements IAuthorizationStore {
      * @inheritDoc
      */
     setPassword = (password: string): void => {
-        // TODO тут следовало бы сразу importKey хранить, а не прокидывать пароль в открытом виде по всему data flow.
+        // TODO.REFACTOR тут следовало бы сразу importKey хранить, а не прокидывать пароль в открытом виде по всему data
+        // flow.
         this.password = password;
     };
 

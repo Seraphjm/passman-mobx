@@ -1,4 +1,28 @@
 {
+    "placeholder:name": "Имя аккаунта",
+    "placeholder:login": "Логин",
+    "placeholder:email": "Эл. почта",
+    "placeholder:phone": "Номер телефона",
+    "placeholder:site": "Сайт",
+    "placeholder:secret_answer": "Ответ на секретный вопрос",
+    "placeholder:secret_question": "Секретный вопрос",
+
+    "categoryName:archive": "Архив",
+    "categoryName:develop": "Разработка",
+    "categoryName:services": "Сервисы",
+    "categoryName:emails": "Эл. почта",
+    "categoryName:games": "Игры",
+    "categoryName:network": "Сеть",
+    "categoryName:keys": "Ключи",
+    "categoryName:social": "Социальные сети",
+    "categoryName:finance": "Финансы",
+    "categoryName:government": "Гос. службы",
+    "categoryName:others": "Прочее",
+    "categoryName:shops": "Магазины",
+    "categoryName:job": "Работа",
+    "categoryName:education": "Образование",
+    "categoryName:": "\u2063",
+
     "AUTH__FORM_NAME": "Авторизация",
     "AUTH__FORM_ERR_STORE_IS_EMPTY": "Хранилище отсутствует. Задайте пароль!",
     "AUTH__PLACEHOLDER_ENTER_PASS": "Введите пароль",
@@ -23,5 +47,6 @@
 
     "MAIN__MODAL_ADD_FORM_NAME": "Добавление аккаунта",
     "MAIN__MODAL_ADD_SELECT_SOME_ITEM": "Выберите что-нибудь из списка, чтобы приступить к созданию аккаунта",
+    "MAIN__MODAL_ADD_SELECT_CATEGORY": "Выберите категорию",
     "MAIN__MODAL_ADD_ACTION_ADD_ACCOUNT": "Добавить аккаунт"
 }

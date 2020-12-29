@@ -5,7 +5,6 @@ import {IBadge} from 'ui/Components/Badge/Models';
  * Модель аккаунта.
  *
  * @prop _id Уникальный идентификатор uuid для аккаунта.
- * @prop accountName Имя аккаунта.
  * @prop category Секция аккаунта.
  * @prop [subCategory] Подсекция, отображаемая чуть ниже основной. Дополнительный фильтр под фильтром category.
  * @prop [logotype] Логотип.
@@ -16,7 +15,6 @@ import {IBadge} from 'ui/Components/Badge/Models';
  */
 export interface IAccount {
     _id: string;
-    accountName: string;
     category: string;
     subCategory?: string;
     logotype?: ILogotype;
@@ -43,6 +41,7 @@ export interface ILogotype {
 /**
  * Модель учётных данных аккаунта.
  *
+ * @prop name Имя аккаунта.
  * @prop email email.
  * @prop login Логин.
  * @prop password Пароль.
@@ -51,6 +50,7 @@ export interface ILogotype {
  * @prop site Сайт которому принадлежит аккаунт.
  */
 export interface IAccountData extends TCustomField {
+    name: string;
     email: string;
     login: string;
     password: string;

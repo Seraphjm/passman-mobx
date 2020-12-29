@@ -1,6 +1,6 @@
 .ui-lib-input {
     position: relative;
-    padding-top: 2rem;
+    padding-top: 1.5rem;
     padding-bottom: 1rem;
     display: inline-block;
 
@@ -37,6 +37,7 @@
     border: 1px solid #bbb;
     outline: none;
     height: 2rem;
+    width: 100%;
 }
 
 @keyframes animateInput {

@@ -1,5 +1,5 @@
 .ui-lib-select {
-    padding-top: 2rem;
+    padding-top: 1.5rem;
     padding-bottom: 1rem;
     position: relative;
     overflow: hidden;
@@ -11,9 +11,23 @@
 
     .ui-lib-option {
         padding: 0.5rem 1rem;
+        display: grid;
+        grid-auto-flow: column;
+        grid-column-gap: 0.75rem;
+        grid-template-columns: minmax(2rem, auto) 1fr;
+
+        .ui-lib-highlight__container {
+            display: flex;
+            align-items: center;
+        }
     }
 
-    &.danger {
+    .ui-lib-option__icon {
+        pointer-events: none;
+        text-align: center;
+    }
+
+    &.error {
         .ui-lib-select__value {
             border-color: var(--color-danger);
         }
@@ -64,4 +78,19 @@
     display: grid;
     grid-template-columns: 1fr auto;
     grid-column-gap: 0.5rem;
+}
+
+.ui-lib-option {
+    overflow: hidden;
+    word-break: break-word;
+    font-family: monospace;
+    transition: background 0.5s;
+    font-size: 1.25rem;
+    user-select: none;
+    pointer-events: all;
+
+    &:hover,
+    &.active {
+        background: rgba(0, 0, 0, 0.15);
+    }
 }
