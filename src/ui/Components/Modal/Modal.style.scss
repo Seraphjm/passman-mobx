@@ -3,6 +3,22 @@
 @import "ui/Styles/variables";
 @import "./variables";
 
+/**
+ * На очень маленьких размерах необходимо более эффективно использовать доступное пространство.
+ * Касается как override размера через класс, так и адаптивного поведения.
+ */
+@mixin small-content-padding {
+    .ui-lib-modal__header,
+    .ui-lib-modal__body,
+    .ui-lib-modal__footer {
+        padding: 0.75rem;
+    }
+
+    .ui-lib-modal__header_close {
+        margin: -0.25rem 0 0 0;
+    }
+}
+
 .ui-lib-modal {
     @extend %fixed_fill_placement;
     display: flex;
@@ -28,8 +44,13 @@
     display: grid;
     grid-template-rows: minmax(2.5rem, auto) minmax(160px, 1fr) minmax(2.5rem, auto);
 
+    @include extra-small {
+        @include small-content-padding;
+    }
+
     &.es {
         @include override-media-size($extra-small);
+        @include small-content-padding;
     }
 
     &.sm {

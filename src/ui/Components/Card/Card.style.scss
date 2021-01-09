@@ -1,0 +1,44 @@
+.ui-lib-card {
+    border: 1px solid #888;
+    background: #fff;
+    border-radius: 3px;
+    transition-property: box-shadow, border, background;
+    transition-duration: 300ms;
+
+    &.shadow {
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.6);
+    }
+
+    &.active {
+        box-shadow: none !important;
+        background: #c4ced6;
+        position: relative;
+    }
+}
+
+.ui-lib-card__header {
+    padding: 0.75rem 1rem;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 3px 3px 0 0;
+    border-bottom: 1px solid;
+}
+
+.ui-lib-card__body {
+    padding: 1rem 0.75rem;
+    overflow: hidden;
+}
+
+.ui-lib-card__footer {
+    padding: 0.5rem;
+    position: relative;
+    overflow: hidden;
+
+    &:before {
+        content: "";
+        border-top: 1px solid;
+        position: absolute;
+        left: 0.5rem;
+        right: 0.5rem;
+        top: 0;
+    }
+}

@@ -49,7 +49,7 @@ export const Button: FunctionComponent<IButton> = ({
     return (
         <div className={classNames('ui-lib-button', size, type, iconPos, className)}>
             <button disabled={disabled} onClick={onClickHandler} className={classNames('ui-lib__flat', {animate})}>
-                {icon && <span className="logotype ui-lib-button__icon">{icon}</span>}
+                {icon && <span className="ui-lib-button__icon">{icon}</span>}
                 {children && (
                     <span className={classNames('ui-lib-button__content')}>
                         {children}

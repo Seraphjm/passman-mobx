@@ -4,8 +4,20 @@
     "placeholder:email": "Email",
     "placeholder:phone": "Phone number",
     "placeholder:site": "Site",
+    "placeholder:password": "Password",
     "placeholder:secret_answer": "Answer to a secret question",
     "placeholder:secret_question": "Secret question",
+    "placeholder:comment": "Comment",
+
+    "fieldName:name": "Account name",
+    "fieldName:login": "Login",
+    "fieldName:email": "Email",
+    "fieldName:phone": "Phone",
+    "fieldName:site": "Site",
+    "fieldName:password": "Password",
+    "fieldName:secret_answer": "Answer to a secret question",
+    "fieldName:secret_question": "Secret question",
+    "fieldName:comment": "Comment",
 
     "categoryName:archive": "Archive",
     "categoryName:develop": "Develop",
@@ -40,6 +52,8 @@
     "COMMON__ACTION_DELETE": "Delete",
     "COMMON__ACTION_CANCEL": "Cancel",
     "COMMON__ACTION_MOVE": "Move",
+    "COMMON__ACTION_SAVE": "Save",
+    "COMMON__ACTION_UPDATE_PASSWORD": "Update password",
 
     "COMMON__LABEL_HIDE_SYMBOLS": "Hide symbols",
 
@@ -47,5 +61,9 @@
     "MAIN__MODAL_ADD_FORM_NAME": "Add an account",
     "MAIN__MODAL_ADD_SELECT_SOME_ITEM": "Select something from the list to start creating your account",
     "MAIN__MODAL_ADD_SELECT_CATEGORY": "Select category",
-    "MAIN__MODAL_ADD_ACTION_ADD_ACCOUNT": "Add account"
+    "MAIN__MODAL_ADD_ACTION_ADD_ACCOUNT": "Add account",
+
+    "MAIN__ACCOUNT_CARD_UPDATE_PASSWORD_FOR": "Update password for {name}",
+    "MAIN__ACCOUNT_CARD_CLICK_FOR_COPY": "Click for copy!",
+    "MAIN__ACCOUNT_CARD_LAST_UPDATE": "Last password update"
 }

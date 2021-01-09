@@ -4,8 +4,20 @@
     "placeholder:email": "Эл. почта",
     "placeholder:phone": "Номер телефона",
     "placeholder:site": "Сайт",
+    "placeholder:password": "Пароль",
     "placeholder:secret_answer": "Ответ на секретный вопрос",
     "placeholder:secret_question": "Секретный вопрос",
+    "placeholder:comment": "Комментарий",
+
+    "fieldName:name": "Имя аккаунта",
+    "fieldName:login": "Логин",
+    "fieldName:email": "Эл. почта",
+    "fieldName:phone": "Телефон",
+    "fieldName:site": "Сайт",
+    "fieldName:password": "Пароль",
+    "fieldName:secret_answer": "Ответ на секретный вопрос",
+    "fieldName:secret_question": "Секретный вопрос",
+    "fieldName:comment": "Комментарий",
 
     "categoryName:archive": "Архив",
     "categoryName:develop": "Разработка",
@@ -40,13 +52,18 @@
     "COMMON__ACTION_DELETE": "Удалить",
     "COMMON__ACTION_CANCEL": "Отмена",
     "COMMON__ACTION_MOVE": "Переместить",
+    "COMMON__ACTION_SAVE": "Сохранить",
+    "COMMON__ACTION_UPDATE_PASSWORD": "Обновить пароль",
 
     "COMMON__LABEL_HIDE_SYMBOLS": "Скрывать символы",
 
     "MAIN__ACCOUNT_NOTHING_FOUND": "Ничего не найдено :(",
-
     "MAIN__MODAL_ADD_FORM_NAME": "Добавление аккаунта",
     "MAIN__MODAL_ADD_SELECT_SOME_ITEM": "Выберите что-нибудь из списка, чтобы приступить к созданию аккаунта",
     "MAIN__MODAL_ADD_SELECT_CATEGORY": "Выберите категорию",
-    "MAIN__MODAL_ADD_ACTION_ADD_ACCOUNT": "Добавить аккаунт"
+    "MAIN__MODAL_ADD_ACTION_ADD_ACCOUNT": "Добавить аккаунт",
+
+    "MAIN__ACCOUNT_CARD_UPDATE_PASSWORD_FOR": "Обновление пароля для {name}",
+    "MAIN__ACCOUNT_CARD_CLICK_FOR_COPY": "Нажмите для копирования!",
+    "MAIN__ACCOUNT_CARD_LAST_UPDATE": "Последнее обновление пароля"
 }

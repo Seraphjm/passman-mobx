@@ -13,7 +13,8 @@ import {IAccount} from '../Models/Account';
  * @prop loadAccounts Экшн, загружающий аккаунты из базы данных.
  * @prop loadCategories Экшн, загружающий дефолтные категории из БД.
  * @prop addAccount Экшн, добавляющий новый аккаунт в базу данных.
- * @prop searchedAccounts Геттер изменяющий состояние аккаунтов в базе данных.
+ * @prop sortedAccounts Геттер возвращающий отсортированный список аккаунтов.
+ * @prop searchedAccounts Геттер, возвращающий найденные аккаунты по поисковому запросу.
  */
 export interface IMainStore {
     accountPrototype: IAccount;
@@ -23,8 +24,9 @@ export interface IMainStore {
     loadAccounts(): Promise<EEncryptionStatus>;
     loadCategories(): Promise<EResponseStatus>;
     addAccount(): Generator<Promise<IResponse<IAccount[]>>>;
-    setFieldAccountPrototype(path: string, data: any): void;
+    setFieldAccountPrototype(path: string, data: unknown): void;
     resetAccountPrototype(): void;
+    sortedAccounts: IAccount[];
     searchedAccounts: IAccount[];
     protoCategoryFields: IFieldsCategory[];
 }

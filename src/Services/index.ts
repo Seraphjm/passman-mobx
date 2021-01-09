@@ -12,57 +12,80 @@ import {EEncryptionStatus} from '../Utils/Crypto/Enums';
 /**
  * Сервсиный слой приложения, работующий непосредственно с indexedDB и api криптографии.
  */
-export const ServiceLayer = ((): IDBServiceLayer => {
-    /**
-     * Промисифицированный объект indexedDB. Приватное поле.
-     */
-    const dbPromise: Promise<IDBPDatabase> = openDB(BASE_NAME, 3, {
-        upgrade(db, oldVersion, newVersion, transaction) {
-            switch (oldVersion) {
-                // eslint-disable-next-line
-                case 0:
-                // a placeholder case so that the switch block will
-                // execute when the database is first created
-                // (oldVersion is 0)
-                // eslint-disable-next-line
-                case 1:
-                    db.createObjectStore(ECryptoStorage.ACCOUNTS, {keyPath: KEY_PATH});
-                    db.createObjectStore(EStoreName.CATEGORIES, {keyPath: KEY_PATH});
-                    db.createObjectStore(ECryptoStorage.USER_CATEGORIES, {keyPath: KEY_PATH});
-                    db.createObjectStore(EStoreName.SETTINGS, {keyPath: EStoreName.SETTINGS, autoIncrement: true}).createIndex(
-                        EStoreName.SETTINGS,
-                        EStoreName.SETTINGS
-                    );
-                    db.createObjectStore(EStoreName.CRYPT, {keyPath: EStoreName.CRYPT, autoIncrement: true}).createIndex(
-                        EStoreName.CRYPT,
-                        EStoreName.CRYPT
-                    );
-            }
-        },
-    });
+class ServiceDB implements IDBServiceLayer {
+    private dbPromise: Promise<IDBPDatabase>;
+    private salt: ArrayBuffer = new Uint8Array();
+    private iv: ArrayBuffer = new Uint8Array();
 
-    /**
-     * @inheritDoc
-     */
-    serviceInit();
-
-    let salt: ArrayBuffer = new Uint8Array();
-    let iv: ArrayBuffer = new Uint8Array();
-
-    async function serviceInit(): Promise<void> {
-        const init: ICryptoInitData = await getCryptInit();
-
-        if (init) {
-            salt = init.salt;
-            iv = init.iv;
-        }
+    constructor() {
+        /**
+         * Промисифицированный объект indexedDB.
+         */
+        this.dbPromise = openDB(BASE_NAME, 3, {
+            upgrade(db, oldVersion, newVersion, transaction) {
+                switch (oldVersion) {
+                    // eslint-disable-next-line
+                    case 0:
+                    // a placeholder case so that the switch block will
+                    // execute when the database is first created
+                    // (oldVersion is 0)
+                    // eslint-disable-next-line
+                    case 1:
+                        db.createObjectStore(ECryptoStorage.ACCOUNTS, {keyPath: KEY_PATH});
+                        db.createObjectStore(EStoreName.CATEGORIES, {keyPath: KEY_PATH});
+                        db.createObjectStore(ECryptoStorage.USER_CATEGORIES, {keyPath: KEY_PATH});
+                        db.createObjectStore(EStoreName.SETTINGS, {keyPath: EStoreName.SETTINGS, autoIncrement: true}).createIndex(
+                            EStoreName.SETTINGS,
+                            EStoreName.SETTINGS
+                        );
+                        db.createObjectStore(EStoreName.CRYPT, {keyPath: EStoreName.CRYPT, autoIncrement: true}).createIndex(
+                            EStoreName.CRYPT,
+                            EStoreName.CRYPT
+                        );
+                }
+            },
+        }).then((db: IDBPDatabase) => {
+            this.serviceInit();
+            return db;
+        });
     }
 
+    private serviceInit = async (): Promise<void> => {
+        const init: ICryptoInitData = await this.getCryptInit();
+
+        if (init) {
+            this.salt = init.salt;
+            this.iv = init.iv;
+        }
+    };
+
+    /**
+     * Приватный метод, удаляющий iv и salt.
+     */
+    private deleteCrypt = async (): Promise<void> => {
+        this.iv = new Uint8Array();
+        this.salt = new Uint8Array();
+
+        this.dbPromise
+            .then((db: IDBPDatabase) => {
+                // TODO что-то
+            })
+            .catch((err: any) => console.error(err));
+    };
+
     /**
      * @inheritDoc
      */
-    function createDB(password: string): Promise<IResponse> {
-        return dbPromise
+    private getCryptInit = (): Promise<ICryptoInitData> =>
+        this.dbPromise.then((db: IDBPDatabase) =>
+            db.transaction(EStoreName.CRYPT, EDBMode.READ_ONLY).objectStore(EStoreName.CRYPT).index(EStoreName.CRYPT).get(1)
+        );
+
+    /**
+     * @inheritDoc
+     */
+    createDB = (password: string): Promise<IResponse> =>
+        this.dbPromise
             .then(async (db: IDBPDatabase) => {
                 await db
                     .transaction(EStoreName.CRYPT, EDBMode.READ_WRITE)
@@ -72,112 +95,81 @@ export const ServiceLayer = ((): IDBServiceLayer => {
                         salt: crypto.getRandomValues(new Uint8Array(32)),
                     });
             })
-            .then(serviceInit)
+            .then(this.serviceInit)
             .then(() =>
                 Promise.all([
-                    setEncryptedData<[]>(ECryptoStorage.ACCOUNTS, password, []),
-                    setEncryptedData(ECryptoStorage.USER_CATEGORIES, password, []),
+                    this.setEncryptedData<[]>(ECryptoStorage.ACCOUNTS, password, []),
+                    this.setEncryptedData(ECryptoStorage.USER_CATEGORIES, password, []),
                 ])
             )
             .then(async () => {
-                await setOpenData<ICategory[]>(EStoreName.CATEGORIES, defaultCategories);
+                await this.setOpenData<ICategory[]>(EStoreName.CATEGORIES, defaultCategories);
             })
-            .then(() => {
-                return {status: EResponseStatus.SUCCESS};
-            })
+            .then(() => ({status: EResponseStatus.SUCCESS}))
             .catch((message) => ({status: EResponseStatus.ERROR, message}));
-    }
 
     /**
      * @inheritDoc
      */
-    async function dbIsEmpty(): Promise<boolean> {
-        return !Boolean(await getCryptInit());
-    }
+    dbIsEmpty = async (): Promise<boolean> => !Boolean(await this.getCryptInit());
 
     /**
      * @inheritDoc
      */
-    function getCryptInit(): Promise<ICryptoInitData> {
-        return dbPromise.then((db: IDBPDatabase) =>
-            db.transaction(EStoreName.CRYPT, EDBMode.READ_ONLY).objectStore(EStoreName.CRYPT).index(EStoreName.CRYPT).get(1)
-        );
-    }
-
-    /**
-     * @inheritDoc
-     */
-    function deleteDB(): Promise<IResponse> {
-        return idbDeleteDB(BASE_NAME).then(
+    deleteDB = (): Promise<IResponse> =>
+        idbDeleteDB(BASE_NAME).then(
             () => {
-                deleteCrypt();
+                this.deleteCrypt();
                 return {status: EResponseStatus.SUCCESS};
             },
             (message) => ({status: EResponseStatus.ERROR, message})
         );
-    }
-
-    /**
-     * Приватный метод, удаляющий iv и salt.
-     */
-    async function deleteCrypt() {
-        iv = new Uint8Array();
-        salt = new Uint8Array();
-
-        dbPromise
-            .then((db: IDBPDatabase) => {
-                // TODO
-            })
-            .catch((err) => console.error(err));
-    }
 
     /**
      * @inheritDoc
      */
-    function getEncryptedData<T>(storage: ECryptoStorage, password: string): Promise<IEncryptionResponse<T>> {
-        return dbPromise
+    getEncryptedData = <T>(storage: ECryptoStorage, password: string): Promise<IEncryptionResponse<T>> =>
+        this.dbPromise
             .then((db: IDBPDatabase) => db.transaction(storage, EDBMode.READ_ONLY).objectStore(storage).get(storage))
-            .then(({data}: ICryptoStore) => {
-                return data === undefined
+            .then(({data}: ICryptoStore) =>
+                data === undefined
                     ? ({status: EEncryptionStatus.SUCCESS, data: []} as any)
                     : decrypt<T>(
                           password,
                           {
-                              salt,
-                              iv,
+                              salt: this.salt,
+                              iv: this.iv,
                           },
                           data
-                      );
-            });
-    }
+                      )
+            );
 
     /**
      * @inheritDoc
      */
-    async function setEncryptedData<T>(storage: ECryptoStorage, password: string, transferData: T): Promise<IResponse<T>> {
-        const encryptedData = await encrypt<T>(
+    setEncryptedData = async <T>(storage: ECryptoStorage, password: string, transferData: T): Promise<IResponse<T>> =>
+        await encrypt<T>(
             password,
             {
-                iv,
-                salt,
+                salt: this.salt,
+                iv: this.iv,
             },
             transferData
+        ).then((encryptedData: ArrayBuffer) =>
+            this.dbPromise
+                .then((db: IDBPDatabase) => updateStorage(db, storage, encryptedData))
+                .then(
+                    ({status}: IResponse) => ({status, data: transferData}),
+                    ({status}: IResponse) => ({status, data: transferData})
+                )
+                .catch((message) => ({status: EResponseStatus.ERROR, data: transferData, message}))
         );
-
-        return dbPromise
-            .then((db: IDBPDatabase) => updateStorage(db, storage, encryptedData))
-            .then(
-                ({status}: IResponse) => ({status, data: transferData}),
-                ({status}: IResponse) => ({status, data: transferData})
-            )
-            .catch((message) => ({status: EResponseStatus.ERROR, data: transferData, message}));
-    }
 
     /**
      * @inheritDoc
      */
-    function getOpenData<T = unknown>(storage: EStoreName): Promise<IResponse<T>> {
-        return dbPromise
+    getOpenData = <T = unknown>(storage: EStoreName): Promise<IResponse<T>> =>
+        this.dbPromise
             .then((db: IDBPDatabase) => db.transaction(storage, EDBMode.READ_ONLY).objectStore(storage).get(storage))
             .then(
                 ({data}: IResponse<T>) => ({
@@ -190,22 +182,12 @@ export const ServiceLayer = ((): IDBServiceLayer => {
                 })
             )
             .catch((message) => ({status: EResponseStatus.ERROR, message}));
-    }
 
     /**
      * @inheritDoc
      */
-    function setOpenData<T>(storage: EStoreName, transferData: T): Promise<IResponse<T>> {
-        return dbPromise.then((db: IDBPDatabase) => updateStorage<T>(db, storage, transferData));
-    }
+    setOpenData = <T>(storage: EStoreName, transferData: T): Promise<IResponse<T>> =>
+        this.dbPromise.then((db: IDBPDatabase) => updateStorage<T>(db, storage, transferData));
+}
 
-    return {
-        dbIsEmpty,
-        createDB,
-        deleteDB,
-        getEncryptedData,
-        setEncryptedData,
-        getOpenData,
-        setOpenData,
-    };
-})();
+export const ServiceLayer: IDBServiceLayer = new ServiceDB();

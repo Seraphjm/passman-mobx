@@ -52,8 +52,15 @@ export class MainStore implements IMainStore {
     /**
      * @inheritDoc
      */
+    get sortedAccounts() {
+        return this.accounts.slice().sort((a, b) => (a.name < b.name ? -1 : 1));
+    }
+
+    /**
+     * @inheritDoc
+     */
     get searchedAccounts() {
-        return this.search ? [] : this.accounts;
+        return this.search ? [] : this.sortedAccounts;
     }
 
     /**

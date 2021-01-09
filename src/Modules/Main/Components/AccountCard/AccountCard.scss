@@ -1,0 +1,125 @@
+.account-card {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+
+    .ui-lib-card__header {
+        padding: 0;
+    }
+}
+
+.account-card__header {
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: auto auto 1fr auto;
+    grid-column-gap: 1rem;
+    padding: 0.75rem 1rem;
+
+    /** todo.REFACTOR убрать как дополню ui-lib компонентами */
+    & > * {
+        user-select: none;
+    }
+
+    .ui-lib-button {
+        display: none;
+    }
+}
+
+.account-card__header-controller {
+    opacity: 0;
+    position: absolute;
+
+    &:checked {
+        ~ .account-card__icon,
+        ~ .ui-lib-button {
+            display: initial;
+        }
+    }
+}
+
+.account-card__header-badges {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.account-card__label {
+    margin: 0;
+    text-transform: capitalize;
+    line-height: 1.5rem;
+}
+
+.account-card__icon {
+    display: none;
+    color: darkgreen;
+    filter: drop-shadow(1px 1px 4px rgba(0, 0, 0, 0.6));
+    position: absolute;
+    top: -10px;
+    left: 2px;
+}
+
+.account-card__body {
+    display: grid;
+    grid-row-gap: 1rem;
+}
+
+.ui-lib-svg-icon,
+.account-card__body {
+    pointer-events: none;
+}
+
+.account-card__field-value,
+.account-card__password-icon {
+    pointer-events: all;
+}
+
+.account-card__field-value {
+    cursor: pointer;
+}
+
+.account-card__field {
+    display: grid;
+    grid-template-columns: minmax(80px, auto) 1fr;
+    grid-column-gap: 0.25rem;
+
+    cursor: default;
+    user-select: none;
+}
+
+.account-card__field-name {
+    user-select: none;
+}
+
+.account-card__password-icon {
+    cursor: pointer;
+    margin: 0 0.25rem;
+}
+
+.account-card__table {
+    display: contents;
+    border-collapse: collapse;
+
+    .account-card__table-tr:not(:last-child) {
+        border-bottom: 1px solid #ccc;
+    }
+
+    .account-card__table-td {
+        word-break: break-all;
+
+        &:nth-child(2n) {
+            font-family: monospace;
+            font-size: 1.35rem;
+            line-height: 1.5;
+        }
+
+        &:nth-child(2n + 1) {
+            min-width: 80px;
+            padding-right: 0.5rem;
+            white-space: nowrap;
+        }
+
+        &.account-card__field-password {
+            font-family: Arial, arial, sans-serif;
+            font-size: 1rem;
+        }
+    }
+}

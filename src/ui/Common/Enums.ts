@@ -31,12 +31,14 @@ export enum EThemes {
 /**
  * List of sizes.
  *
- * XS extra small.
+ * ES extra small.
+ * XS x small.
  * SM small.
  * MD medium.
  * LG Large.
  */
 export enum ESizes {
+    ES = 'es',
     XS = 'xs',
     SM = 'sm',
     MD = 'md',

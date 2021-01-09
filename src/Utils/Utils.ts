@@ -15,10 +15,10 @@ export const capitalizeFirstLetter = ([first, ...rest]: string): string => [firs
 /**
  * Функция скрывающая пароль по переданному флагу.
  *
- * @param hide Флаг на скрытие пароля.
  * @param password Переданный пароль.
+ * @param ignore Флаг на скрытие пароля.
  */
-export const hidePass = (hide: boolean, password: string): string => (hide ? '•'.repeat(password.length) : password);
+export const hidePassword = (password: string, ignore?: boolean): string => (ignore ? password : '•'.repeat(password.length));
 
 /**
  * Функция создающая криптографически случайный пароль по заданной длинне и паттерну.
@@ -73,4 +73,42 @@ export const set = <T>(object: T, path: string, data: unknown) => {
         // @ts-ignore todo не очевидно как типизировать, если вообще возможно.
         i !== lastIndex ? (nested = nested[keys[i++]]) : (nested[keys[i++]] = data);
     }
+};
+
+/**
+ * Функция копирующая переданное значение в буфер обмена.
+ *
+ * @param value Копируемое значение.
+ */
+export const copyToClipboard = (value: string): string => {
+    // @ts-ignore
+    const copypasted: HTMLInputElement = document.getElementById('copypasted');
+
+    copypasted.value = value;
+    copypasted.select();
+    document.designMode = 'on';
+    document.execCommand('copy');
+    document.designMode = 'off';
+    copypasted.value = '';
+
+    return value;
+};
+
+/**
+ * Функция возвращающая uuid.
+ *
+ * @example b970d1da-4aa7-19d4-7881-974f95d5ad39.
+ */
+export const uuid = (): string => {
+    let key: string = '';
+
+    for (let block = 0; 5 > block; block++) {
+        const getLength = block === 0 ? 8 : block < 4 ? 4 : 12;
+        const rnd = window.crypto.getRandomValues(new Uint32Array(2));
+        const hex = (rnd[0].toString(16) + rnd[1].toString(16)).substring(0, getLength);
+
+        block < 4 ? (key += `${hex}-`) : (key += hex);
+    }
+
+    return key;
 };
