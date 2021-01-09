@@ -1,12 +1,16 @@
 import {FunctionComponent} from 'react';
 import {observer} from 'mobx-react';
 import {useMain} from '../../Store/Hooks';
-import {AccountCard} from '../AccountCard/AccountCard.';
+import {AccountCard} from '../AccountCard/AccountCard';
 import {useIntl} from 'react-intl';
 import './Content.style.scss';
 
+/**
+ * Компонент отображающий контентную часть приложения в главно окне.
+ */
 export const Content: FunctionComponent = observer(() => {
     const {searchedAccounts} = useMain();
+    /** Интернационализация */
     const {formatMessage} = useIntl();
 
     return (

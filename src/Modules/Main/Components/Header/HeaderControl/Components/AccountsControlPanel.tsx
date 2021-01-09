@@ -12,17 +12,15 @@ import {AddAccountModal} from '../../../Modals/AddAccount.modal';
  */
 export const AccountsControlPanel: FunctionComponent = observer(() => {
     const main = useMain();
+    /** Интернационализация */
     const {formatMessage} = useIntl();
     /** Состояние активности модального окна добавления аккаунта */
-    const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
+    const [isOpenAddModal, setIsOpenAddModal] = useState<boolean>(false);
 
-    const openAddAccount = () => {
-        setAddModalOpen(true);
-    };
-
+    /*TODO.REMOVE*/
     const disable = false;
 
-    const closeAddModal = () => setAddModalOpen(false);
+    const toggleModal = (): void => setIsOpenAddModal(!isOpenAddModal);
 
     return (
         <>
@@ -31,9 +29,9 @@ export const AccountsControlPanel: FunctionComponent = observer(() => {
                     <SVGIcon icon={faKeycdn} size={ESizes.MD} />
                 </li>
                 <li
-                    onClick={openAddAccount}
+                    onClick={toggleModal}
                     className={classNames('header__item', {
-                        accounts_is_empty: !main.accounts.length && !addModalOpen,
+                        accounts_is_empty: !main.accounts.length && !isOpenAddModal,
                     })}
                 >
                     {formatMessage({id: 'COMMON__ACTION_ADD'})}
@@ -44,7 +42,7 @@ export const AccountsControlPanel: FunctionComponent = observer(() => {
                 {disable && <li className="header__item">{formatMessage({id: 'COMMON__ACTION_CANCEL'})}</li>}
             </ul>
 
-            <AddAccountModal isOpen={addModalOpen} onClose={closeAddModal} />
+            <AddAccountModal isOpen={isOpenAddModal} onClose={toggleModal} />
         </>
     );
 });

@@ -24,8 +24,12 @@ svg:not(:root).svg-inline--fa {
         color: var(--color-info);
     }
 
-    &.xs {
+    &.es {
         height: 0.75rem;
+    }
+
+    &.xs {
+        height: 1rem;
     }
 
     &.sm {

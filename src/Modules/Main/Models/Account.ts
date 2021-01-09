@@ -1,10 +1,12 @@
 import {ENotificationPeriodUpdate} from '../Enums';
 import {IBadge} from 'ui/Components/Badge/Models';
+import {ISVGIcon} from 'ui/Components/Icon/Models';
 
 /**
  * Модель аккаунта.
  *
  * @prop _id Уникальный идентификатор uuid для аккаунта.
+ * @prop name Имя аккаунта.
  * @prop category Секция аккаунта.
  * @prop [subCategory] Подсекция, отображаемая чуть ниже основной. Дополнительный фильтр под фильтром category.
  * @prop [logotype] Логотип.
@@ -15,33 +17,19 @@ import {IBadge} from 'ui/Components/Badge/Models';
  */
 export interface IAccount {
     _id: string;
+    name: string;
     category: string;
     subCategory?: string;
-    logotype?: ILogotype;
-    lastUpdate: Date;
-    passwordLastUpdate: Date;
+    logotype: ISVGIcon;
+    lastUpdate: string;
+    passwordLastUpdate: string;
     settings?: IAccountSettings;
     data: IAccountData;
 }
 
 /**
- * Модель логотипа.
- *
- * @prop [logo] Логотип. Представляет из себя строку css к определённой иконке.
- * @prop color Цвет иконки.
- * @prop [image] Изображение прикреплённое пользователем. Имеет приоритет над logo.
- * TODO На текущий момент не очевидно как лучше реализовать хранение. До тех пор, тип: any;
- */
-export interface ILogotype {
-    logo?: string;
-    color: string;
-    image?: any;
-}
-
-/**
  * Модель учётных данных аккаунта.
  *
- * @prop name Имя аккаунта.
  * @prop email email.
  * @prop login Логин.
  * @prop password Пароль.
@@ -49,8 +37,7 @@ export interface ILogotype {
  * @prop phone Телефон привязанный к аккаунту.
  * @prop site Сайт которому принадлежит аккаунт.
  */
-export interface IAccountData extends TCustomField {
-    name: string;
+export interface IAccountData extends IAdditionalFields, ICustomField {
     email: string;
     login: string;
     password: string;
@@ -60,11 +47,24 @@ export interface IAccountData extends TCustomField {
 }
 
 /**
- * Выделенный тип под созданные пользователем кастомные поля.
+ * Модель дополнительных данных аккаунта.
+ *
+ * @prop [secret_answer] Ответ на секретный вопрос.
+ * @prop [secret_question] Вопрос на секретный ответ.
+ * @prop comment Комментарий к учётным данным.
  */
-export type TCustomField = {
+interface IAdditionalFields {
+    secret_answer: string;
+    secret_question: string;
+    comment: string;
+}
+
+/**
+ * Модель кастомных полей аккаунта.
+ */
+export interface ICustomField {
     [key: string]: string;
-};
+}
 
 /**
  * Модель настроек применимых аккаунту.
@@ -108,4 +108,17 @@ export interface IPasswordNeedUpdate {
 export interface IAccountBadge extends IBadge {
     counter: never;
     counterPosition: never;
+}
+
+/**
+ * Модель группированных данных аккаунта по категориям.
+ *
+ * @prop default Основыне поля.
+ * @prop additional Дополнительные поля.
+ * @prop custom Пользовательские поля.
+ */
+export interface IPreparedFields {
+    default: string[];
+    additional: string[];
+    custom: string[];
 }

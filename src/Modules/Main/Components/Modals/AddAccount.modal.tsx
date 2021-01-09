@@ -29,7 +29,8 @@ export const AddAccountModal: FunctionComponent<IModal> = observer(({onClose, is
      * @param field Поле в которое необходимо установить пришедшее значение.
      */
     const setField = (value: string, field: string): void => {
-        field && main.setFieldAccountPrototype(`data.${field}`, value);
+        const f = field === 'name' ? field : `data.${field}`;
+        f && main.setFieldAccountPrototype(f, value);
     };
 
     /**
@@ -75,7 +76,7 @@ export const AddAccountModal: FunctionComponent<IModal> = observer(({onClose, is
                             <Input
                                 key={field.name}
                                 dataBind={field.name}
-                                value={main.accountPrototype.data[field.name]}
+                                value={field.name !== 'name' ? main.accountPrototype.data[field.name] : main.accountPrototype.name}
                                 required={field.required}
                                 onInput={setField}
                                 placeholder={formatMessage({id: field.placeholder})}
@@ -87,7 +88,9 @@ export const AddAccountModal: FunctionComponent<IModal> = observer(({onClose, is
                             <textarea />
                         </div>
 
-                        <div>SET ICONS</div>
+                        <div>
+                            <SVGIcon icon={main.accountPrototype.logotype.icon} size={ESizes.LG} />
+                        </div>
                     </div>
                 ) : (
                     <div className="select-category-text">{formatMessage({id: 'MAIN__MODAL_ADD_SELECT_SOME_ITEM'})}</div>
