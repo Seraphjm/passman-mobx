@@ -32,17 +32,17 @@ export enum EThemes {
  * List of sizes.
  *
  * ES extra small.
- * XS x small.
  * SM small.
  * MD medium.
- * LG Large.
+ * LG large.
+ * EL extra Large.
  */
 export enum ESizes {
     ES = 'es',
-    XS = 'xs',
     SM = 'sm',
     MD = 'md',
     LG = 'lg',
+    EL = 'el',
 }
 
 /**
@@ -74,7 +74,7 @@ export enum EKeyCode {
 /**
  * Перечисление типов событийных сообщений.
  *
- * INFO Ро умолчанию.
+ * INFO По умолчанию.
  * WAITING Ожидание.
  * WARNING Внимание.
  * ERROR Ошибка.
@@ -86,4 +86,15 @@ export enum EMessageType {
     WARNING = 'warning',
     ERROR = 'error',
     SUCCESS = 'success',
+}
+
+/**
+ * Перечисление типов позиций/layout.
+ *
+ * VERTICAL Вертикально.
+ * HORIZONTAL Горизонтально.
+ */
+export enum EOrientation {
+    VERTICAL = 'vertical',
+    HORIZONTAL = 'horizontal',
 }

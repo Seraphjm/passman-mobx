@@ -1,0 +1,11 @@
+.ui-lib-radio-select {
+    display: grid;
+
+    &.horizontal {
+        grid-auto-flow: column;
+    }
+
+    &.vertical {
+        grid-auto-flow: row;
+    }
+}

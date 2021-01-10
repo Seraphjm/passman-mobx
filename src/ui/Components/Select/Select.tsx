@@ -226,7 +226,7 @@ export const Select: FunctionComponent<ISelect<any, any>> = ({
             <input
                 placeholder={'\u2063'}
                 onKeyDown={onKeyDownHandler}
-                className="ui-lib-select__hidden-controller ui-lib__input--controller"
+                className="ui-lib__hidden-controller ui-lib__input--controller"
                 //@ts-ignore
                 ref={controllerRef}
                 value={localValue === null ? value : localValue}
@@ -240,7 +240,7 @@ export const Select: FunctionComponent<ISelect<any, any>> = ({
                     {localValue && (
                         <span className="font-monospace">
                             {' '}
-                            | <SVGIcon icon={faSearch} size={ESizes.XS} />: {localValue}
+                            | <SVGIcon icon={faSearch} size={ESizes.ES} />: {localValue}
                         </span>
                     )}
                 </InputPlaceholder>
@@ -249,7 +249,7 @@ export const Select: FunctionComponent<ISelect<any, any>> = ({
             <div className="ui-lib-select__value text-ellipsis" tabIndex={0}>
                 {value}
                 <div className="ui-lib-select__arrow">
-                    <SVGIcon icon={faChevronUp} size={ESizes.XS} />
+                    <SVGIcon icon={faChevronUp} size={ESizes.ES} />
                 </div>
             </div>
 

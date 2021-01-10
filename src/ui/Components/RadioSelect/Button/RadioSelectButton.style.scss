@@ -1,0 +1,38 @@
+@import "ui/Styles/mixins";
+
+.ui-lib-radio-select-button {
+    display: grid;
+    grid-auto-flow: column;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.33);
+
+    &.es {
+        .ui-lib-radio-button__container {
+            @include flat-es;
+        }
+    }
+
+    &.sm {
+        .ui-lib-radio-button__container {
+            @include flat-sm;
+        }
+    }
+
+    &.md {
+        .ui-lib-radio-button__container {
+            @include flat-md;
+        }
+    }
+
+    &.lg {
+        .ui-lib-radio-button__container {
+            @include flat-lg;
+        }
+    }
+
+    &.el {
+        .ui-lib-radio-button__container {
+            @include flat-el;
+        }
+    }
+}
