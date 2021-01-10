@@ -1,0 +1,47 @@
+.ui-lib-radio-item {
+    display: grid;
+    grid-template-columns: 1rem 1fr;
+    grid-column-gap: 0.25rem;
+    grid-row-gap: 0.25rem;
+    padding: 0.25rem;
+
+    .ui-lib__hidden-controller {
+        opacity: 0;
+        pointer-events: none;
+        position: absolute;
+
+        &:checked ~ .ui-lib-radio-item__ripple:before {
+            transform: translate(23%, 23%) scale(1);
+        }
+
+        &:focus-visible ~ .ui-lib-radio-item__ripple {
+            outline: 1.25px solid var(--out-line-color);
+        }
+    }
+}
+
+.ui-lib-radio-item__ripple {
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid;
+    border-radius: 50%;
+    position: relative;
+    margin: auto;
+
+    &:before {
+        content: "";
+        width: 0.6rem;
+        height: 0.6rem;
+        background: var(--color-info);
+        position: absolute;
+        border-radius: 50%;
+        top: 0;
+        left: 0;
+        transition: transform 300ms;
+        transform: translate(23%, 23%) scale(0);
+    }
+}
+
+.ui-lib-radio-item__label {
+    user-select: none;
+}

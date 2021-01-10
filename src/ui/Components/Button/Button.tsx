@@ -1,19 +1,9 @@
-import {FunctionComponent, useState, MouseEvent} from 'react';
+import {FunctionComponent, useState} from 'react';
 import classNames from 'classnames';
 import {calcRipplePosition, cancelEvent, isFunction} from 'ui/Utils';
+import {IRipplePosition, TRippleMouseEvent} from 'ui/Common/Models';
 import {IButton} from './Models';
 import './Button.style.scss';
-
-/**
- * Модель состояния риппера.
- */
-interface IState {
-    width?: number;
-    height?: number;
-    top?: number;
-    left?: number;
-    display?: string;
-}
 
 /**
  * Компонент кнопки.
@@ -30,12 +20,12 @@ export const Button: FunctionComponent<IButton> = ({
     additionalContent,
     animate,
 }) => {
-    const [ripple, setRipple] = useState<IState>({});
+    const [ripple, setRipple] = useState<IRipplePosition | {}>({});
 
     /**
      * Обработчик клика по кнопке.
      */
-    const onClickHandler = async (e: MouseEvent) => {
+    const onClickHandler = async (e: TRippleMouseEvent): Promise<void> => {
         cancelEvent<any>(e);
 
         await setRipple({...ripple, display: 'none'});

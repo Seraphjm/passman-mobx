@@ -18,6 +18,8 @@
     --color-info: #1671ce;
 
     --font-color: #2c3e50;
+
+    --out-line-color: #e59700;
 }
 
 .ui-lib {
@@ -70,6 +72,12 @@
     background: #fff;
     overflow-y: auto;
     z-index: 1;
+}
+
+.ui-lib__hidden-controller {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
 }
 
 .font-monospace {

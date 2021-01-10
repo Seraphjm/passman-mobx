@@ -1,0 +1,38 @@
+.ui-lib-radio-button {
+    &:first-child .ui-lib-radio-button__container {
+        border-radius: 5px 0 0 5px;
+    }
+
+    &:last-child .ui-lib-radio-button__container {
+        border-radius: 0 5px 5px 0;
+    }
+
+    .ui-lib__hidden-controller {
+        &:checked ~ .ui-lib-radio-button__container {
+            box-shadow: none !important;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        &:focus-visible ~ .ui-lib-radio-button__container {
+            border: 1.25px solid var(--out-line-color);
+        }
+    }
+}
+
+.ui-lib-radio-button__container {
+    padding: 0.5rem;
+    display: block;
+    cursor: pointer;
+    transition: box-shadow 300ms;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    position: relative;
+
+    &:hover:not(:disabled) {
+        box-shadow: 1px 6px 15px rgba(0, 0, 0, 0.3);
+    }
+}
+
+.ui-lib-radio-button__label {
+    user-select: none;
+}

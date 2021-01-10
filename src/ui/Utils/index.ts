@@ -1,4 +1,4 @@
-import {IPositionProps, IRipplePosition} from 'ui/Common/Models';
+import {IPositionProps, IRipplePosition, TRippleMouseEvent} from 'ui/Common/Models';
 
 /**
  * Функция проверяющая, что переданное значение является функцией.
@@ -12,9 +12,10 @@ export const isFunction = (value: unknown): boolean => typeof value === 'functio
  * Вычисление позиции для эффекта пульсации внутри контейнера.
  *
  * @param event Событие.
- * @param container Контейнер в котором необходимо отобразить эффект пульсации.
+ * @param [container] Контейнер в котором необходимо отобразить эффект пульсации.
  */
-export const calcRipplePosition = (event: any, container?: any): IRipplePosition => {
+export const calcRipplePosition = (event: TRippleMouseEvent, container?: Element): IRipplePosition => {
+    // @ts-ignore TODO.TYPES
     const rect = container ? container.getBoundingClientRect() : event.target.getBoundingClientRect();
 
     const size = Math.max(rect.width, rect.height) ^ 0;
@@ -46,7 +47,7 @@ export const cancelEvent = <T extends Event>(e: T): void => {
  * @param [fixTop] Поправка высоты под различные компоненты.
  */
 export const getPositionProps = <T extends Event>(eventContainer: T, fixTop?: string): IPositionProps => {
-    // @ts-ignore
+    // @ts-ignore TODO.TYPES
     const {y, height, bottom} = eventContainer.target.getBoundingClientRect();
     const heightContainer = document.body.clientHeight || 200;
 
@@ -54,4 +55,23 @@ export const getPositionProps = <T extends Event>(eventContainer: T, fixTop?: st
         maxHeight: heightContainer - y - height * 2,
         top: fixTop ? `calc(${bottom}px - ${fixTop})` : bottom,
     };
+};
+
+/**
+ * Функция возвращающая uuid.
+ *
+ * @example b970d1da-4aa7-19d4-7881-974f95d5ad39.
+ */
+export const uuid = (): string => {
+    let key: string = '';
+
+    for (let block = 0; 5 > block; block++) {
+        const getLength = block === 0 ? 8 : block < 4 ? 4 : 12;
+        const rnd = window.crypto.getRandomValues(new Uint32Array(2));
+        const hex = (rnd[0].toString(16) + rnd[1].toString(16)).substring(0, getLength);
+
+        block < 4 ? (key += `${hex}-`) : (key += hex);
+    }
+
+    return key;
 };

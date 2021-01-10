@@ -5,6 +5,21 @@
     overflow: hidden;
     cursor: pointer;
 
+    .ui-lib__hidden-controller {
+        opacity: 0;
+        pointer-events: none;
+        position: absolute;
+        height: 2rem;
+
+        &:focus ~ .ui-lib__drop-list {
+            display: initial;
+        }
+
+        &:focus ~ .ui-lib-select__value > .ui-lib-select__arrow {
+            transform: rotateZ(180deg);
+        }
+    }
+
     .ui-lib__drop-list {
         display: none;
     }
@@ -43,21 +58,6 @@
         .ui-lib-select__value {
             border-color: var(--color-warning);
         }
-    }
-}
-
-.ui-lib-select__hidden-controller {
-    opacity: 0;
-    pointer-events: none;
-    position: absolute;
-    height: 2rem;
-
-    &:focus ~ .ui-lib__drop-list {
-        display: initial;
-    }
-
-    &:focus ~ .ui-lib-select__value > .ui-lib-select__arrow {
-        transform: rotateZ(180deg);
     }
 }
 

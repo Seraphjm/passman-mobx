@@ -1,0 +1,65 @@
+.ui-lib-checkbox {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-column-gap: 0.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+
+    .ui-lib__hidden-controller {
+        &:checked ~ .ui-lib-checkbox__icon {
+            &::before {
+                transform: scale(2);
+                opacity: 1;
+            }
+
+            .ui-lib-svg-icon {
+                transform: scale(1);
+            }
+        }
+
+        /*TODO.STYLES вынести в отдельный миксин (глобальный поиск по <<&:focus-visible>>)*/
+        &:focus-visible ~ .ui-lib-checkbox__icon {
+            outline: 1.25px solid var(--out-line-color);
+        }
+    }
+}
+
+.ui-lib-checkbox__icon {
+    border: 1px solid;
+    padding: 0.1rem 0.2rem;
+    position: relative;
+    overflow: hidden;
+    width: 1.5rem;
+    height: 1.5rem;
+
+    &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        /*TODO.STYLES этот бы костыль пофиксить */
+        top: 3px;
+        left: 3px;
+        transition-duration: 300ms;
+        transition-property: opacity, transform;
+        transform: scale(0);
+        opacity: 0;
+        border-radius: 50%;
+        background: var(--color-info);
+        width: 1rem;
+        height: 1rem;
+    }
+
+    .ui-lib-svg-icon {
+        transition: transform 400ms;
+        transform: scale(0);
+        color: #fff;
+        position: absolute;
+        top: 3px;
+    }
+}
+
+.ui-lib-checkbox__label {
+    align-self: center;
+    user-select: none;
+    font-size: 1.1rem;
+}
