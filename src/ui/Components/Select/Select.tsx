@@ -1,18 +1,28 @@
-import {Children, cloneElement, FormEvent, FunctionComponent, KeyboardEvent, ReactNode, useEffect, useRef, useState} from 'react';
+import {
+    BaseSyntheticEvent,
+    Children,
+    cloneElement,
+    FormEvent,
+    FunctionComponent,
+    KeyboardEvent,
+    ReactNode,
+    useEffect,
+    useRef,
+    useState,
+} from 'react';
 import classNames from 'classnames';
 import {InputFilled} from 'ui/Common/InnerComponents/InputFilled/InputFilled';
 import {InputMessage} from 'ui/Common/InnerComponents/InputMessage/InputMessage';
 import {InputPlaceholder} from 'ui/Common/InnerComponents/InputPlaceholder/InputPlaceholder';
 import {getPositionProps, isFunction} from 'ui/Utils';
 import {IFuzzySortResult, IPositionProps} from 'ui/Common/Models';
-import {Highlight} from 'ui/Components/Highlight/Highlight';
+import {SVGIcon, Highlight} from 'ui';
 import {go} from 'fuzzysort';
 import {useHiddenListFromWindow, useRemoteScrollControl} from 'ui/Common/Hooks';
 import {EKeyCode, ESizes} from 'ui/Common/Enums';
 import {faChevronUp, faSearch} from '@fortawesome/free-solid-svg-icons';
 import {IOption, ISelect} from './Models';
 import './Select.style.scss';
-import {SVGIcon} from '../Icon';
 
 // TODO.TYPES TODO.REFACTOR: заевбавси, доделать.
 
@@ -141,10 +151,10 @@ export const Select: FunctionComponent<ISelect<any, any>> = ({
      *
      * @param event Событие по клику.
      */
-    const onClickHandler = (event: Event) => {
+    const onClickHandler = (event: BaseSyntheticEvent) => {
         if (!focus) {
             controllerRef.current?.focus();
-            setStyle(getPositionProps<Event>(event, '1rem'));
+            setStyle(getPositionProps<BaseSyntheticEvent>(event, '1rem'));
         } else {
             controllerRef.current?.blur();
         }
@@ -216,14 +226,14 @@ export const Select: FunctionComponent<ISelect<any, any>> = ({
         setLocalValue(null);
         if (mouseSelected !== null) {
             setMouseSelected(null);
-            // @ts-ignore
+            // @ts-ignore ложноположительное срабатывание
             isFunction(onChange) && onChangeHandler(childes[mouseSelected]?.props.value);
         }
     };
 
     return (
-        //@ts-ignore
         <div
+            /*@ts-ignore TODO.TYPES ref*/
             ref={containerRef}
             className={classNames('ui-lib-select', className, required, message?.type, {disabled})}
             onClick={onClickHandler}

@@ -14,6 +14,7 @@ import {RadioSelectButton} from './Components/RadioSelect/Button/RadioSelectButt
 import {RadioButton} from './Components/RadioSelect/Button/RadioButton';
 import {Checkbox} from './Components/Checkbox/Checkbox';
 import {Switch} from './Components/Switch/Switch';
+import {Highlight} from './Components/Highlight/Highlight';
 
 export {EColors, ESizes, EBadgeCounterPosition, EMessageType, EPositions, EModalContentPosition};
 
@@ -37,4 +38,5 @@ export {
     RadioButton,
     Checkbox,
     Switch,
+    Highlight,
 };

@@ -46,7 +46,7 @@ export const cancelEvent = <T extends Event>(e: T): void => {
  * @param eventContainer Проверяемое значение.
  * @param [fixTop] Поправка высоты под различные компоненты.
  */
-export const getPositionProps = <T extends Event>(eventContainer: T, fixTop?: string): IPositionProps => {
+export const getPositionProps = <T = unknown>(eventContainer: T, fixTop?: string): IPositionProps => {
     // @ts-ignore TODO.TYPES
     const {y, height, bottom} = eventContainer.target.getBoundingClientRect();
     const heightContainer = document.body.clientHeight || 200;
