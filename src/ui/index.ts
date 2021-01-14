@@ -13,6 +13,7 @@ import {RadioItem} from './Components/RadioSelect/Select/RadioItem';
 import {RadioSelectButton} from './Components/RadioSelect/Button/RadioSelectButton';
 import {RadioButton} from './Components/RadioSelect/Button/RadioButton';
 import {Checkbox} from './Components/Checkbox/Checkbox';
+import {Switch} from './Components/Switch/Switch';
 
 export {EColors, ESizes, EBadgeCounterPosition, EMessageType, EPositions, EModalContentPosition};
 
@@ -35,4 +36,5 @@ export {
     RadioSelectButton,
     RadioButton,
     Checkbox,
+    Switch,
 };

@@ -23,6 +23,9 @@ svg:not(:root).svg-inline--fa {
     &.info {
         color: var(--color-info);
     }
+    &.secondary {
+        color: var(--color-secondary);
+    }
 
     &.es {
         height: 0.75rem;
