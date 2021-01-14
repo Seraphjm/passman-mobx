@@ -1,3 +1,5 @@
+@import "ui/Styles/mixins";
+
 .ui-lib-radio-button {
     &:first-child .ui-lib-radio-button__container {
         border-radius: 5px 0 0 5px;
@@ -15,6 +17,10 @@
 
         &:focus-visible ~ .ui-lib-radio-button__container {
             border: 1.25px solid var(--out-line-color);
+        }
+
+        &:disabled {
+            @include disabled;
         }
     }
 }

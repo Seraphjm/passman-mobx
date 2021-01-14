@@ -8,6 +8,7 @@ import {IEventMessage} from '../../Common/Models';
  * @prop [className] css класс.
  * @prop [placeholder] placeholder.
  * @prop [required] Флаг обязательности заполнения.
+ * @prop [disabled] Флаг отключения компонента.
  * @prop [message] Сообщение для вывода информации в компонент.
  * @prop [dataBind] Прикреплённые данные к инпуту, которые будет переданны в onChange вторым параметром.
  */
@@ -17,6 +18,7 @@ export interface ISelect<T = unknown, B = unknown> {
     className?: string;
     placeholder?: string;
     required?: boolean;
+    disabled?: boolean;
     message?: IEventMessage;
     dataBind?: B;
 }

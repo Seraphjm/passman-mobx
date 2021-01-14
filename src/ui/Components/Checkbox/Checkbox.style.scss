@@ -1,3 +1,5 @@
+@import "ui/Styles/mixins";
+
 .ui-lib-checkbox {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -14,6 +16,13 @@
 
             .ui-lib-svg-icon {
                 transform: scale(1);
+            }
+        }
+
+        &:disabled {
+            & ~ .ui-lib-checkbox__icon,
+            & ~ .ui-lib-checkbox__label {
+                @include disabled;
             }
         }
 

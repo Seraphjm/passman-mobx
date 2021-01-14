@@ -71,6 +71,6 @@
  * Миксин для отключенных элементов.
  */
 @mixin disabled {
-    opacity: 0.5;
+    opacity: 0.66;
     cursor: not-allowed;
 }

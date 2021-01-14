@@ -15,16 +15,16 @@
             }
         }
 
+        &:disabled {
+            & ~ .ui-lib-switch__icon,
+            & ~ .ui-lib-switch__label {
+                @include disabled;
+            }
+        }
+
         /*TODO.STYLES вынести в отдельный миксин (глобальный поиск по <<&:focus-visible>>)*/
         &:focus-visible ~ .ui-lib-switch__icon {
             outline: 2px solid var(--out-line-color);
-        }
-    }
-
-    .ui-lib__hidden-controller:disabled {
-        & ~ .ui-lib-switch__icon,
-        & ~ .ui-lib-switch__label {
-            @include disabled;
         }
     }
 }

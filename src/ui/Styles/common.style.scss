@@ -56,8 +56,7 @@
     }
 
     &:disabled {
-        opacity: 0.65;
-        cursor: not-allowed;
+        @include disabled;
     }
 
     &:hover:not(:disabled),

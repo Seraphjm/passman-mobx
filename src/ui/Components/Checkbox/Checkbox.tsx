@@ -30,7 +30,7 @@ export const Checkbox: FunctionComponent<ICheckbox> = (props) => {
     };
 
     return (
-        <label className={classNames('ui-lib-checkbox', props.classNames, {disabled: props.disabled})}>
+        <label className={classNames('ui-lib-checkbox', props.classNames)}>
             <input
                 onChange={onChange}
                 checked={props.checked}

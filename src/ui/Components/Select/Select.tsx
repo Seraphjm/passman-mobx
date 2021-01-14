@@ -28,6 +28,7 @@ export const Select: FunctionComponent<ISelect<any, any>> = ({
     message,
     children,
     dataBind,
+    disabled,
 }) => {
     /** Скрытый контроллер компонента. На нём обвязана вся логика. */
     const controllerRef = useRef<HTMLInputElement>();
@@ -222,7 +223,11 @@ export const Select: FunctionComponent<ISelect<any, any>> = ({
 
     return (
         //@ts-ignore
-        <div ref={containerRef} className={classNames('ui-lib-select', className, required, message?.type)} onClick={onClickHandler}>
+        <div
+            ref={containerRef}
+            className={classNames('ui-lib-select', className, required, message?.type, {disabled})}
+            onClick={onClickHandler}
+        >
             <input
                 placeholder={'\u2063'}
                 onKeyDown={onKeyDownHandler}
@@ -232,6 +237,7 @@ export const Select: FunctionComponent<ISelect<any, any>> = ({
                 value={localValue === null ? value : localValue}
                 onInput={onInputHandler}
                 onBlur={onBlurHandler}
+                disabled={disabled}
             />
 
             {placeholder && (

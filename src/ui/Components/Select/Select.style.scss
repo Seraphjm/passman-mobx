@@ -1,3 +1,5 @@
+@import "ui/Styles/mixins";
+
 .ui-lib-select {
     padding-top: 1.5rem;
     padding-bottom: 1rem;
@@ -40,6 +42,13 @@
     .ui-lib-option__icon {
         pointer-events: none;
         text-align: center;
+    }
+
+    &.disabled {
+        cursor: not-allowed;
+        .ui-lib-select__value {
+            @include disabled;
+        }
     }
 
     &.error {

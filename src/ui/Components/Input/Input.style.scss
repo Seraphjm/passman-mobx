@@ -1,3 +1,5 @@
+@import "ui/Styles/mixins";
+
 .ui-lib-input {
     position: relative;
     padding-top: 1.5rem;
@@ -38,6 +40,10 @@
     outline: none;
     height: 2rem;
     width: 100%;
+
+    &:disabled {
+        @include disabled;
+    }
 }
 
 @keyframes animateInput {
