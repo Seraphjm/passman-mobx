@@ -10,8 +10,10 @@
     .ui-lib__hidden-controller {
         &:checked ~ .ui-lib-switch__icon {
             background: var(--color-info);
+
             .ui-lib-svg-icon {
-                transform: translate(calc(1.5rem - 5px), 1px);
+                color: #f6f6f6;
+                transform: translate(calc(1.5em - 3px), 0.1em);
             }
         }
 
@@ -24,7 +26,8 @@
 
         /*TODO.STYLES вынести в отдельный миксин (глобальный поиск по <<&:focus-visible>>)*/
         &:focus-visible ~ .ui-lib-switch__icon {
-            outline: 2px solid var(--out-line-color);
+            border-radius: 2em;
+            box-shadow: 0 0 0 2px var(--out-line-color);
         }
     }
 }
@@ -32,17 +35,16 @@
 .ui-lib-switch__icon {
     display: flex;
     transition: background 500ms;
-    background: #fff;
-    width: 2.5rem;
-    height: 1.35rem;
-    border: 2px solid;
-    border-radius: 10px;
+    background: #f6f6f6;
+    width: 2.5em;
+    height: 1.35em;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 2em;
 
     .ui-lib-svg-icon {
-        transition: transform 300ms;
-        transform: translate(1px, 0.75px);
-        border: 1px solid var(--font-color);
-        border-radius: 50%;
+        transition-duration: 300ms;
+        transition-property: transform, color;
+        transform: translate(0.1em, 0.1em);
     }
 }
 
