@@ -1,6 +1,8 @@
 @import "ui/Styles/mixins";
 
 .ui-lib-radio-button {
+    display: contents;
+
     &:first-child .ui-lib-radio-button__container {
         border-radius: 5px 0 0 5px;
     }
@@ -27,9 +29,11 @@
 
 .ui-lib-radio-button__container {
     padding: 0.5rem;
-    display: block;
+    display: inline-flex;
     cursor: pointer;
-    transition: box-shadow 300ms;
+    background: #fff;
+    transition-duration: 300ms;
+    transition-property: box-shadow, background;
     border: 1px solid #ccc;
     overflow: hidden;
     position: relative;
@@ -41,4 +45,5 @@
 
 .ui-lib-radio-button__label {
     user-select: none;
+    text-align: center;
 }

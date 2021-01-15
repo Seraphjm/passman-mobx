@@ -54,6 +54,7 @@
     "COMMON__ACTION_MOVE": "Move",
     "COMMON__ACTION_SAVE": "Save",
     "COMMON__ACTION_UPDATE_PASSWORD": "Update password",
+    "COMMON__PASSWORD_LENGTH": "Password length",
 
     "COMMON__LABEL_HIDE_SYMBOLS": "Hide symbols",
 

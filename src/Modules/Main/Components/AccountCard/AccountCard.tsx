@@ -2,9 +2,10 @@ import {BaseSyntheticEvent, FunctionComponent, SyntheticEvent, useMemo, useRef, 
 import {observer} from 'mobx-react';
 import {Button, Card, CardBody, CardFooter, CardHeader, ESizes, Modal, ModalBody, ModalFooter, ModalHeader, SVGIcon} from 'ui';
 import {faCheck, faRecycle} from '@fortawesome/free-solid-svg-icons';
-import {faEyeSlash, faSave, faEye} from '@fortawesome/free-regular-svg-icons';
+import {faEye, faEyeSlash, faSave} from '@fortawesome/free-regular-svg-icons';
 import {useIntl} from 'react-intl';
 import {Logotype} from 'Common/Components/Logotype';
+import {PassGen} from 'Common/Components/PassGen/PassGen';
 import {copyToClipboard, hidePassword} from 'Utils/Utils';
 import {IAccount} from '../../Models/Account';
 import {getPreparedAccountField} from '../../Utils';
@@ -205,7 +206,7 @@ export const AccountCard: FunctionComponent<IProps> = observer(({account}) => {
                 </CardFooter>
             </Card>
 
-            <Modal isOpen={modalIsOpen} onClose={toggleModal} size={ESizes.ES}>
+            <Modal className="account-card__modal" isOpen={modalIsOpen} onClose={toggleModal} size={ESizes.ES}>
                 <ModalHeader onClose={toggleModal}>
                     {formatMessage(
                         {
@@ -216,9 +217,11 @@ export const AccountCard: FunctionComponent<IProps> = observer(({account}) => {
                         }
                     )}
                 </ModalHeader>
-                <ModalBody>passgen</ModalBody>
+                <ModalBody>
+                    <PassGen />
+                </ModalBody>
                 <ModalFooter>
-                    <Button onClick={saveChanges} icon={<SVGIcon icon={faSave} />}>
+                    <Button onClick={saveChanges} size={ESizes.SM} icon={<SVGIcon icon={faSave} />}>
                         {formatMessage({id: 'COMMON__ACTION_SAVE'})}
                     </Button>
                 </ModalFooter>

@@ -123,3 +123,11 @@
         }
     }
 }
+
+.account-card__modal {
+    max-width: 350px !important;
+
+    .ui-lib-input__controller {
+        text-align: center;
+    }
+}

@@ -54,6 +54,7 @@
     "COMMON__ACTION_MOVE": "Переместить",
     "COMMON__ACTION_SAVE": "Сохранить",
     "COMMON__ACTION_UPDATE_PASSWORD": "Обновить пароль",
+    "COMMON__PASSWORD_LENGTH": "Длина пароля",
 
     "COMMON__LABEL_HIDE_SYMBOLS": "Скрывать символы",
 

@@ -1,7 +1,7 @@
 import {FunctionComponent, useEffect, useRef, useState} from 'react';
 import {useIntl} from 'react-intl';
 import {observer} from 'mobx-react';
-import {ESizes, Input, Button, EMessageType, EPositions, SVGIcon} from 'ui';
+import {ESizes, Button, EMessageType, EPositions, SVGIcon, InputGroup} from 'ui';
 import {IEventMessage} from 'ui/Common/Models';
 import classNames from 'classnames';
 import {AuthorizationBody, AuthorizationFooter, AuthorizationHeader} from './AuthorizationForm/AuthorizationForm';
@@ -106,19 +106,18 @@ export const Authorization: FunctionComponent = observer(() => {
             </AuthorizationHeader>
 
             <AuthorizationBody position={EPositions.CENTER}>
-                <div className="authorization__input-container">
-                    <Input
-                        className={animate ? 'animated' : undefined}
-                        inputRef={ref}
-                        value={auth.password}
-                        type="password"
-                        placeholder={formatMessage({id: 'AUTH__PLACEHOLDER_ENTER_PASS'})}
-                        disabled={auth.isChecking}
-                        autoFocus={true}
-                        onInput={auth.setPassword}
-                        onEnter={checkAccess}
-                        message={{type: message?.type}}
-                    />
+                <InputGroup
+                    className={animate ? 'animated' : undefined}
+                    inputRef={ref}
+                    value={auth.password}
+                    type="password"
+                    placeholder={formatMessage({id: 'AUTH__PLACEHOLDER_ENTER_PASS'})}
+                    disabled={auth.isChecking}
+                    autoFocus={true}
+                    onInput={auth.setPassword}
+                    onEnter={checkAccess}
+                    message={{type: message?.type}}
+                >
                     <Button
                         onClick={checkAccess}
                         disabled={!auth.password}
@@ -126,7 +125,7 @@ export const Authorization: FunctionComponent = observer(() => {
                         className="authorization__button"
                         size={ESizes.SM}
                     />
-                </div>
+                </InputGroup>
             </AuthorizationBody>
 
             <AuthorizationFooter position={EPositions.CENTER}>

@@ -3,6 +3,7 @@ import {observer} from 'mobx-react';
 import {Button, ESizes, Input, Modal, ModalBody, ModalFooter, ModalHeader, Option, Select, SVGIcon} from 'ui/index';
 import {useIntl} from 'react-intl';
 import {IModal} from 'ui/Components/Modal/Models';
+import {PassGen} from 'Common/Components/PassGen/PassGen';
 import {faDownload} from '@fortawesome/free-solid-svg-icons';
 import {useMain} from '../../Store/Hooks';
 import {IFieldsCategory} from '../../Store/Models';
@@ -84,7 +85,7 @@ export const AddAccountModal: FunctionComponent<IModal> = observer(({onClose, is
                         ))}
 
                         <div className="additional-template">
-                            <div>PASSGEN: {main.accountPrototype.data.password}</div>
+                            <PassGen />
                             <textarea />
                         </div>
 
