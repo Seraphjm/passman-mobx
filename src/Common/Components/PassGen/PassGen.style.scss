@@ -1,0 +1,31 @@
+.pass-gen {
+    display: grid;
+    grid-row-gap: 0.5rem;
+    grid-template-columns: 1fr;
+}
+
+.pass-gen__password .ui-lib-input__controller {
+    font-family: monospace;
+}
+
+.pass-gen__length {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-column-gap: 0.5rem;
+    font-size: 0.75rem;
+    text-align: right;
+    padding-top: 0.75rem;
+}
+
+.pass-gen__length-text {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    user-select: none;
+}
+
+.pass-gen__length-control {
+    width: 4em;
+    height: 2em;
+    text-align: center;
+}

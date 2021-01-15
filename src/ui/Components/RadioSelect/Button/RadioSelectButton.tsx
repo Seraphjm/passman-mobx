@@ -12,17 +12,18 @@ import './RadioSelectButton.style.scss';
  * @prop [onChange] Обработчик события onChange.
  * @prop [value] Значение компонента для его контроля из вне.
  */
-interface IRadioButton {
+interface IRadioButton<T extends string | number> {
     size?: ESizes;
     className?: string;
-    onChange?: (e: string | number) => void;
+    onChange?: (e: T) => void;
     value?: string | number;
 }
 
+// TODO.TYPES дженерик IRadioButton в FunctionComponent
 /**
  * Компонент radio-select в форме кнопок.
  */
-export const RadioSelectButton: FunctionComponent<IRadioButton> = (props) => {
+export const RadioSelectButton: FunctionComponent<IRadioButton<any>> = (props) => {
     /** Создание name space для radio-select */
     const {current: name} = useRef(uuid());
 
@@ -33,7 +34,7 @@ export const RadioSelectButton: FunctionComponent<IRadioButton> = (props) => {
      */
     const onChange = (e: BaseSyntheticEvent) => {
         // @ts-ignore ложноположительное срабатывание.
-        isFunction(props.onChange) && props.onChange(e.target.value);
+        isFunction(props.onChange) && props.onChange(e.target.value as string | number);
     };
 
     return (

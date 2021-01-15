@@ -23,10 +23,10 @@ export const hidePassword = (password: string, ignore?: boolean): string => (ign
 /**
  * Функция создающая криптографически случайный пароль по заданной длинне и паттерну.
  *
- * @param length Длина пароля.
  * @param pattern Паттерн, по которому требуется создать пароль.
+ * @param length Длина пароля.
  */
-export const passwordGenerate = (length: number = 16, pattern: EPasswordPatterns = EPasswordPatterns.LOWER_UPPER_NUMBER_): string => {
+export const passwordGenerate = (pattern: EPasswordPatterns = EPasswordPatterns.LOWER_UPPER_NUMBER_, length: number = 16): string => {
     const currentPatterns = {
         [EPasswordPatterns.LOWER_UPPER_NUMBER]: /[a-zA-Z0-9]/,
         [EPasswordPatterns.LOWER_UPPER_NUMBER_]: /[a-zA-Z0-9_]/,

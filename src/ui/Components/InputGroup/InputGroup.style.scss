@@ -1,0 +1,44 @@
+@import "ui/Styles/mixins";
+
+.ui-lib-input-group {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    padding-top: 1.5rem;
+
+    .ui-lib-input {
+        padding-top: 0;
+    }
+
+    .ui-lib-input__controller {
+        border-right: none;
+    }
+
+    .ui-lib__input-placeholder {
+        top: 0.4rem;
+    }
+
+    &.disabled {
+        @include disabled;
+    }
+}
+
+.ui-lib-input-group__content {
+    display: inline-flex;
+
+    .ui-lib__flat {
+        border-radius: 0;
+        height: 2rem;
+        box-shadow: none;
+        border-top: 1px solid #bbb;
+        border-bottom: 1px solid #bbb;
+    }
+
+    .ui-lib-button:last-child .ui-lib__flat {
+        border: 1px solid #bbb;
+        border-radius: 0 0.25rem 0.25rem 0;
+    }
+
+    .ui-lib-button:first-child .ui-lib__flat {
+        border-left: 1px solid #bbb;
+    }
+}

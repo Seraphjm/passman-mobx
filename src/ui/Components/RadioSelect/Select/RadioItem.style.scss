@@ -1,3 +1,5 @@
+@import "ui/Styles/mixins";
+
 .ui-lib-radio-item {
     display: grid;
     grid-template-columns: 1rem 1fr;
@@ -12,6 +14,10 @@
 
         &:checked ~ .ui-lib-radio-item__ripple:before {
             transform: translate(23%, 23%) scale(1);
+        }
+
+        &:disabled {
+            @include disabled;
         }
 
         &:focus-visible ~ .ui-lib-radio-item__ripple {

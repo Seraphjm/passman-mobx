@@ -1,3 +1,5 @@
+@import "ui/Styles/mixins";
+
 .ui-lib-select {
     padding-top: 1.5rem;
     padding-bottom: 1rem;
@@ -42,6 +44,13 @@
         text-align: center;
     }
 
+    &.disabled {
+        cursor: not-allowed;
+        .ui-lib-select__value {
+            @include disabled;
+        }
+    }
+
     &.error {
         .ui-lib-select__value {
             border-color: var(--color-danger);
@@ -83,7 +92,6 @@
 .ui-lib-option {
     overflow: hidden;
     word-break: break-word;
-    font-family: monospace;
     transition: background 0.5s;
     font-size: 1.25rem;
     user-select: none;

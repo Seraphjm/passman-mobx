@@ -1,0 +1,55 @@
+@import "ui/Styles/mixins";
+
+.ui-lib-switch {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-column-gap: 0.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+
+    .ui-lib__hidden-controller {
+        &:checked ~ .ui-lib-switch__icon {
+            background: var(--color-info);
+
+            .ui-lib-svg-icon {
+                color: #f6f6f6;
+                transform: translate(calc(1.5em - 3px), 0.1em);
+            }
+        }
+
+        &:disabled {
+            & ~ .ui-lib-switch__icon,
+            & ~ .ui-lib-switch__label {
+                @include disabled;
+            }
+        }
+
+        /*TODO.STYLES вынести в отдельный миксин (глобальный поиск по <<&:focus-visible>>)*/
+        &:focus-visible ~ .ui-lib-switch__icon {
+            border-radius: 2em;
+            box-shadow: 0 0 0 2px var(--out-line-color);
+        }
+    }
+}
+
+.ui-lib-switch__icon {
+    display: flex;
+    transition: background 500ms;
+    background: #f6f6f6;
+    width: 2.5em;
+    height: 1.35em;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 2em;
+
+    .ui-lib-svg-icon {
+        transition-duration: 300ms;
+        transition-property: transform, color;
+        transform: translate(0.1em, 0.1em);
+    }
+}
+
+.ui-lib-switch__label {
+    align-self: center;
+    user-select: none;
+    font-size: 1.1rem;
+}

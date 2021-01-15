@@ -48,7 +48,7 @@
 }
 
 @mixin flat-sm {
-    font-size: 1rem;
+    font-size: 0.85rem;
     padding: 0.25rem 0.5rem;
 }
 
@@ -65,4 +65,12 @@
 @mixin flat-el {
     font-size: 1.5rem;
     padding: 0.75rem 1.5rem;
+}
+
+/**
+ * Миксин для отключенных элементов.
+ */
+@mixin disabled {
+    opacity: 0.66;
+    cursor: not-allowed;
 }

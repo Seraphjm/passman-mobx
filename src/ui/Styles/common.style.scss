@@ -16,6 +16,7 @@
     --color-warning: #db8e00;
     --color-success: #0ca400;
     --color-info: #1671ce;
+    --color-secondary: #cccccc;
 
     --font-color: #2c3e50;
 
@@ -55,8 +56,7 @@
     }
 
     &:disabled {
-        opacity: 0.65;
-        cursor: not-allowed;
+        @include disabled;
     }
 
     &:hover:not(:disabled),
