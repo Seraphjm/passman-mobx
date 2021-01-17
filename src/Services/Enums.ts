@@ -28,11 +28,13 @@ export enum EDBMode {
  * ADD Добавить.
  * EDIT Редактировать.
  * DELETE Удалить.
+ * CLEAR Очистить.
  */
 export enum ESetMode {
     ADD,
     EDIT,
     DELETE,
+    CLEAR,
 }
 
 /**

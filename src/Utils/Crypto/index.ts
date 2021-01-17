@@ -62,7 +62,7 @@ function getImportKey(password: string): Promise<CryptoKey> {
  * @param iv IV.
  * @param message Данные, которые необходимо зашифровать.
  */
-export async function encrypt<T>(password: string, {iv, salt}: ICryptoInitData, message: T) {
+export async function encrypt<T>(password: string, {iv, salt}: ICryptoInitData, message: T): Promise<ArrayBuffer> {
     const targetMessage: string = JSON.stringify(message);
     const key = await getCachedKey(password, salt);
 

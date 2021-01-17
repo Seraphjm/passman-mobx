@@ -30,6 +30,11 @@
         display: grid;
         grid-auto-flow: column;
         grid-column-gap: 0.5rem;
+
+        &:disabled {
+            background: #dadada;
+            box-shadow: none;
+        }
     }
 
     &.es {
@@ -41,6 +46,13 @@
     &.danger {
         .ui-lib__flat {
             background: var(--color-danger);
+            @include common-mode;
+        }
+    }
+
+    &.info {
+        .ui-lib__flat {
+            background: var(--color-info);
             @include common-mode;
         }
     }

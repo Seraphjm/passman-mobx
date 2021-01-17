@@ -2,8 +2,10 @@ import {makeAutoObservable, runInAction} from 'mobx';
 import {ICategory, IMainStore} from './Models';
 import {IRootStore} from 'Store/Models';
 import {EEncryptionStatus} from 'Utils/Crypto/Enums';
+import {IEncryptionResponse} from 'Utils/Crypto/Models';
 import {EResponseStatus, ESetMode} from 'Services/Enums';
 import {set} from 'Utils/Utils';
+import {clearObserve} from 'Store/Utils';
 import {IMainService} from '../Services/Models';
 import {IAccount} from '../Models/Account';
 import {getDefaultAccountPrototype} from './Consts';
@@ -36,6 +38,10 @@ export class MainStore implements IMainStore {
      * @inheritDoc
      */
     search: string = '';
+    /**
+     * @inheritDoc
+     */
+    selectedAccounts: IAccount[] = [];
 
     constructor(rootStore: IRootStore, serviceLayer: IMainService) {
         this.serviceLayer = serviceLayer;
@@ -47,6 +53,7 @@ export class MainStore implements IMainStore {
         });
 
         this.addAccount = this.addAccount.bind(this);
+        this.setSelectedAccounts = this.setSelectedAccounts.bind(this);
     }
 
     /**
@@ -76,6 +83,54 @@ export class MainStore implements IMainStore {
     setFieldAccountPrototype = <T = unknown>(path: string, data: T) => {
         set<IAccount>(this.accountPrototype, path, data);
     };
+
+    /**
+     * @inheritDoc
+     */
+    setSelectedAccounts(mode: ESetMode.ADD, account: IAccount): void;
+    setSelectedAccounts(mode: ESetMode.DELETE, account: IAccount): void;
+    setSelectedAccounts(mode: ESetMode.CLEAR, account?: never): void;
+    setSelectedAccounts(mode: any, account: any): any {
+        switch (mode) {
+            case ESetMode.ADD:
+                this.selectedAccounts.push(account);
+                break;
+
+            case ESetMode.DELETE:
+                this.selectedAccounts.splice(this.selectedAccounts.indexOf(account), 1);
+                break;
+
+            case ESetMode.CLEAR:
+                this.selectedAccounts.splice(0, this.selectedAccounts.length);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    setAccountPrototype = (account: IAccount): void => {
+        this.accountPrototype = clearObserve(account);
+    };
+
+    /**
+     * @inheritDoc
+     */
+    editAccount = (account: IAccount): Promise<void> =>
+        this.serviceLayer
+            .editAccount(clearObserve<IAccount>(account, {}), this.rootStore.authStore.password)
+            .then((response: IEncryptionResponse<IAccount[]>) => {
+                if (response.status === EEncryptionStatus.SUCCESS) {
+                    runInAction(() => {
+                        console.log(response.data);
+                        this.accounts = response.data || [];
+                    });
+                } else {
+                }
+            });
 
     /**
      * @inheritDoc
@@ -114,7 +169,7 @@ export class MainStore implements IMainStore {
      * @inheritDoc
      */
     *addAccount() {
-        const response = yield this.serviceLayer.setAccounts([{...this.accountPrototype}], ESetMode.ADD, this.rootStore.authStore.password);
+        const response = yield this.serviceLayer.addAccount(this.accountPrototype, this.rootStore.authStore.password);
 
         if (response.status === EEncryptionStatus.SUCCESS) {
             this.accounts = response.data;

@@ -1,5 +1,8 @@
+import {EPluralPeriod, getLocalePluralPeriod} from 'i18n';
+import {ELanguage} from 'Modules/Settings/Enums';
 import {IAccountData, IPreparedFields} from './Models/Account';
 import {ADDITIONAL_FIELDS, DEFAULT_FIELDS, SORT_ORDER} from './Store/Consts';
+import {ILastUpdate} from './Models/Models';
 
 /**
  * Функция, осуществляющая группировку полей по типам.
@@ -28,4 +31,27 @@ export const getPreparedAccountField = (fields: IAccountData) => {
 
             return acc;
         }, prepareFields);
+};
+
+/**
+ * Получает локализированную временную пару период/количество.
+ *
+ * @param locale Языковая локаль.
+ * @param time Время.
+ */
+export const getLocaleLastUpdate = (locale: ELanguage, time: string): ILastUpdate => {
+    const days = (Date.now() - new Date(time).valueOf()) / 86400000;
+
+    const count = days < 30 ? days : days >= 30 && days < 365 ? days / 30 : days / 365;
+
+    const period =
+        days < 1
+            ? EPluralPeriod.TODAY
+            : days >= 1 && days < 30
+            ? EPluralPeriod.DAY
+            : days >= 30 && days < 365
+            ? EPluralPeriod.MONTH
+            : EPluralPeriod.YEAR;
+
+    return {period: getLocalePluralPeriod(locale, period, count), count: Number(count.toFixed(2))};
 };

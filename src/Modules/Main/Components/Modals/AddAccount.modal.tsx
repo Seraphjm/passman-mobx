@@ -1,6 +1,6 @@
 import {FunctionComponent, useEffect} from 'react';
 import {observer} from 'mobx-react';
-import {Button, ESizes, Input, Modal, ModalBody, ModalFooter, ModalHeader, Option, Select, SVGIcon} from 'ui/index';
+import {Button, ESizes, Input, Modal, ModalBody, ModalFooter, ModalHeader, Option, Select, SVGIcon} from 'ui';
 import {useIntl} from 'react-intl';
 import {IModal} from 'ui/Components/Modal/Models';
 import {PassGen} from 'Common/Components/PassGen/PassGen';
@@ -46,8 +46,8 @@ export const AddAccountModal: FunctionComponent<IModal> = observer(({onClose, is
     /**
      * Метод добавления нового аккаунта. Так же закрывает модальное окно.
      */
-    const addAccount = () => {
-        main.addAccount();
+    const addAccount = async () => {
+        await main.addAccount();
         onClose();
     };
 
@@ -85,7 +85,7 @@ export const AddAccountModal: FunctionComponent<IModal> = observer(({onClose, is
                         ))}
 
                         <div className="additional-template">
-                            <PassGen />
+                            <PassGen required={true} />
                             <textarea />
                         </div>
 

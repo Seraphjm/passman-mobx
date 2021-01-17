@@ -1,15 +1,16 @@
 import {IDBPDatabase} from 'idb/build/esm/entry';
 import {ECryptoStorage, EDBMode, EResponseStatus, EStoreName} from './Enums';
 import {IResponse} from './Models';
+import {IEncryptionResponse} from '../Utils/Crypto/Models';
 
 /**
  * Функция, иммутабельно добавляющая новые элементы в переданный целевой массив.
  *
  * @param targetArray Целевой массив.
- * @param items Переданные элементы на добавление в целевой массив.
+ * @param item Переданный элемент на добавление в целевой массив.
  */
-export function addItemsFromArray<T>(targetArray: T[], items: T[]): T[] {
-    return [...targetArray, ...items];
+export function addItemToArray<T>(targetArray: T[], item: T): T[] {
+    return [...targetArray, item];
 }
 
 /**
@@ -27,11 +28,12 @@ export function removeItemsFromArray<T>(targetArray: T[], items: T[], by: string
  * Функция, иммутабельно редактирующая указанные в items элементы в переданном целевом массиве.
  *
  * @param targetArray Целевой массив.
- * @param items Переданные элементы по которым необходимо осуществить редактирование.
+ * @param item Переданный элемент по которому необходимо осуществить редактирование.
  * @param by Ключ, по которому необходимо редактировать элемент. По умолчанию, используется _id.
  */
-export function editItemsFromArray<T>(targetArray: T[], items: T[], by: string = '_id'): T[] {
-    return targetArray.map((sourceItem: T | any) => items.find((item: T | any) => item[by] === sourceItem[by]) || sourceItem);
+export function editItemInArray<T>(targetArray: T[], item: T, by: string = '_id'): T[] {
+    // @ts-ignore
+    return targetArray.map((sourceItem: T) => (item[by] === sourceItem[by] ? item : sourceItem));
 }
 
 /**
@@ -42,7 +44,7 @@ export function editItemsFromArray<T>(targetArray: T[], items: T[], by: string =
  * @param data Данные, которые необходимо записать в указанную в txStorage сущность indexedDB.
  */
 function updateStorage<T>(db: IDBPDatabase, txStorage: EStoreName, data: T): Promise<IResponse<T>>;
-function updateStorage(db: IDBPDatabase, txStorage: ECryptoStorage, data: ArrayBuffer): Promise<IResponse<ArrayBuffer>>;
+function updateStorage(db: IDBPDatabase, txStorage: ECryptoStorage, data: ArrayBuffer): Promise<IEncryptionResponse<ArrayBuffer>>;
 async function updateStorage(db: any, txStorage: any, data: any): Promise<any> {
     const tx = db.transaction(txStorage, EDBMode.READ_WRITE);
     const store = tx.objectStore(txStorage);

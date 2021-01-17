@@ -16,6 +16,7 @@ import {Checkbox} from './Components/Checkbox/Checkbox';
 import {Switch} from './Components/Switch/Switch';
 import {Highlight} from './Components/Highlight/Highlight';
 import {InputGroup} from './Components/InputGroup/InputGroup';
+import {Badge} from './Components/Badge/Badge';
 
 export {EColors, ESizes, EBadgeCounterPosition, EMessageType, EPositions, EModalContentPosition};
 
@@ -41,4 +42,5 @@ export {
     Switch,
     Highlight,
     InputGroup,
+    Badge,
 };

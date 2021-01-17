@@ -55,7 +55,6 @@
     "COMMON__ACTION_SAVE": "Save",
     "COMMON__ACTION_UPDATE_PASSWORD": "Update password",
     "COMMON__PASSWORD_LENGTH": "Password length",
-
     "COMMON__LABEL_HIDE_SYMBOLS": "Hide symbols",
 
     "MAIN__ACCOUNT_NOTHING_FOUND": "Nothing found :(",
@@ -66,5 +65,6 @@
 
     "MAIN__ACCOUNT_CARD_UPDATE_PASSWORD_FOR": "Update password for {name}",
     "MAIN__ACCOUNT_CARD_CLICK_FOR_COPY": "Click for copy!",
-    "MAIN__ACCOUNT_CARD_LAST_UPDATE": "Last password update"
+    "MAIN__ACCOUNT_CARD_LAST_UPDATE": "Last password update: {count} {period} ago",
+    "MAIN__ACCOUNT_CARD_LAST_UPDATE_TODAY": "Last password update: today"
 }
