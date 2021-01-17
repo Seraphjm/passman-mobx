@@ -1,0 +1,15 @@
+.settings {
+    display: grid;
+    grid-template-columns: 200px auto;
+    grid-template-rows: 90vh;
+    margin: 5vh 2rem;
+    background: #fff;
+    border: 1px solid #d0d5d8;
+    border-radius: 3px;
+    box-shadow: 0 3px 5px 0 rgba(174, 174, 174, 0.5);
+    position: relative;
+}
+
+.settings__sidebar {
+    border-right: 1px solid;
+}
