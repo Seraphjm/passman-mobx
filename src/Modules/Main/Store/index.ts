@@ -119,18 +119,25 @@ export class MainStore implements IMainStore {
     /**
      * @inheritDoc
      */
-    editAccount = (account: IAccount): Promise<void> =>
-        this.serviceLayer
-            .editAccount(clearObserve<IAccount>(account, {}), this.rootStore.authStore.password)
-            .then((response: IEncryptionResponse<IAccount[]>) => {
-                if (response.status === EEncryptionStatus.SUCCESS) {
-                    runInAction(() => {
-                        console.log(response.data);
-                        this.accounts = response.data || [];
-                    });
-                } else {
-                }
-            });
+    editAccount = (account: IAccount): Promise<void> => {
+        const updateDate = new Date().toISOString();
+        const payload: IAccount = {...clearObserve<IAccount>(account, {}), lastUpdate: updateDate};
+        const i = this.accounts.findIndex(({_id}) => _id === account._id);
+
+        if (this.accounts[i].data.password !== payload.data.password) {
+            payload.passwordLastUpdate = updateDate;
+        }
+
+        return this.serviceLayer.editAccount(payload, this.rootStore.authStore.password).then((response: IEncryptionResponse<IAccount>) => {
+            if (response.status === EEncryptionStatus.SUCCESS) {
+                runInAction(() => {
+                    this.accounts[i] = response.data || payload;
+                });
+            } else {
+                // todo.NOTIFICATION
+            }
+        });
+    };
 
     /**
      * @inheritDoc
@@ -172,7 +179,7 @@ export class MainStore implements IMainStore {
         const response = yield this.serviceLayer.addAccount(this.accountPrototype, this.rootStore.authStore.password);
 
         if (response.status === EEncryptionStatus.SUCCESS) {
-            this.accounts = response.data;
+            this.accounts.push(clearObserve(this.accountPrototype));
             // todo.NOTIFICATION
         }
 

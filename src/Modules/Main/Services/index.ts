@@ -46,14 +46,17 @@ export class MainService implements IMainService {
     /**
      * @inheritDoc
      */
-    editAccount = async (account: IAccount, password: string): Promise<IEncryptionResponse<IAccount[]>> => {
+    editAccount = async (account: IAccount, password: string): Promise<IEncryptionResponse<IAccount>> => {
         const {data: accountsFromStore = [], status}: IEncryptionResponse<IAccount[]> = await this.getAccounts(password);
 
         if (status === EEncryptionStatus.ERROR) return {status: EEncryptionStatus.ERROR}; // todo.NOTIFICATION
 
         try {
             const transferData = await editItemInArray<IAccount>(accountsFromStore, account);
-            return this.serviceLayer.setEncryptedData<IAccount[]>(ECryptoStorage.ACCOUNTS, password, transferData);
+            return this.serviceLayer.setEncryptedData<IAccount[]>(ECryptoStorage.ACCOUNTS, password, transferData).then((resp) => ({
+                ...resp,
+                data: account,
+            }));
         } catch (e) {
             return {status: EEncryptionStatus.ERROR, message: e}; // todo.NOTIFICATION
         }
