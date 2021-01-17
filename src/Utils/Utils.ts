@@ -53,7 +53,7 @@ export const passwordGenerate = (pattern: EPasswordPatterns = EPasswordPatterns.
 export const isFunction = (value: unknown): boolean => typeof value === 'function';
 
 /**
- * Более легковесный аналог lodash.set.
+ * Более легковесный аналог lodash.set. Мутирует переданный объект.
  *
  * @param object Объект в котором необходимо установить свойство.
  * @param path Путь до свойства. Описывается через <<.>>.

@@ -3,7 +3,8 @@ import {observer} from 'mobx-react';
 import {useIntl} from 'react-intl';
 import classNames from 'classnames';
 import {faKeycdn} from '@fortawesome/free-brands-svg-icons';
-import {SVGIcon, ESizes} from 'ui';
+import {ESizes, SVGIcon} from 'ui';
+import {ESetMode} from 'Services/Enums';
 import {useMain} from '../../../../Store/Hooks';
 import {AddAccountModal} from '../../../Modals/AddAccount.modal';
 
@@ -19,8 +20,16 @@ export const AccountsControlPanel: FunctionComponent = observer(() => {
 
     /*TODO.REMOVE*/
     const disable = false;
+    /** Количество выбранных аккаунтов */
+    const selectedAccountsLength = main.selectedAccounts.length;
 
-    const toggleModal = (): void => setIsOpenAddModal(!isOpenAddModal);
+    /** Функция, переключающая состояние модального окна добавления аккаунта */
+    const toggleAddModal = (): void => setIsOpenAddModal(!isOpenAddModal);
+
+    /** Функция, вызывающую отмену всех выделенных аккаунтов */
+    const cancelSelected = (): void => {
+        main.setSelectedAccounts(ESetMode.CLEAR);
+    };
 
     return (
         <>
@@ -28,21 +37,29 @@ export const AccountsControlPanel: FunctionComponent = observer(() => {
                 <li className="header__icon">
                     <SVGIcon icon={faKeycdn} size={ESizes.MD} />
                 </li>
-                <li
-                    onClick={toggleModal}
-                    className={classNames('header__item', {
-                        accounts_is_empty: !main.accounts.length && !isOpenAddModal,
-                    })}
-                >
-                    {formatMessage({id: 'COMMON__ACTION_ADD'})}
-                </li>
-                {disable && <li className="header__item">{formatMessage({id: 'COMMON__ACTION_EDIT'})}</li>}
-                {disable && <li className="header__item">{formatMessage({id: 'COMMON__ACTION_MOVE'})}</li>}
-                {disable && <li className="header__item">{formatMessage({id: 'COMMON__ACTION_DELETE'})}</li>}
-                {disable && <li className="header__item">{formatMessage({id: 'COMMON__ACTION_CANCEL'})}</li>}
+                {!selectedAccountsLength && (
+                    <li
+                        onClick={toggleAddModal}
+                        className={classNames('header__item', {
+                            accounts_is_empty: !main.accounts.length && !isOpenAddModal,
+                        })}
+                    >
+                        {formatMessage({id: 'COMMON__ACTION_ADD'})}
+                    </li>
+                )}
+                {selectedAccountsLength === 1 && <li className="header__item">{formatMessage({id: 'COMMON__ACTION_EDIT'})}</li>}
+                {Boolean(selectedAccountsLength) && (
+                    <>
+                        {disable && <li className="header__item">{formatMessage({id: 'COMMON__ACTION_MOVE'})}</li>}
+                        {disable && <li className="header__item">{formatMessage({id: 'COMMON__ACTION_DELETE'})}</li>}
+                        <li className="header__item" onClick={cancelSelected}>
+                            {formatMessage({id: 'COMMON__ACTION_CANCEL'})}
+                        </li>
+                    </>
+                )}
             </ul>
 
-            <AddAccountModal isOpen={isOpenAddModal} onClose={toggleModal} />
+            <AddAccountModal isOpen={isOpenAddModal} onClose={toggleAddModal} />
         </>
     );
 });

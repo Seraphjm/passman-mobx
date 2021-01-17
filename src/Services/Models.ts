@@ -34,7 +34,7 @@ export interface IDBServiceLayer {
      * @param password Пароль пользователя.
      * @param transferData Переданные данные, которые необходимо зашифровать и записать.
      */
-    setEncryptedData: <T>(storage: ECryptoStorage, password: string, transferData: T) => Promise<IResponse<T>>;
+    setEncryptedData: <T>(storage: ECryptoStorage, password: string, transferData: T) => Promise<IEncryptionResponse<T>>;
 
     /**
      * Метод, возвращающий открыте данные из указанной сущности в БД.

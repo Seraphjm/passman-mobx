@@ -9,6 +9,7 @@
 }
 
 .account-card__header {
+    align-items: center;
     cursor: pointer;
     display: grid;
     grid-template-columns: auto auto 1fr auto;

@@ -1,4 +1,3 @@
-import {ESetMode} from 'Services/Enums';
 import {IResponse} from 'Services/Models';
 import {IDBServiceLayer} from 'Services/Models';
 import {IEncryptionResponse} from 'Utils/Crypto/Models';
@@ -22,15 +21,28 @@ export interface IMainService {
     getAccounts(password: string): Promise<IEncryptionResponse<IAccount[]>>;
 
     /**
-     * Экшн, изменяющий сохранённые в базе аккаунты пользователя.
-     * На вход принимается массив изменяемых/добавляемых аккаунтов, смотрится mode,
-     * И в соответствии с ним выполняется необходимая стратегия по diff.
+     * Экшн, добавляющий новый аккаунт в базу аккаунтов пользователя.
      *
-     * @param accounts Аккаунты, которые необходимо изменить/добавить.
-     * @param mode Применяемая стратегия по отношению к переданным аккаунтам add/put/delete.
+     * @param account Аккаунты, которые необходимо изменить/добавить.
      * @param password Пароль пользователя.
      */
-    setAccounts(accounts: IAccount[], mode: ESetMode, password: string): Promise<IResponse<IAccount[]>>;
+    addAccount(account: IAccount, password: string): Promise<IEncryptionResponse<IAccount[]>>;
+
+    /**
+     * Экшн, изменяющий сохранённые в базе аккаунты пользователя.
+     *
+     * @param account Аккаунты, которые необходимо изменить/добавить.
+     * @param password Пароль пользователя.
+     */
+    editAccount(account: IAccount, password: string): Promise<IEncryptionResponse<IAccount[]>>;
+
+    /**
+     * Экшн, изменяющий сохранённые в базе аккаунты пользователя.
+     *
+     * @param accounts Аккаунты, которые необходимо изменить/добавить.
+     * @param password Пароль пользователя.
+     */
+    removeAccounts(accounts: IAccount[], password: string): Promise<IEncryptionResponse<IAccount[]>>;
 
     /**
      * Экшн, возвращающий дефолтные категории.

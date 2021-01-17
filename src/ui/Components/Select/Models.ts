@@ -1,4 +1,4 @@
-import {IEventMessage} from '../../Common/Models';
+import {IEventMessage} from 'ui/Common/Models';
 
 /**
  * Модель компонента select.

@@ -104,10 +104,14 @@ export interface IPasswordNeedUpdate {
  *
  * @prop counter Запрещённое свойство для бейджа аккаунта.
  * @prop counterPosition Запрещённое свойство для бейджа аккаунта.
+ * @prop size Запрещённое свойство для бейджа аккаунта.
+ * @prop text Badge text.
  */
 export interface IAccountBadge extends IBadge {
     counter: never;
     counterPosition: never;
+    size: never;
+    text: string;
 }
 
 /**

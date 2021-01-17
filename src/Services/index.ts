@@ -147,7 +147,7 @@ class ServiceDB implements IDBServiceLayer {
     /**
      * @inheritDoc
      */
-    setEncryptedData = async <T>(storage: ECryptoStorage, password: string, transferData: T): Promise<IResponse<T>> =>
+    setEncryptedData = async <T>(storage: ECryptoStorage, password: string, transferData: T): Promise<IEncryptionResponse<T>> =>
         await encrypt<T>(
             password,
             {
@@ -159,10 +159,10 @@ class ServiceDB implements IDBServiceLayer {
             this.dbPromise
                 .then((db: IDBPDatabase) => updateStorage(db, storage, encryptedData))
                 .then(
-                    ({status}: IResponse) => ({status, data: transferData}),
-                    ({status}: IResponse) => ({status, data: transferData})
+                    ({status}: IEncryptionResponse) => ({status, data: transferData}),
+                    ({status}: IEncryptionResponse) => ({status, data: transferData})
                 )
-                .catch((message) => ({status: EResponseStatus.ERROR, data: transferData, message}))
+                .catch((message) => ({status: EEncryptionStatus.ERROR, data: transferData, message}))
         );
 
     /**

@@ -2,6 +2,7 @@ import {BaseSyntheticEvent, FunctionComponent, useEffect, useState} from 'react'
 import {useIntl} from 'react-intl';
 import {observer} from 'mobx-react';
 import {Button, ESizes, InputGroup, RadioButton, RadioSelectButton, SVGIcon} from 'ui';
+import {IEventMessage} from 'ui/Common/Models';
 import {faSync} from '@fortawesome/free-solid-svg-icons';
 import {faCopy} from '@fortawesome/free-regular-svg-icons';
 import {useMain} from 'Modules/Main/Store/Hooks';
@@ -13,9 +14,11 @@ import './PassGen.style.scss';
  * Свойства компонента генерации пароля.
  *
  * @prop [required] Флаг обязательности заполнения.
+ * @prop [message] Сообщение к полю input.
  */
 interface IPassGen {
     required?: boolean;
+    message?: IEventMessage;
 }
 
 /**
@@ -108,6 +111,7 @@ export const PassGen: FunctionComponent<IPassGen> = observer((props) => {
                 required={props.required}
                 className="pass-gen__password"
                 onInput={onInput}
+                placeholder={formatMessage({id: 'placeholder:password'})}
                 value={main.accountPrototype.data.password}
             >
                 <Button onClick={onUpdate} size={ESizes.ES}>
