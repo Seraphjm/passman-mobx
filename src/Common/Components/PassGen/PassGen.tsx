@@ -15,22 +15,28 @@ import './PassGen.style.scss';
  *
  * @prop [required] Флаг обязательности заполнения.
  * @prop [message] Сообщение к полю input.
+ * @prop [createNewPasswordOnMount] Флаг сообщающий о необходимости создать новый пароль при монтировании компонента.
  */
 interface IPassGen {
     required?: boolean;
     message?: IEventMessage;
+    createNewPasswordOnMount?: boolean;
 }
 
 /**
  * Компонент для генерации пароля. Предоставляет возможности установки длинны, паттерна и ручного редактирования.
  */
 export const PassGen: FunctionComponent<IPassGen> = observer((props) => {
-    /** При размонтировании сбрасываем пароль */
-    // eslint-disable-next-line
-    useEffect(() => passGen, []);
-
     /** mobx store */
     const main = useMainStore();
+
+    /** При размонтировании сбрасываем пароль */
+    useEffect(() => {
+        if (props.createNewPasswordOnMount) passGen();
+
+        return passGen;
+        // eslint-disable-next-line
+    }, []);
     /** Интернационализация */
     const {formatMessage} = useIntl();
 

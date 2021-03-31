@@ -1,6 +1,20 @@
 import {BaseSyntheticEvent, FunctionComponent, SyntheticEvent, useMemo, useRef, useState} from 'react';
 import {observer} from 'mobx-react';
-import {Badge, Button, Card, CardBody, CardFooter, CardHeader, ESizes, Modal, ModalBody, ModalFooter, ModalHeader, SVGIcon} from 'ui';
+import {
+    Badge,
+    Button,
+    Card,
+    CardBody,
+    CardFooter,
+    CardHeader,
+    EColors,
+    ESizes,
+    Modal,
+    ModalBody,
+    ModalFooter,
+    ModalHeader,
+    SVGIcon,
+} from 'ui';
 import {faCheck, faRecycle} from '@fortawesome/free-solid-svg-icons';
 import {faEye, faEyeSlash, faSave} from '@fortawesome/free-regular-svg-icons';
 import {useIntl} from 'react-intl';
@@ -233,12 +247,13 @@ export const AccountCard: FunctionComponent<IProps> = observer(({account}) => {
                 </ModalHeader>
 
                 <ModalBody>
-                    <PassGen />
+                    <PassGen createNewPasswordOnMount={true} />
                 </ModalBody>
 
                 <ModalFooter>
                     <Button
                         disabled={account.data.password === main.accountPrototype.data.password}
+                        type={EColors.INFO}
                         onClick={saveChanges}
                         size={ESizes.SM}
                         icon={<SVGIcon icon={faSave} />}
