@@ -9,6 +9,7 @@ import {
     CardHeader,
     EColors,
     ESizes,
+    Highlight,
     Modal,
     ModalBody,
     ModalFooter,
@@ -21,7 +22,7 @@ import {useIntl} from 'react-intl';
 import {Logotype} from 'Common/Components/Logotype';
 import {PassGen} from 'Common/Components/PassGen/PassGen';
 import {ELanguage} from 'Modules/Settings/Enums';
-import {copyToClipboard, hidePassword} from 'Utils/Utils';
+import {capitalizeFirstLetter, copyToClipboard, hidePassword} from 'Utils/Utils';
 import {ESetMode} from 'Services/Enums';
 import {useMainStore} from '../../Store/Hooks';
 import {IAccount, IAccountBadge} from '../../Models/Account';
@@ -184,7 +185,9 @@ export const AccountCard: FunctionComponent<IProps> = observer(({account}) => {
                         />
                         <SVGIcon icon={faCheck} className="account-card__icon" />
                         <Logotype size={ESizes.MD} logotype={account.logotype} />
-                        <h2 className="account-card__label">{account.name}</h2>
+                        <h2 className="account-card__label">
+                            <Highlight text={capitalizeFirstLetter(account.name)} search={main.search} />
+                        </h2>
                         <div className="account-card__header-badges">
                             {account.settings?.badges?.map((badge: IAccountBadge) => (
                                 <Badge type={badge.type}>{badge.text}</Badge>

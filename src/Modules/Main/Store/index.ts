@@ -8,6 +8,8 @@ import {set} from 'Utils/Utils';
 import {IMainService} from '../Services/Models';
 import {IAccount} from '../Models/Account';
 import {getDefaultAccountPrototype} from './Consts';
+import {go} from 'fuzzysort';
+import {IFuzzySortResult} from 'Common/Models';
 
 /**
  * Стор главной страницы приложеия.
@@ -40,7 +42,7 @@ export class MainStore implements IMainStore {
     /**
      * @inheritDoc
      */
-    search: string = 'v';
+    search: string = '';
     /**
      * @inheritDoc
      */
@@ -91,7 +93,13 @@ export class MainStore implements IMainStore {
      * @inheritDoc
      */
     get searchedAccounts() {
-        return [];
+        //@ts-ignore
+        const filtered: IFuzzySortResult<IAccount>[] = go<IAccount>(this.search, this.accounts, {
+            limit: 100,
+            key: 'name',
+        });
+
+        return filtered.length ? (filtered.sort((a, b) => (a.score < b.score ? 1 : -1)).map(({obj}) => obj) as IAccount[]) : [];
     }
 
     /**
@@ -144,6 +152,8 @@ export class MainStore implements IMainStore {
      * @inheritDoc
      */
     setSearch = (search: string): void => {
+        if (this.selectedAccounts.length) this.setSelectedAccounts(ESetMode.CLEAR);
+
         this.search = search;
     };
 

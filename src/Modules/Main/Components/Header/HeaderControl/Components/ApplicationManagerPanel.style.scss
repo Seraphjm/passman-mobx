@@ -1,0 +1,57 @@
+@import "ui/Styles/mixins";
+
+.header__search-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    min-width: 1rem;
+}
+
+.header__search-controller {
+    transition: width 500ms, opacity 200ms;
+    width: 0;
+    opacity: 0;
+    outline: none;
+    border-radius: 3px;
+    border: none;
+    line-height: 1.5;
+    cursor: pointer;
+
+    &:focus {
+        cursor: initial;
+        width: 30vw;
+        opacity: 1;
+        padding-right: 1.3rem;
+        padding-left: 0.5rem;
+
+        @include extra-small {
+            width: 50vw;
+        }
+
+        @include small {
+            width: 40vw;
+        }
+
+        @include medium {
+            width: 30vw;
+        }
+
+        @include large {
+            width: 30vw;
+        }
+
+        @include extra-large {
+            width: 20vw;
+        }
+
+        + .header__search-icon {
+            transform: scale(0.75) translateX(-0.25rem);
+            color: #858585;
+        }
+    }
+}
+
+.header__search-icon {
+    transition: transform 400ms;
+    position: fixed;
+}
