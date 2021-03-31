@@ -19,5 +19,11 @@
         align-items: center;
         height: 100%;
         user-select: none;
+        font-size: 2rem;
+    }
+
+    .image-not-found {
+        border-radius: 50%;
+        margin-bottom: 1rem;
     }
 }

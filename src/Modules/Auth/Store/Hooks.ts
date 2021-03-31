@@ -6,6 +6,6 @@ import {IAuthorizationStore} from './Models';
 /**
  * Хук, необходимый для быстрого доступа к настройкам.
  */
-export function useAuthorization(): IAuthorizationStore {
+export function useAuthorizationStore(): IAuthorizationStore {
     return useContext<TRootStore>(RootStoreContext).authorization as IAuthorizationStore;
 }

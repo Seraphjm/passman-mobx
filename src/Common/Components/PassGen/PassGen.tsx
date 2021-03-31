@@ -5,7 +5,7 @@ import {Button, ESizes, InputGroup, RadioButton, RadioSelectButton, SVGIcon} fro
 import {IEventMessage} from 'ui/Common/Models';
 import {faSync} from '@fortawesome/free-solid-svg-icons';
 import {faCopy} from '@fortawesome/free-regular-svg-icons';
-import {useMain} from 'Modules/Main/Store/Hooks';
+import {useMainStore} from 'Modules/Main/Store/Hooks';
 import {EPasswordPatterns} from 'Utils/Enums';
 import {passwordGenerate, copyToClipboard} from 'Utils/Utils';
 import './PassGen.style.scss';
@@ -30,7 +30,7 @@ export const PassGen: FunctionComponent<IPassGen> = observer((props) => {
     useEffect(() => passGen, []);
 
     /** mobx store */
-    const main = useMain();
+    const main = useMainStore();
     /** Интернационализация */
     const {formatMessage} = useIntl();
 

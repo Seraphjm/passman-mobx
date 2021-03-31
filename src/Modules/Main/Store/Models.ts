@@ -26,6 +26,11 @@ export interface IMainStore {
     categories: ICategory[];
 
     /**
+     * Активная категория.
+     */
+    selectedCategory: string;
+
+    /**
      * Поисковая строка в списке аккаунтов.
      */
     search: string;
@@ -47,9 +52,24 @@ export interface IMainStore {
     searchedAccounts: IAccount[];
 
     /**
+     * Геттер, возвращающий найденные аккаунты по поисковому запросу.
+     */
+    showedAccounts: IAccount[];
+
+    /**
      * Геттер, достающий поля к выбранной категории в протипе аккаунта.
      */
     protoCategoryFields: IFieldsCategory[];
+
+    /**
+     * Геттер, достающий поля к выбранной категории в протипе аккаунта.
+     */
+    activeCategory: string;
+
+    /**
+     * Геттер, достающий поля к выбранной категории в протипе аккаунта.
+     */
+    enabledCategories: ICategory[];
 
     /*actions*/
     /**
@@ -61,6 +81,16 @@ export interface IMainStore {
      * Экшн, загружающий дефолтные категории из БД.
      */
     loadCategories(): Promise<EResponseStatus>;
+
+    /**
+     * Экшн, устанавливающий активную категорию в сайдбаре.
+     */
+    setSelectedCategory(id: string): void;
+
+    /**
+     * Экшн, устанавливающий активную категорию в сайдбаре.
+     */
+    setSearch(search: string): void;
 
     /**
      * Экшн, добавляющий новый аккаунт в базу данных.
@@ -135,11 +165,13 @@ export interface IFieldsCategory {
 /**
  * Модель категории.
  *
+ * @prop id Идентификатор категории.
  * @prop name Имя категории.
  * @prop icon Иконка категории.
  * @prop fields Список полей соответствующих категории.
  */
 export interface ICategory {
+    id: string;
     name: string;
     icon: ISVGIcon;
     fields: IFieldsCategory[];

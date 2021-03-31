@@ -37,7 +37,11 @@ export class MainStore implements IMainStore {
     /**
      * @inheritDoc
      */
-    search: string = '';
+    selectedCategory: string = '';
+    /**
+     * @inheritDoc
+     */
+    search: string = 'v';
     /**
      * @inheritDoc
      */
@@ -60,21 +64,42 @@ export class MainStore implements IMainStore {
      * @inheritDoc
      */
     get sortedAccounts() {
-        return this.accounts.slice().sort((a, b) => (a.name < b.name ? -1 : 1));
+        return this.accounts.slice().sort((a, b) => (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase() ? -1 : 1));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    get enabledCategories() {
+        return this.categories.filter((category) => this.accounts.some((account) => category.id === account.category));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    get activeCategory() {
+        return this.selectedCategory || this.enabledCategories[0]?.id;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    get showedAccounts() {
+        return this.search ? this.searchedAccounts : this.sortedAccounts.filter((account) => account.category === this.activeCategory);
     }
 
     /**
      * @inheritDoc
      */
     get searchedAccounts() {
-        return this.search ? [] : this.sortedAccounts;
+        return [];
     }
 
     /**
      * @inheritDoc
      */
     get protoCategoryFields() {
-        return this.categories.find((category) => category.name === this.accountPrototype.category)?.fields || [];
+        return this.categories.find((category) => category.id === this.accountPrototype.category)?.fields || [];
     }
 
     /**
@@ -114,6 +139,20 @@ export class MainStore implements IMainStore {
      */
     setAccountPrototype = (account: IAccount): void => {
         this.accountPrototype = clearObserve(account);
+    };
+
+    /**
+     * @inheritDoc
+     */
+    setSearch = (search: string): void => {
+        this.search = search;
+    };
+
+    /**
+     * @inheritDoc
+     */
+    setSelectedCategory = (id: string): void => {
+        this.selectedCategory = id;
     };
 
     /**

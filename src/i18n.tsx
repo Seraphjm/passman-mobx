@@ -2,7 +2,7 @@ import {FunctionComponent, useEffect, useState} from 'react';
 import {IntlProvider} from 'react-intl';
 import {ELanguage} from 'Modules/Settings/Enums';
 import {observer} from 'mobx-react';
-import {useSettings} from 'Modules/Settings/Store/Hooks';
+import {useSettingsStore} from 'Modules/Settings/Store/Hooks';
 
 /**
  * Модель экспортируемого модуля локализации.
@@ -30,7 +30,7 @@ function loadLocaleData(locale: ELanguage): Promise<IMessagesExportModule> {
  */
 export const IntlWrapper: FunctionComponent = observer(({children}) => {
     const [messages, setMessages] = useState<any>({default: null});
-    const settings = useSettings();
+    const settings = useSettingsStore();
 
     useEffect(() => {
         loadLocaleData(settings.language)

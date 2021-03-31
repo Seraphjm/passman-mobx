@@ -6,7 +6,7 @@ import {IEventMessage} from 'ui/Common/Models';
 import classNames from 'classnames';
 import {AuthorizationBody, AuthorizationFooter, AuthorizationHeader} from './AuthorizationForm/AuthorizationForm';
 import {TemplateAuthForm} from './AuthorizationForm/TemplateAuthForm';
-import {useAuthorization} from '../Store/Hooks';
+import {useAuthorizationStore} from '../Store/Hooks';
 import {faCheck, faSignInAlt} from '@fortawesome/free-solid-svg-icons';
 import style from './AuthorizationForm/AuthorizationForm.style.module.scss';
 
@@ -17,7 +17,7 @@ export const Authorization: FunctionComponent = observer(() => {
     /** Интернационализация */
     const {formatMessage} = useIntl();
     /** store авторизации экшены и состояние*/
-    const auth = useAuthorization();
+    const auth = useAuthorizationStore();
     /** Сообщения приходящие в процессе авторизации/создании БД */
     const [message, setMessage] = useState<IEventMessage>();
     /** флаг анимации инпута */

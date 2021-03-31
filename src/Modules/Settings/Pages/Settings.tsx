@@ -4,14 +4,14 @@ import {RadioButton, RadioSelectButton} from 'ui';
 import {AUTH_ROUTE_NAMES} from 'Modules/Auth/Router/Routes';
 import {MAIN_ROUTE_NAMES} from 'Modules/Main/Router/Routes';
 import {ELanguage} from '../Enums';
-import {useSettings} from '../Store/Hooks';
+import {useSettingsStore} from '../Store/Hooks';
 import './Settings.style.scss';
 
 /**
  * Страница настроек приложения.
  */
 const Settings: FunctionComponent = () => {
-    const settings = useSettings();
+    const settings = useSettingsStore();
     return (
         <div className="settings">
             <div className="settings__sidebar">

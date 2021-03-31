@@ -74,3 +74,9 @@
     opacity: 0.66;
     cursor: not-allowed;
 }
+
+@mixin active-item {
+    background: #777;
+    color: #fff;
+    transition: background 200ms;
+}

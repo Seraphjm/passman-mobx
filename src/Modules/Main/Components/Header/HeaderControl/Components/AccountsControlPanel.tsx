@@ -5,14 +5,14 @@ import classNames from 'classnames';
 import {faKeycdn} from '@fortawesome/free-brands-svg-icons';
 import {ESizes, SVGIcon} from 'ui';
 import {ESetMode} from 'Services/Enums';
-import {useMain} from '../../../../Store/Hooks';
+import {useMainStore} from '../../../../Store/Hooks';
 import {AddAccountModal} from '../../../Modals/AddAccount.modal';
 
 /**
  * Панель управления аккаунтами в заголовке.
  */
 export const AccountsControlPanel: FunctionComponent = observer(() => {
-    const main = useMain();
+    const main = useMainStore();
     /** Интернационализация */
     const {formatMessage} = useIntl();
     /** Состояние активности модального окна добавления аккаунта */
@@ -34,7 +34,7 @@ export const AccountsControlPanel: FunctionComponent = observer(() => {
     return (
         <>
             <ul className="header__control-accounts">
-                <li className="header__icon">
+                <li className="header__icon v-center">
                     <SVGIcon icon={faKeycdn} size={ESizes.MD} />
                 </li>
                 {!selectedAccountsLength && (

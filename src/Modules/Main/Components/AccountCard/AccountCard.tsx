@@ -9,7 +9,7 @@ import {PassGen} from 'Common/Components/PassGen/PassGen';
 import {ELanguage} from 'Modules/Settings/Enums';
 import {copyToClipboard, hidePassword} from 'Utils/Utils';
 import {ESetMode} from 'Services/Enums';
-import {useMain} from '../../Store/Hooks';
+import {useMainStore} from '../../Store/Hooks';
 import {IAccount, IAccountBadge} from '../../Models/Account';
 import {getLocaleLastUpdate, getPreparedAccountField} from '../../Utils';
 import './AccountCard.scss';
@@ -67,7 +67,7 @@ export const AccountCard: FunctionComponent<IProps> = observer(({account}) => {
     /** Интернационализация */
     const {formatMessage, locale} = useIntl();
     /** mobx main store */
-    const main = useMain();
+    const main = useMainStore();
     /** Состояние открытия модального окна */
     const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
     /** Состояние скрытия пароля */

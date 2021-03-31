@@ -1,0 +1,51 @@
+@import "ui/Styles/mixins";
+
+.sidebar-item {
+    background: #fff;
+    border-bottom: 1px solid #606060;
+    padding: 0.75rem 1rem;
+    font-size: 1.25rem;
+    transition-property: background, color, text-shadow;
+    transition-duration: 400ms;
+    cursor: pointer;
+    user-select: none;
+    min-height: 65px;
+    position: relative;
+    will-change: background, color, text-shadow;
+    color: #2c3e50;
+
+    pointer-events: all;
+    display: grid;
+    grid-template-columns: minmax(1.5rem, auto) 1fr;
+    grid-column-gap: 0.5rem;
+
+    &:hover {
+        background: #bbb;
+        color: #fff;
+        text-shadow: 1px 1px 4px #000;
+    }
+
+    &:active {
+        @include active-item;
+    }
+}
+
+.sidebar-item__text {
+    text-transform: capitalize;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.sidebar-item__icon,
+.sidebar-item__text {
+    align-self: center;
+}
+
+.sidebar-item__icon {
+    justify-self: center;
+}
+
+.sidebar-item--active {
+    @include active-item;
+}

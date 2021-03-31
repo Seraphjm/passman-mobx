@@ -111,13 +111,3 @@ h4 {
 .blur {
     filter: blur(5px);
 }
-
-@mixin active-item {
-    background: #777 !important;
-    color: #fff !important;
-    transition: background 200ms;
-}
-
-.active-item {
-    @include active-item;
-}

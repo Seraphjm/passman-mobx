@@ -1,11 +1,11 @@
-import {FunctionComponent, useEffect} from 'react';
+import {FunctionComponent, useEffect, useMemo} from 'react';
 import {observer} from 'mobx-react';
 import {Button, ESizes, Input, Modal, ModalBody, ModalFooter, ModalHeader, Option, Select, SVGIcon} from 'ui';
 import {useIntl} from 'react-intl';
 import {IModal} from 'ui/Components/Modal/Models';
 import {PassGen} from 'Common/Components/PassGen/PassGen';
 import {faDownload} from '@fortawesome/free-solid-svg-icons';
-import {useMain} from '../../Store/Hooks';
+import {useMainStore} from '../../Store/Hooks';
 import {IFieldsCategory} from '../../Store/Models';
 import './AddAccount.style.scss';
 
@@ -13,8 +13,16 @@ import './AddAccount.style.scss';
  * Компонент модального окна добавления нового аккаунта.
  */
 export const AddAccountModal: FunctionComponent<IModal> = observer(({onClose, isOpen}) => {
-    const main = useMain();
+    const main = useMainStore();
     const {formatMessage} = useIntl();
+
+    const categoryName = useMemo<string>((): string => {
+        const name = main.categories.find((category) => category.id === main.accountPrototype.category)?.name || '';
+        const id = `categoryName:${name}`;
+        const message = formatMessage({id});
+        return message === id ? name : message;
+    }, [main.accountPrototype.category]);
+
     // eslint-disable-next-line
     useEffect(main.resetAccountPrototype, []);
 
@@ -55,17 +63,9 @@ export const AddAccountModal: FunctionComponent<IModal> = observer(({onClose, is
         <Modal isOpen={isOpen} onClose={onClose} size={ESizes.MD}>
             <ModalHeader onClose={onClose}>{formatMessage({id: 'MAIN__MODAL_ADD_FORM_NAME'})}</ModalHeader>
             <ModalBody>
-                <Select
-                    onChange={setCategory}
-                    value={
-                        main.accountPrototype.category
-                            ? formatMessage({id: `categoryName:${main.accountPrototype.category}`})
-                            : main.accountPrototype.category
-                    }
-                    placeholder={formatMessage({id: 'MAIN__MODAL_ADD_SELECT_CATEGORY'})}
-                >
+                <Select onChange={setCategory} value={categoryName} placeholder={formatMessage({id: 'MAIN__MODAL_ADD_SELECT_CATEGORY'})}>
                     {main.categories.map((category) => (
-                        <Option key={category.name} value={category.name} icon={<SVGIcon size={ESizes.MD} icon={category.icon} />}>
+                        <Option key={category.id} value={category.id} icon={<SVGIcon size={ESizes.MD} icon={category.icon} />}>
                             {formatMessage({id: `categoryName:${category.name}`})}
                         </Option>
                     ))}
