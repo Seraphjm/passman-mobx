@@ -13,15 +13,27 @@ import './AddAccount.style.scss';
  * Компонент модального окна добавления нового аккаунта.
  */
 export const AddAccountModal: FunctionComponent<IModal> = observer(({onClose, isOpen}) => {
+    /** mobx store of main page */
     const main = useMainStore();
+    /** Интернационализация*/
     const {formatMessage} = useIntl();
 
     const categoryName = useMemo<string>((): string => {
-        const name = main.categories.find((category) => category.id === main.accountPrototype.category)?.name || '';
+        const name = main.categories.find((category) => category.id === main.accountPrototype.categoryId)?.name || '';
         const id = `categoryName:${name}`;
         const message = formatMessage({id});
         return message === id ? name : message;
-    }, [main.accountPrototype.category]);
+        // eslint-disable-next-line
+    }, [main.accountPrototype.categoryId, main.categories]);
+
+    // Находим соответствующую категорию из списка категорий, и выбираем оттуда обязательные поля.
+    const requiredFields = useMemo<IFieldsCategory[]>(
+        () =>
+            main.categories
+                .find((category) => category.id === main.accountPrototype.categoryId)
+                ?.fields.filter((field) => field.required) || [],
+        [main.accountPrototype.categoryId, main.categories]
+    );
 
     // eslint-disable-next-line
     useEffect(main.resetAccountPrototype, []);
@@ -47,16 +59,33 @@ export const AddAccountModal: FunctionComponent<IModal> = observer(({onClose, is
      *
      * @param value Значение категории.
      */
-    const setCategory = (value: string) => {
-        main.setFieldAccountPrototype('category', value);
+    const setCategory = (value: string): void => {
+        main.setFieldAccountPrototype('categoryId', value);
     };
 
     /**
      * Метод добавления нового аккаунта. Так же закрывает модальное окно.
      */
-    const addAccount = async () => {
+    const addAccount = async (): Promise<void> => {
         await main.addAccount();
         onClose();
+    };
+
+    /**
+     * Метод, определяющий доступность кнопки добавления аккаунта.
+     * Должны быть категория, имя, а так же все поля указанные как обязательные.
+     */
+    const availableAddButton = (): boolean => {
+        // Проверяется самая база: категория, пароль и имя. Без этого смысла нет дальше что-то смотреть.
+        if (main.accountPrototype.categoryId && main.accountPrototype.name && main.accountPrototype.data.password) {
+            for (let field of requiredFields) {
+                // предполагается, что значения там все строковые, поэтому без дополнительных проверок.
+                //@ts-ignore фоллбэком проверяем наличие поля прямо в accountPrototype
+                if (!main.accountPrototype.data[field.name] && !main.accountPrototype[field.name]) return false;
+            }
+        } else return false;
+
+        return true;
     };
 
     return (
@@ -98,7 +127,7 @@ export const AddAccountModal: FunctionComponent<IModal> = observer(({onClose, is
                 )}
             </ModalBody>
             <ModalFooter>
-                <Button onClick={addAccount} icon={<SVGIcon icon={faDownload} />}>
+                <Button disabled={!availableAddButton()} onClick={addAccount} icon={<SVGIcon icon={faDownload} />}>
                     {formatMessage({id: 'MAIN__MODAL_ADD_ACTION_ADD_ACCOUNT'})}
                 </Button>
             </ModalFooter>

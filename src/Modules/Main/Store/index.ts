@@ -72,7 +72,7 @@ export class MainStore implements IMainStore {
      * @inheritDoc
      */
     get enabledCategories() {
-        return this.categories.filter((category) => this.accounts.some((account) => category.id === account.category));
+        return this.categories.filter((category) => this.accounts.some((account) => category.id === account.categoryId));
     }
 
     /**
@@ -86,7 +86,7 @@ export class MainStore implements IMainStore {
      * @inheritDoc
      */
     get showedAccounts() {
-        return this.search ? this.searchedAccounts : this.sortedAccounts.filter((account) => account.category === this.activeCategory);
+        return this.search ? this.searchedAccounts : this.sortedAccounts.filter((account) => account.categoryId === this.activeCategory);
     }
 
     /**
@@ -106,7 +106,7 @@ export class MainStore implements IMainStore {
      * @inheritDoc
      */
     get protoCategoryFields() {
-        return this.categories.find((category) => category.id === this.accountPrototype.category)?.fields || [];
+        return this.categories.find((category) => category.id === this.accountPrototype.categoryId)?.fields || [];
     }
 
     /**
