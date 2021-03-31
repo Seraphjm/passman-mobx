@@ -1,11 +1,10 @@
-import {makeAutoObservable, runInAction} from 'mobx';
+import {makeAutoObservable, runInAction, toJS} from 'mobx';
 import {ICategory, IMainStore} from './Models';
 import {IRootStore} from 'Store/Models';
 import {EEncryptionStatus} from 'Utils/Crypto/Enums';
 import {IEncryptionResponse} from 'Utils/Crypto/Models';
 import {EResponseStatus, ESetMode} from 'Services/Enums';
 import {set} from 'Utils/Utils';
-import {clearObserve} from 'Store/Utils';
 import {IMainService} from '../Services/Models';
 import {IAccount} from '../Models/Account';
 import {getDefaultAccountPrototype} from './Consts';
@@ -138,7 +137,7 @@ export class MainStore implements IMainStore {
      * @inheritDoc
      */
     setAccountPrototype = (account: IAccount): void => {
-        this.accountPrototype = clearObserve(account);
+        this.accountPrototype = toJS(account);
     };
 
     /**
@@ -160,7 +159,7 @@ export class MainStore implements IMainStore {
      */
     editAccount = (account: IAccount): Promise<void> => {
         const updateDate = new Date().toISOString();
-        const payload: IAccount = {...clearObserve<IAccount>(account, {}), lastUpdate: updateDate};
+        const payload: IAccount = {...toJS(account), lastUpdate: updateDate};
         const i = this.accounts.findIndex(({_id}) => _id === account._id);
 
         if (this.accounts[i].data.password !== payload.data.password) {
@@ -218,7 +217,7 @@ export class MainStore implements IMainStore {
         const response = yield this.serviceLayer.addAccount(this.accountPrototype, this.rootStore.authStore.password);
 
         if (response.status === EEncryptionStatus.SUCCESS) {
-            this.accounts.push(clearObserve(this.accountPrototype));
+            this.accounts.push(toJS(this.accountPrototype));
             // todo.NOTIFICATION
         }
 
