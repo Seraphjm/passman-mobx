@@ -1,4 +1,5 @@
 import {IPositionProps, IRipplePosition, TRippleMouseEvent} from 'ui/Common/Models';
+import {BaseSyntheticEvent} from 'react';
 
 /**
  * Функция проверяющая, что переданное значение является функцией.
@@ -43,19 +44,26 @@ export const cancelEvent = <T extends Event>(e: T): void => {
 /**
  * Функция, возвращающая параметры положения и размеров под целевым элементом для выпадающего списка.
  *
- * @param eventContainer Проверяемое значение.
+ * @param container Целевой контейнер. Может быть передан как event.target, так и просто как элемент.
  * @param [fixTop] Поправка высоты под различные компоненты.
  */
-export const getPositionProps = <T = unknown>(eventContainer: T, fixTop?: string): IPositionProps => {
-    // @ts-ignore TODO.TYPES
-    const {y, height, bottom} = eventContainer.target.getBoundingClientRect();
+function getPositionProps(container: BaseSyntheticEvent, fixTop?: string): IPositionProps;
+function getPositionProps(container: HTMLElement | undefined, fixTop?: string): IPositionProps;
+function getPositionProps(container: any, fixTop?: any): any {
+    const target = container.target || container;
+
+    if (!target) return {};
+
+    const {y, height, bottom} = target.getBoundingClientRect();
     const heightContainer = document.body.clientHeight || 200;
 
     return {
         maxHeight: heightContainer - y - height * 2,
         top: fixTop ? `calc(${bottom}px - ${fixTop})` : bottom,
     };
-};
+}
+
+export {getPositionProps};
 
 /**
  * Функция возвращающая uuid.

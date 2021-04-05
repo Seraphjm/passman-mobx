@@ -39,6 +39,11 @@
         }
     }
 
+    /** Компенсирует нижний border */
+    .ui-lib__input-filled {
+        margin-top: -3px;
+    }
+
     .ui-lib-option__icon {
         pointer-events: none;
         text-align: center;

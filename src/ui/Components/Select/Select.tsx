@@ -1,15 +1,4 @@
-import {
-    BaseSyntheticEvent,
-    Children,
-    cloneElement,
-    FormEvent,
-    FunctionComponent,
-    KeyboardEvent,
-    ReactNode,
-    useEffect,
-    useRef,
-    useState,
-} from 'react';
+import {Children, cloneElement, FormEvent, FunctionComponent, KeyboardEvent, ReactNode, useEffect, useRef, useState} from 'react';
 import classNames from 'classnames';
 import {InputFilled} from 'ui/Common/InnerComponents/InputFilled/InputFilled';
 import {InputMessage} from 'ui/Common/InnerComponents/InputMessage/InputMessage';
@@ -42,8 +31,10 @@ export const Select: FunctionComponent<ISelect<any, any>> = ({
 }) => {
     /** Скрытый контроллер компонента. На нём обвязана вся логика. */
     const controllerRef = useRef<HTMLInputElement>();
-    /** Контейнер компонента. Нужен для отслеживания событий и установки размерностей внешнего контейнера. */
+    /** Контейнер компонента. Нужен для отслеживания событий. */
     const containerRef = useRef<HTMLDivElement>();
+    /** Нужен для установки размерностей внешнего контейнера. */
+    const viewValueRef = useRef<HTMLDivElement>();
     /** Контейнер списка. Необходимо для удалённого контроля скролла по хоткеям. */
     const listRef = useRef<HTMLUListElement>();
     /** Необходимо для поиска и фильтрации потомков с заданным value, если такой будет предоставлен посредством
@@ -67,6 +58,7 @@ export const Select: FunctionComponent<ISelect<any, any>> = ({
     useEffect(() => {
         window.addEventListener('click', disableFocus);
         return () => window.removeEventListener('click', disableFocus);
+        // eslint-disable-next-line
     }, []);
 
     /**
@@ -74,12 +66,12 @@ export const Select: FunctionComponent<ISelect<any, any>> = ({
      *
      * @param event Входящее событие.
      */
-    const disableFocus = (event: Event) => {
+    function disableFocus(event: Event) {
         if (event.target !== containerRef.current && event.target !== listRef.current) {
             controllerRef.current?.blur();
             setFocus(false);
         }
-    };
+    }
 
     /**
      * Здесь осуществляется поиск по потомкам по введённому значению.
@@ -148,13 +140,11 @@ export const Select: FunctionComponent<ISelect<any, any>> = ({
     /**
      * Обработчик клика по компоненту.
      * Задача: скрыть или показать выпадающий список.
-     *
-     * @param event Событие по клику.
      */
-    const onClickHandler = (event: BaseSyntheticEvent) => {
+    const onClickHandler = () => {
         if (!focus) {
             controllerRef.current?.focus();
-            setStyle(getPositionProps<BaseSyntheticEvent>(event, '1rem'));
+            setStyle(getPositionProps(viewValueRef?.current));
         } else {
             controllerRef.current?.blur();
         }
@@ -262,7 +252,8 @@ export const Select: FunctionComponent<ISelect<any, any>> = ({
                 </InputPlaceholder>
             )}
 
-            <div className="ui-lib-select__value text-ellipsis" tabIndex={0}>
+            {/*@ts-ignore*/}
+            <div ref={viewValueRef} className="ui-lib-select__value text-ellipsis" tabIndex={0}>
                 {value}
                 <div className="ui-lib-select__arrow">
                     <SVGIcon icon={faChevronUp} size={ESizes.ES} />

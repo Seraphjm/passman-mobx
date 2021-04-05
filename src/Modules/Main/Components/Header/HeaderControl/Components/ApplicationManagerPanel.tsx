@@ -1,4 +1,4 @@
-import {BaseSyntheticEvent, FunctionComponent, useState} from 'react';
+import {BaseSyntheticEvent, FunctionComponent, useRef} from 'react';
 import {redirectTo} from 'Router/Utils';
 import {SETTINGS_ROUTE_NAMES} from 'Modules/Settings/Router/Routes';
 import {faCog, faSearch} from '@fortawesome/free-solid-svg-icons';
@@ -14,10 +14,8 @@ import './ApplicationManagerPanel.style.scss';
 export const ApplicationManagerPanel: FunctionComponent = observer(() => {
     /** mobx main store */
     const main = useMainStore();
-    /** Состояние активности поиска*/
-    const [searchEnabled, setSearchEnabled] = useState(false);
-    /** ID элемента поиска. Необходимо для установки автофокуса. */
-    const searchElementId = 'main.search';
+    /** Реф на инпут элемент поиска. Необходимо для установки фокуса */
+    const searchElement = useRef<HTMLInputElement>();
     /** Функция, открывающая страницу настроек приложения */
     const openSettings = () => {
         redirectTo(SETTINGS_ROUTE_NAMES.ROOT);
@@ -30,22 +28,19 @@ export const ApplicationManagerPanel: FunctionComponent = observer(() => {
 
     /** Функция, активирующая поиск по аккаунтам */
     const searchActivate = () => {
-        document.getElementById(searchElementId)?.focus();
+        searchElement.current?.focus();
     };
-
-    /** Функция, обрабатывающая потерю фокуса из поисковой строки */
-    const searchOnBlur = () => {};
 
     return (
         <ul className="header__control-tools">
             <li onClick={searchActivate} className="header__icon header__item">
                 <div className="header__search-container">
                     <input
-                        id={searchElementId}
+                        // @ts-ignore
+                        ref={searchElement}
                         onInput={onSearchInput}
                         className="header__search-controller"
                         value={main.search}
-                        onBlur={searchOnBlur}
                     />
                     <SVGIcon icon={faSearch} className="header__search-icon" size={ESizes.SM} />
                 </div>
