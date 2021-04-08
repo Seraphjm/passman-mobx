@@ -1,12 +1,11 @@
-import {FunctionComponent, useCallback} from 'react';
+import {FunctionComponent, useCallback, Fragment} from 'react';
 import {observer} from 'mobx-react';
-import {Link} from 'react-router-dom';
-import {AUTH_ROUTE_NAMES} from 'Modules/Auth/Router/Routes';
 import {SideBar as Container} from 'Common/Components/Sidebar/Sidebar';
 import {SideBarItem} from 'Common/Components/Sidebar/SideBarItem';
 import {useIntl} from 'react-intl';
 import {faLongArrowAltLeft} from '@fortawesome/free-solid-svg-icons/faLongArrowAltLeft';
 import {useMainStore} from '../../Store/Hooks';
+import {Subcategories} from './Subcategories';
 
 /**
  * Контейнер сайдбара.
@@ -28,20 +27,18 @@ export const SideBar: FunctionComponent = observer(() => {
     return (
         <Container onClick={setActiveCategory}>
             {!main.search ? (
-                main.enabledCategories.map((category) => (
-                    <SideBarItem
-                        key={category.id}
-                        active={category.id === main.activeCategory}
-                        id={category.id}
-                        icon={category.icon}
-                        text={category.name}
-                    />
-                ))
+                main.enabledCategories.map((category) => {
+                    const isActiveCategory: boolean = category.id === main.activeCategory;
+                    return (
+                        <Fragment key={category.id}>
+                            <SideBarItem active={isActiveCategory} id={category.id} icon={category.icon} text={category.name} />
+                            {isActiveCategory && <Subcategories subcategories={main.currentSubcategoryList} />}
+                        </Fragment>
+                    );
+                })
             ) : (
                 <SideBarItem active={true} id="search" icon={faLongArrowAltLeft} text={formatMessage({id: 'COMMON__ACTION_CANCEL'})} />
             )}
-
-            {process.env.NODE_ENV === 'development' && <Link to={AUTH_ROUTE_NAMES.ROOT}>GO TO Auth</Link>}
         </Container>
     );
 });

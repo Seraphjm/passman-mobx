@@ -21,8 +21,8 @@ export const SideBar: FunctionComponent<ISideBar> = (props) => {
     };
 
     return (
-        <div onClick={onClickHandle} className="sidebar">
+        <ul onClick={onClickHandle} className="sidebar">
             {props.children}
-        </div>
+        </ul>
     );
 };

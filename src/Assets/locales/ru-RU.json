@@ -61,6 +61,7 @@
     "MAIN__MODAL_ADD_FORM_NAME": "Добавление аккаунта",
     "MAIN__MODAL_ADD_SELECT_SOME_ITEM": "Выберите что-нибудь из списка, чтобы приступить к созданию аккаунта",
     "MAIN__MODAL_ADD_SELECT_CATEGORY": "Выберите категорию",
+    "MAIN__MODAL_ADD_ENTER_SUBCATEGORY": "Введите подкатегорию",
     "MAIN__MODAL_ADD_ACTION_ADD_ACCOUNT": "Добавить аккаунт",
 
     "MAIN__ACCOUNT_CARD_UPDATE_PASSWORD_FOR": "Обновление пароля для {name}",

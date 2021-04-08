@@ -10,6 +10,7 @@ import {IAccount} from '../Models/Account';
 import {getDefaultAccountPrototype} from './Consts';
 import {go} from 'fuzzysort';
 import {IFuzzySortResult} from 'Common/Models';
+import {getSortedSubcategoriesFromAccounts} from '../Utils';
 
 /**
  * Стор главной страницы приложеия.
@@ -35,6 +36,10 @@ export class MainStore implements IMainStore {
      * @inheritDoc
      */
     categories: ICategory[] = [];
+    /**
+     * @inheritDoc
+     */
+    selectedSubcategory: string = '';
     /**
      * @inheritDoc
      */
@@ -85,8 +90,33 @@ export class MainStore implements IMainStore {
     /**
      * @inheritDoc
      */
+    get subcategories() {
+        return getSortedSubcategoriesFromAccounts(this.accounts);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    get currentSubcategoryList() {
+        return getSortedSubcategoriesFromAccounts(this.currentCategoryAccounts);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    get currentCategoryAccounts() {
+        return this.search ? [] : this.sortedAccounts.filter((account) => account.categoryId === this.activeCategory);
+    }
+
+    /**
+     * @inheritDoc
+     */
     get showedAccounts() {
-        return this.search ? this.searchedAccounts : this.sortedAccounts.filter((account) => account.categoryId === this.activeCategory);
+        return this.search
+            ? this.searchedAccounts
+            : !this.selectedSubcategory
+            ? this.currentCategoryAccounts
+            : this.currentCategoryAccounts.filter((account) => this.selectedSubcategory === account.subcategory);
     }
 
     /**
@@ -151,8 +181,16 @@ export class MainStore implements IMainStore {
     /**
      * @inheritDoc
      */
+    setSelectedSubcategory = (subcategory: string): void => {
+        this.selectedSubcategory = subcategory;
+    };
+
+    /**
+     * @inheritDoc
+     */
     setSearch = (search: string): void => {
         if (this.selectedAccounts.length) this.setSelectedAccounts(ESetMode.CLEAR);
+        if (this.selectedSubcategory) this.setSelectedSubcategory('');
 
         this.search = search;
     };
@@ -161,6 +199,7 @@ export class MainStore implements IMainStore {
      * @inheritDoc
      */
     setSelectedCategory = (id: string): void => {
+        this.selectedSubcategory = '';
         this.selectedCategory = id;
     };
 

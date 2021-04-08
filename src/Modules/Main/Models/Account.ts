@@ -7,8 +7,8 @@ import {ISVGIcon} from 'ui/Components/Icon/Models';
  *
  * @prop _id Уникальный идентификатор uuid для аккаунта.
  * @prop name Имя аккаунта.
- * @prop category ID категории аккаунта.
- * @prop [categoryId] Подсекция, отображаемая чуть ниже основной. Дополнительный фильтр под фильтром category.
+ * @prop categoryId ID категории аккаунта.
+ * @prop subcategory Подсекция, отображаемая чуть ниже основной. Дополнительный фильтр под фильтром category.
  * @prop [logotype] Логотип.
  * @prop lastUpdate Последнее обновление каких-либо данных в аккаунте.
  * @prop passwordLastUpdate Последнее обновление пароля в аккаунте.
@@ -19,7 +19,7 @@ export interface IAccount {
     _id: string;
     name: string;
     categoryId: string;
-    subCategory?: string;
+    subcategory: string;
     logotype: ISVGIcon;
     lastUpdate: string;
     passwordLastUpdate: string;

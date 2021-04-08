@@ -19,7 +19,7 @@ export const getDefaultAccountPrototype = (): IAccount => ({
     _id: uuid(),
     name: '',
     categoryId: '',
-    subCategory: '',
+    subcategory: '',
     logotype: {
         icon: faKeycdn,
     },

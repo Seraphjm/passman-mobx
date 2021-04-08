@@ -4,12 +4,12 @@
     background: var(--color-info);
     width: 100%;
     transition: 0.5s;
-    transform: scaleX(0);
+    transform: scaleX(0) translateY(-2px);
     transform-origin: left;
 }
 
 .ui-lib__input--controller:not(:placeholder-shown) ~ .ui-lib__input-filled {
-    transform: scaleX(1);
+    transform: scaleX(1) translateY(-2px);
 }
 
 .error > .ui-lib__input-filled {

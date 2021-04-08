@@ -64,6 +64,15 @@ export const AddAccountModal: FunctionComponent<IModal> = observer(({onClose, is
     };
 
     /**
+     * Метод, устанавливающий подкатегорию аккаунта в его прототип.
+     *
+     * @param value Значение подкатегории.
+     */
+    const setSubcategory = (value: string): void => {
+        main.setFieldAccountPrototype('subcategory', value.toLocaleLowerCase());
+    };
+
+    /**
      * Метод добавления нового аккаунта. Так же закрывает модальное окно.
      */
     const addAccount = async (): Promise<void> => {
@@ -99,6 +108,15 @@ export const AddAccountModal: FunctionComponent<IModal> = observer(({onClose, is
                         </Option>
                     ))}
                 </Select>
+
+                {main.accountPrototype.categoryId && (
+                    <Input
+                        placeholder={formatMessage({id: 'MAIN__MODAL_ADD_ENTER_SUBCATEGORY'})}
+                        autoComplete={main.subcategories}
+                        value={main.accountPrototype.subcategory}
+                        onInput={setSubcategory}
+                    />
+                )}
 
                 {main.protoCategoryFields.length ? (
                     <div className="account-form">

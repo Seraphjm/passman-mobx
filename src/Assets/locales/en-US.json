@@ -61,6 +61,7 @@
     "MAIN__MODAL_ADD_FORM_NAME": "Add an account",
     "MAIN__MODAL_ADD_SELECT_SOME_ITEM": "Select something from the list to start creating your account",
     "MAIN__MODAL_ADD_SELECT_CATEGORY": "Select category",
+    "MAIN__MODAL_ADD_ENTER_SUBCATEGORY": "Enter subcategory",
     "MAIN__MODAL_ADD_ACTION_ADD_ACCOUNT": "Add account",
 
     "MAIN__ACCOUNT_CARD_UPDATE_PASSWORD_FOR": "Update password for {name}",

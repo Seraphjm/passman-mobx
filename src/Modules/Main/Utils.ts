@@ -1,6 +1,6 @@
 import {EPluralPeriod, getLocalePluralPeriod} from 'i18n';
 import {ELanguage} from 'Modules/Settings/Enums';
-import {IAccountData, IPreparedFields} from './Models/Account';
+import {IAccount, IAccountData, IPreparedFields} from './Models/Account';
 import {ADDITIONAL_FIELDS, DEFAULT_FIELDS, SORT_ORDER} from './Store/Consts';
 import {ILastUpdate} from './Models/Models';
 
@@ -55,3 +55,18 @@ export const getLocaleLastUpdate = (locale: ELanguage, time: string): ILastUpdat
 
     return {period: getLocalePluralPeriod(locale, period, count), count: Number(count.toFixed(2))};
 };
+
+/**
+ * TODO.PERFORMANCE потенциально дорогая штука, используемая сразу в двух геттерах. Продумать как можно оптимизировать.
+ * Утилитарная функция, принимающая массив аккаунтов, и возвращающая список содержащихся в них подкатегорий в
+ * отсортированном виде.
+ *
+ * @param accounts Переданный список аккаунтов.
+ */
+export const getSortedSubcategoriesFromAccounts = (accounts: IAccount[]): string[] =>
+    accounts
+        .reduce((subcategories: string[], account: IAccount) => {
+            account.subcategory && !subcategories.includes(account.subcategory) && subcategories.push(account.subcategory);
+            return subcategories;
+        }, [])
+        .sort((a, b) => (a < b ? -1 : 1));

@@ -4,6 +4,7 @@ import {EResponseStatus} from 'Services/Enums';
 import {IEncryptionResponse} from 'Utils/Crypto/Models';
 import {IAccount} from '../Models/Account';
 import {ESetMode} from '../../../Services/Enums';
+import {getSortedSubcategoriesFromAccounts} from '../Utils';
 
 /**
  * Модель состояния главной страницы.
@@ -26,6 +27,11 @@ export interface IMainStore {
     categories: ICategory[];
 
     /**
+     * Выбранная подкатегория. Дополнительный фильтр под выбранной категорией.
+     */
+    selectedSubcategory: string;
+
+    /**
      * Активная категория.
      */
     selectedCategory: string;
@@ -45,6 +51,12 @@ export interface IMainStore {
      * Геттер возвращающий отсортированный список аккаунтов.
      */
     sortedAccounts: IAccount[];
+
+    /* getters */
+    /**
+     * Геттер содержащий список аккаунтов относящихся к активной категории.
+     */
+    currentCategoryAccounts: IAccount[];
 
     /**
      * Геттер, возвращающий найденные аккаунты по поисковому запросу.
@@ -71,6 +83,16 @@ export interface IMainStore {
      */
     enabledCategories: ICategory[];
 
+    /**
+     * Геттер, содержащий список всех уникальных подкатегорий во всех аккаунтах.
+     */
+    subcategories: string[];
+
+    /**
+     * Геттер, содержащий список всех уникальных подкатегорий по аккаунтам, находящимся в активной категории.
+     */
+    currentSubcategoryList: string[];
+
     /*actions*/
     /**
      * Экшн, загружающий аккаунты из базы данных.
@@ -86,6 +108,11 @@ export interface IMainStore {
      * Экшн, устанавливающий активную категорию в сайдбаре.
      */
     setSelectedCategory(id: string): void;
+
+    /**
+     * Экшн, устанавливающий активную подкатегорию в сайдбаре.
+     */
+    setSelectedSubcategory(subcategory: string): void;
 
     /**
      * Экшн, устанавливающий активную категорию в сайдбаре.
