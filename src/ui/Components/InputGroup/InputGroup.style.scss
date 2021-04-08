@@ -20,6 +20,10 @@
     &.disabled {
         @include disabled;
     }
+
+    .ui-lib__input-filled {
+        margin-top: -0.5px;
+    }
 }
 
 .ui-lib-input-group__content {

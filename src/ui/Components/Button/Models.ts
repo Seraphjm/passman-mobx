@@ -1,4 +1,4 @@
-import {ESizes, EPositions, EMessageType} from 'ui/Common/Enums';
+import {ESizes, EPositions, EColors} from 'ui/Common/Enums';
 
 /**
  * Модель свойств состояния компонента кнопки.
@@ -16,7 +16,7 @@ import {ESizes, EPositions, EMessageType} from 'ui/Common/Enums';
 export interface IButton {
     size?: ESizes;
     iconPos?: EPositions;
-    type?: EMessageType;
+    type?: EColors;
     className?: string;
     disabled?: boolean;
     onClick?: () => void;

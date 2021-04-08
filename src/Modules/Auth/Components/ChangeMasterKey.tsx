@@ -5,7 +5,7 @@ import {observer} from 'mobx-react';
 import {EPositions} from 'ui/Common/Enums';
 import {SVGIcon} from 'ui';
 import {faLongArrowAltLeft} from '@fortawesome/free-solid-svg-icons';
-import {useAuthorization} from '../Store/Hooks';
+import {useAuthorizationStore} from '../Store/Hooks';
 import {TemplateAuthForm} from './AuthorizationForm/TemplateAuthForm';
 import {AuthorizationBody, AuthorizationFooter, AuthorizationHeader} from './AuthorizationForm/AuthorizationForm';
 import {AUTH_ROUTE_NAMES} from '../Router/Routes';
@@ -16,7 +16,7 @@ import '../Pages/Authorization.style.scss';
  */
 const ChangeMasterKey: FunctionComponent = observer(() => {
     const {formatMessage} = useIntl();
-    const auth = useAuthorization();
+    const auth = useAuthorizationStore();
     // eslint-disable-next-line
     const [fields, setFields] = useState({
         currentPassword: {

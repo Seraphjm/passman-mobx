@@ -4,6 +4,7 @@ import {EResponseStatus} from 'Services/Enums';
 import {IEncryptionResponse} from 'Utils/Crypto/Models';
 import {IAccount} from '../Models/Account';
 import {ESetMode} from '../../../Services/Enums';
+import {getSortedSubcategoriesFromAccounts} from '../Utils';
 
 /**
  * Модель состояния главной страницы.
@@ -26,6 +27,16 @@ export interface IMainStore {
     categories: ICategory[];
 
     /**
+     * Выбранная подкатегория. Дополнительный фильтр под выбранной категорией.
+     */
+    selectedSubcategory: string;
+
+    /**
+     * Активная категория.
+     */
+    selectedCategory: string;
+
+    /**
      * Поисковая строка в списке аккаунтов.
      */
     search: string;
@@ -41,15 +52,46 @@ export interface IMainStore {
      */
     sortedAccounts: IAccount[];
 
+    /* getters */
+    /**
+     * Геттер содержащий список аккаунтов относящихся к активной категории.
+     */
+    currentCategoryAccounts: IAccount[];
+
     /**
      * Геттер, возвращающий найденные аккаунты по поисковому запросу.
      */
     searchedAccounts: IAccount[];
 
     /**
+     * Геттер, возвращающий найденные аккаунты по поисковому запросу.
+     */
+    showedAccounts: IAccount[];
+
+    /**
      * Геттер, достающий поля к выбранной категории в протипе аккаунта.
      */
     protoCategoryFields: IFieldsCategory[];
+
+    /**
+     * Геттер, достающий поля к выбранной категории в протипе аккаунта.
+     */
+    activeCategory: string;
+
+    /**
+     * Геттер, достающий поля к выбранной категории в протипе аккаунта.
+     */
+    enabledCategories: ICategory[];
+
+    /**
+     * Геттер, содержащий список всех уникальных подкатегорий во всех аккаунтах.
+     */
+    subcategories: string[];
+
+    /**
+     * Геттер, содержащий список всех уникальных подкатегорий по аккаунтам, находящимся в активной категории.
+     */
+    currentSubcategoryList: string[];
 
     /*actions*/
     /**
@@ -61,6 +103,21 @@ export interface IMainStore {
      * Экшн, загружающий дефолтные категории из БД.
      */
     loadCategories(): Promise<EResponseStatus>;
+
+    /**
+     * Экшн, устанавливающий активную категорию в сайдбаре.
+     */
+    setSelectedCategory(id: string): void;
+
+    /**
+     * Экшн, устанавливающий активную подкатегорию в сайдбаре.
+     */
+    setSelectedSubcategory(subcategory: string): void;
+
+    /**
+     * Экшн, устанавливающий активную категорию в сайдбаре.
+     */
+    setSearch(search: string): void;
 
     /**
      * Экшн, добавляющий новый аккаунт в базу данных.
@@ -135,11 +192,13 @@ export interface IFieldsCategory {
 /**
  * Модель категории.
  *
+ * @prop id Идентификатор категории.
  * @prop name Имя категории.
  * @prop icon Иконка категории.
  * @prop fields Список полей соответствующих категории.
  */
 export interface ICategory {
+    id: string;
     name: string;
     icon: ISVGIcon;
     fields: IFieldsCategory[];

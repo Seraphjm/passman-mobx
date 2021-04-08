@@ -1,15 +1,30 @@
 import {BaseSyntheticEvent, FunctionComponent, SyntheticEvent, useMemo, useRef, useState} from 'react';
 import {observer} from 'mobx-react';
-import {Badge, Button, Card, CardBody, CardFooter, CardHeader, ESizes, Modal, ModalBody, ModalFooter, ModalHeader, SVGIcon} from 'ui';
+import {
+    Badge,
+    Button,
+    Card,
+    CardBody,
+    CardFooter,
+    CardHeader,
+    EColors,
+    ESizes,
+    Highlight,
+    Modal,
+    ModalBody,
+    ModalFooter,
+    ModalHeader,
+    SVGIcon,
+} from 'ui';
 import {faCheck, faRecycle} from '@fortawesome/free-solid-svg-icons';
 import {faEye, faEyeSlash, faSave} from '@fortawesome/free-regular-svg-icons';
 import {useIntl} from 'react-intl';
 import {Logotype} from 'Common/Components/Logotype';
 import {PassGen} from 'Common/Components/PassGen/PassGen';
 import {ELanguage} from 'Modules/Settings/Enums';
-import {copyToClipboard, hidePassword} from 'Utils/Utils';
+import {capitalizeFirstLetter, copyToClipboard, hidePassword} from 'Utils/Utils';
 import {ESetMode} from 'Services/Enums';
-import {useMain} from '../../Store/Hooks';
+import {useMainStore} from '../../Store/Hooks';
 import {IAccount, IAccountBadge} from '../../Models/Account';
 import {getLocaleLastUpdate, getPreparedAccountField} from '../../Utils';
 import './AccountCard.scss';
@@ -67,7 +82,7 @@ export const AccountCard: FunctionComponent<IProps> = observer(({account}) => {
     /** Интернационализация */
     const {formatMessage, locale} = useIntl();
     /** mobx main store */
-    const main = useMain();
+    const main = useMainStore();
     /** Состояние открытия модального окна */
     const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
     /** Состояние скрытия пароля */
@@ -170,7 +185,9 @@ export const AccountCard: FunctionComponent<IProps> = observer(({account}) => {
                         />
                         <SVGIcon icon={faCheck} className="account-card__icon" />
                         <Logotype size={ESizes.MD} logotype={account.logotype} />
-                        <h2 className="account-card__label">{account.name}</h2>
+                        <h2 className="account-card__label">
+                            <Highlight text={capitalizeFirstLetter(account.name)} search={main.search} />
+                        </h2>
                         <div className="account-card__header-badges">
                             {account.settings?.badges?.map((badge: IAccountBadge) => (
                                 <Badge type={badge.type}>{badge.text}</Badge>
@@ -233,12 +250,13 @@ export const AccountCard: FunctionComponent<IProps> = observer(({account}) => {
                 </ModalHeader>
 
                 <ModalBody>
-                    <PassGen />
+                    <PassGen createNewPasswordOnMount={true} />
                 </ModalBody>
 
                 <ModalFooter>
                     <Button
                         disabled={account.data.password === main.accountPrototype.data.password}
+                        type={EColors.INFO}
                         onClick={saveChanges}
                         size={ESizes.SM}
                         icon={<SVGIcon icon={faSave} />}

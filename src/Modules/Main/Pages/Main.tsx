@@ -1,7 +1,7 @@
 import {FunctionComponent} from 'react';
 import {Header} from '../Components/Header/Header';
+import {SideBar} from '../Components/SideBar/SideBar';
 import {Content} from '../Components/Content/Content';
-import {SideBar} from '../Components/Sidebar/Sidebar';
 import './Main.style.scss';
 
 /**

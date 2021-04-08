@@ -6,6 +6,6 @@ import {IMainStore} from './Models';
 /**
  * Хук, необходимый для быстрого доступа к состоянию главной страницы.
  */
-export function useMain(): IMainStore {
+export function useMainStore(): IMainStore {
     return useContext<TRootStore>(RootStoreContext).main as IMainStore;
 }

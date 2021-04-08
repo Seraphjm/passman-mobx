@@ -34,7 +34,7 @@ export interface IMainService {
      * @param account Аккаунты, которые необходимо изменить/добавить.
      * @param password Пароль пользователя.
      */
-    editAccount(account: IAccount, password: string): Promise<IEncryptionResponse<IAccount[]>>;
+    editAccount(account: IAccount, password: string): Promise<IEncryptionResponse<IAccount>>;
 
     /**
      * Экшн, изменяющий сохранённые в базе аккаунты пользователя.

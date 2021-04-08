@@ -139,7 +139,7 @@ const InputComp: FunctionComponent<IInput> = ({
      */
     const onFocusHandler = (e: FocusEvent<HTMLInputElement>) => {
         if (autoCompleteList.length) {
-            setStyle(getPositionProps<FocusEvent<HTMLInputElement>>(e));
+            setStyle(getPositionProps(e));
             setAutoCompleteIsOpen(true);
         }
 

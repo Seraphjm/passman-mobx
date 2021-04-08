@@ -6,6 +6,6 @@ import {TRootStore} from 'Store/Models';
 /**
  * Хук, необходимый для быстрого доступа к настройкам.
  */
-export function useSettings(): ISettingsStore {
+export function useSettingsStore(): ISettingsStore {
     return useContext<TRootStore>(RootStoreContext).settings as ISettingsStore;
 }

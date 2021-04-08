@@ -1,14 +1,15 @@
 .ui-lib__input-filled {
     position: absolute;
-    height: 3px;
+    height: 2.5px;
     background: var(--color-info);
-    width: 0;
+    width: 100%;
     transition: 0.5s;
-    bottom: 1rem;
+    transform: scaleX(0) translateY(-2px);
+    transform-origin: left;
 }
 
 .ui-lib__input--controller:not(:placeholder-shown) ~ .ui-lib__input-filled {
-    width: 100%;
+    transform: scaleX(1) translateY(-2px);
 }
 
 .error > .ui-lib__input-filled {

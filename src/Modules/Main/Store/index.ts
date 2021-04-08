@@ -1,14 +1,16 @@
-import {makeAutoObservable, runInAction} from 'mobx';
+import {makeAutoObservable, runInAction, toJS} from 'mobx';
 import {ICategory, IMainStore} from './Models';
 import {IRootStore} from 'Store/Models';
 import {EEncryptionStatus} from 'Utils/Crypto/Enums';
 import {IEncryptionResponse} from 'Utils/Crypto/Models';
 import {EResponseStatus, ESetMode} from 'Services/Enums';
 import {set} from 'Utils/Utils';
-import {clearObserve} from 'Store/Utils';
 import {IMainService} from '../Services/Models';
 import {IAccount} from '../Models/Account';
 import {getDefaultAccountPrototype} from './Consts';
+import {go} from 'fuzzysort';
+import {IFuzzySortResult} from 'Common/Models';
+import {getSortedSubcategoriesFromAccounts} from '../Utils';
 
 /**
  * Стор главной страницы приложеия.
@@ -37,6 +39,14 @@ export class MainStore implements IMainStore {
     /**
      * @inheritDoc
      */
+    selectedSubcategory: string = '';
+    /**
+     * @inheritDoc
+     */
+    selectedCategory: string = '';
+    /**
+     * @inheritDoc
+     */
     search: string = '';
     /**
      * @inheritDoc
@@ -60,21 +70,73 @@ export class MainStore implements IMainStore {
      * @inheritDoc
      */
     get sortedAccounts() {
-        return this.accounts.slice().sort((a, b) => (a.name < b.name ? -1 : 1));
+        return this.accounts.slice().sort((a, b) => (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase() ? -1 : 1));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    get enabledCategories() {
+        return this.categories.filter((category) => this.accounts.some((account) => category.id === account.categoryId));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    get activeCategory() {
+        return this.selectedCategory || this.enabledCategories[0]?.id;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    get subcategories() {
+        return getSortedSubcategoriesFromAccounts(this.accounts);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    get currentSubcategoryList() {
+        return getSortedSubcategoriesFromAccounts(this.currentCategoryAccounts);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    get currentCategoryAccounts() {
+        return this.search ? [] : this.sortedAccounts.filter((account) => account.categoryId === this.activeCategory);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    get showedAccounts() {
+        return this.search
+            ? this.searchedAccounts
+            : !this.selectedSubcategory
+            ? this.currentCategoryAccounts
+            : this.currentCategoryAccounts.filter((account) => this.selectedSubcategory === account.subcategory);
     }
 
     /**
      * @inheritDoc
      */
     get searchedAccounts() {
-        return this.search ? [] : this.sortedAccounts;
+        //@ts-ignore
+        const filtered: IFuzzySortResult<IAccount>[] = go<IAccount>(this.search, this.accounts, {
+            limit: 100,
+            key: 'name',
+        });
+
+        return filtered.length ? (filtered.sort((a, b) => (a.score < b.score ? 1 : -1)).map(({obj}) => obj) as IAccount[]) : [];
     }
 
     /**
      * @inheritDoc
      */
     get protoCategoryFields() {
-        return this.categories.find((category) => category.name === this.accountPrototype.category)?.fields || [];
+        return this.categories.find((category) => category.id === this.accountPrototype.categoryId)?.fields || [];
     }
 
     /**
@@ -113,24 +175,56 @@ export class MainStore implements IMainStore {
      * @inheritDoc
      */
     setAccountPrototype = (account: IAccount): void => {
-        this.accountPrototype = clearObserve(account);
+        this.accountPrototype = toJS(account);
     };
 
     /**
      * @inheritDoc
      */
-    editAccount = (account: IAccount): Promise<void> =>
-        this.serviceLayer
-            .editAccount(clearObserve<IAccount>(account, {}), this.rootStore.authStore.password)
-            .then((response: IEncryptionResponse<IAccount[]>) => {
-                if (response.status === EEncryptionStatus.SUCCESS) {
-                    runInAction(() => {
-                        console.log(response.data);
-                        this.accounts = response.data || [];
-                    });
-                } else {
-                }
-            });
+    setSelectedSubcategory = (subcategory: string): void => {
+        this.selectedSubcategory = subcategory;
+    };
+
+    /**
+     * @inheritDoc
+     */
+    setSearch = (search: string): void => {
+        if (this.selectedAccounts.length) this.setSelectedAccounts(ESetMode.CLEAR);
+        if (this.selectedSubcategory) this.setSelectedSubcategory('');
+
+        this.search = search;
+    };
+
+    /**
+     * @inheritDoc
+     */
+    setSelectedCategory = (id: string): void => {
+        this.selectedSubcategory = '';
+        this.selectedCategory = id;
+    };
+
+    /**
+     * @inheritDoc
+     */
+    editAccount = (account: IAccount): Promise<void> => {
+        const updateDate = new Date().toISOString();
+        const payload: IAccount = {...toJS(account), lastUpdate: updateDate};
+        const i = this.accounts.findIndex(({_id}) => _id === account._id);
+
+        if (this.accounts[i].data.password !== payload.data.password) {
+            payload.passwordLastUpdate = updateDate;
+        }
+
+        return this.serviceLayer.editAccount(payload, this.rootStore.authStore.password).then((response: IEncryptionResponse<IAccount>) => {
+            if (response.status === EEncryptionStatus.SUCCESS) {
+                runInAction(() => {
+                    this.accounts[i] = response.data || payload;
+                });
+            } else {
+                // todo.NOTIFICATION
+            }
+        });
+    };
 
     /**
      * @inheritDoc
@@ -172,7 +266,7 @@ export class MainStore implements IMainStore {
         const response = yield this.serviceLayer.addAccount(this.accountPrototype, this.rootStore.authStore.password);
 
         if (response.status === EEncryptionStatus.SUCCESS) {
-            this.accounts = response.data;
+            this.accounts.push(toJS(this.accountPrototype));
             // todo.NOTIFICATION
         }
 

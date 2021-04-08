@@ -18,8 +18,8 @@ export const defaultMain: IDefaultMainStore = {
 export const getDefaultAccountPrototype = (): IAccount => ({
     _id: uuid(),
     name: '',
-    category: '',
-    subCategory: '',
+    categoryId: '',
+    subcategory: '',
     logotype: {
         icon: faKeycdn,
     },
