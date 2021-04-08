@@ -262,7 +262,7 @@ export class MainStore implements IMainStore {
     /**
      * @inheritDoc
      */
-    *addAccount() {
+    *addAccount(): Generator<Promise<IEncryptionResponse<IAccount[]>>, void, IEncryptionResponse<IAccount[]>> {
         const response = yield this.serviceLayer.addAccount(this.accountPrototype, this.rootStore.authStore.password);
 
         if (response.status === EEncryptionStatus.SUCCESS) {
