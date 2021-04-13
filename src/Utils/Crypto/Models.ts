@@ -16,7 +16,7 @@ export interface ICryptoInitData {
  *
  * @prop status Статус прошедшей операции.
  * @prop message Сообщение. Обычно это error.message.
- * @prop data Возвращаемые на выходе данные.
+ * @prop [data] Возвращаемые на выходе данные.
  */
 export interface IEncryptionResponse<T = unknown> {
     status: EEncryptionStatus;

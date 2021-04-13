@@ -1,4 +1,4 @@
-import {FunctionComponent, useState} from 'react';
+import {BaseSyntheticEvent, FunctionComponent, useState} from 'react';
 import {observer} from 'mobx-react';
 import {useIntl} from 'react-intl';
 import classNames from 'classnames';
@@ -6,7 +6,8 @@ import {faKeycdn} from '@fortawesome/free-brands-svg-icons';
 import {ESizes, SVGIcon} from 'ui';
 import {ESetMode} from 'Services/Enums';
 import {useMainStore} from '../../../../Store/Hooks';
-import {AddAccountModal} from '../../../Modals/AddAccount.modal';
+import {AccountModal} from '../../../Modals/Account.modal';
+import {EAccountModalMode} from '../../../../Enums';
 
 /**
  * Панель управления аккаунтами в заголовке.
@@ -15,16 +16,23 @@ export const AccountsControlPanel: FunctionComponent = observer(() => {
     const main = useMainStore();
     /** Интернационализация */
     const {formatMessage} = useIntl();
-    /** Состояние активности модального окна добавления аккаунта */
-    const [isOpenAddModal, setIsOpenAddModal] = useState<boolean>(false);
-
-    /*TODO.REMOVE*/
-    const disable = false;
+    /** Состояние активности модального управления аккаунтами */
+    const [isOpenAccountModal, setIsOpenAccountModal] = useState<boolean>(false);
+    /** Режим в котором должно работать модальное окно управления аккаунтами */
+    const [accountModalMode, setAccountModalMode] = useState<EAccountModalMode>(EAccountModalMode.ADD);
     /** Количество выбранных аккаунтов */
     const selectedAccountsLength = main.selectedAccounts.length;
 
-    /** Функция, переключающая состояние модального окна добавления аккаунта */
-    const toggleAddModal = (): void => setIsOpenAddModal(!isOpenAddModal);
+    /** Функция, открывающая модальное окно аккаунта */
+    const openAccountModal = (e: BaseSyntheticEvent): void => {
+        setAccountModalMode(+e.target.dataset.mode);
+        setIsOpenAccountModal(true);
+    };
+
+    /** Функция, закрывающая модальное окно аккаунта */
+    const closeAccountModal = (): void => {
+        setIsOpenAccountModal(false);
+    };
 
     /** Функция, вызывающую отмену всех выделенных аккаунтов */
     const cancelSelected = (): void => {
@@ -39,19 +47,25 @@ export const AccountsControlPanel: FunctionComponent = observer(() => {
                 </li>
                 {!selectedAccountsLength && (
                     <li
-                        onClick={toggleAddModal}
+                        onClick={openAccountModal}
+                        data-mode={EAccountModalMode.ADD}
                         className={classNames('header__item', {
-                            accounts_is_empty: !main.accounts.length && !isOpenAddModal,
+                            accounts_is_empty: !main.accounts.length && !isOpenAccountModal,
                         })}
                     >
                         {formatMessage({id: 'COMMON__ACTION_ADD'})}
                     </li>
                 )}
-                {selectedAccountsLength === 1 && <li className="header__item">{formatMessage({id: 'COMMON__ACTION_EDIT'})}</li>}
+                {selectedAccountsLength === 1 && (
+                    <li onClick={openAccountModal} data-mode={EAccountModalMode.EDIT} className="header__item">
+                        {formatMessage({id: 'COMMON__ACTION_EDIT'})}
+                    </li>
+                )}
                 {Boolean(selectedAccountsLength) && (
                     <>
-                        {disable && <li className="header__item">{formatMessage({id: 'COMMON__ACTION_MOVE'})}</li>}
-                        {disable && <li className="header__item">{formatMessage({id: 'COMMON__ACTION_DELETE'})}</li>}
+                        <li className="header__item">
+                            {formatMessage({id: 'COMMON__ACTION_DELETE_COUNT'}, {count: selectedAccountsLength})}
+                        </li>
                         <li className="header__item" onClick={cancelSelected}>
                             {formatMessage({id: 'COMMON__ACTION_CANCEL'})}
                         </li>
@@ -59,7 +73,7 @@ export const AccountsControlPanel: FunctionComponent = observer(() => {
                 )}
             </ul>
 
-            <AddAccountModal isOpen={isOpenAddModal} onClose={toggleAddModal} />
+            <AccountModal isOpen={isOpenAccountModal} mode={accountModalMode} onClose={closeAccountModal} />
         </>
     );
 });

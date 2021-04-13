@@ -199,7 +199,8 @@ export class MainStore implements IMainStore {
      * @inheritDoc
      */
     setSelectedCategory = (id: string): void => {
-        this.selectedSubcategory = '';
+        this.setSelectedSubcategory('');
+        this.setSelectedAccounts(ESetMode.CLEAR);
         this.selectedCategory = id;
     };
 
@@ -216,9 +217,10 @@ export class MainStore implements IMainStore {
         }
 
         return this.serviceLayer.editAccount(payload, this.rootStore.authStore.password).then((response: IEncryptionResponse<IAccount>) => {
-            if (response.status === EEncryptionStatus.SUCCESS) {
+            if (response.status === EEncryptionStatus.SUCCESS && response.data) {
                 runInAction(() => {
-                    this.accounts[i] = response.data || payload;
+                    //@ts-ignore ложноположительное срабатывание. Проверка response.data сделана выше.
+                    this.accounts[i] = response.data;
                 });
             } else {
                 // todo.NOTIFICATION
@@ -238,11 +240,13 @@ export class MainStore implements IMainStore {
      */
     loadAccounts = (): Promise<EEncryptionStatus> =>
         this.serviceLayer.getAccounts(this.rootStore.authStore.password).then((response) => {
-            if (response.status === EEncryptionStatus.SUCCESS) {
+            if (response.status === EEncryptionStatus.SUCCESS && response.data) {
                 runInAction(() => {
-                    this.accounts = response.data || [];
-                    // todo.NOTIFICATION
+                    //@ts-ignore ложноположительное срабатывание. Проверка response.data сделана выше.
+                    this.accounts = response.data;
                 });
+            } else {
+                // todo.NOTIFICATION
             }
 
             return response.status;
@@ -253,9 +257,14 @@ export class MainStore implements IMainStore {
      */
     loadCategories = (): Promise<EResponseStatus> =>
         this.serviceLayer.getCategories().then((response) => {
-            runInAction(() => {
-                this.categories = response.data || [];
-            });
+            if (response.status === EResponseStatus.SUCCESS && response.data) {
+                runInAction(() => {
+                    //@ts-ignore ложноположительное срабатывание. Проверка response.data сделана выше.
+                    this.categories = response.data;
+                });
+            } else {
+                // todo.NOTIFICATION
+            }
             return response.status;
         });
 
@@ -267,6 +276,7 @@ export class MainStore implements IMainStore {
 
         if (response.status === EEncryptionStatus.SUCCESS) {
             this.accounts.push(toJS(this.accountPrototype));
+        } else {
             // todo.NOTIFICATION
         }
 
