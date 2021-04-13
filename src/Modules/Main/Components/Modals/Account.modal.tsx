@@ -4,20 +4,33 @@ import {Button, ESizes, Input, Modal, ModalBody, ModalFooter, ModalHeader, Optio
 import {useIntl} from 'react-intl';
 import {IModal} from 'ui/Components/Modal/Models';
 import {PassGen} from 'Common/Components/PassGen/PassGen';
-import {faDownload} from '@fortawesome/free-solid-svg-icons';
+import {faDownload, faSave} from '@fortawesome/free-solid-svg-icons';
+import isEqual from 'lodash.isequal';
 import {useMainStore} from '../../Store/Hooks';
 import {IFieldsCategory} from '../../Store/Models';
+import {EAccountModalMode} from '../../Enums';
 import './AddAccount.style.scss';
 
 /**
- * Компонент модального окна добавления нового аккаунта.
+ * Интерфейс компонента.
+ *
+ * @prop mode Режим работы модального окна.
  */
-export const AddAccountModal: FunctionComponent<IModal> = observer(({onClose, isOpen}) => {
+interface IAccountModal {
+    mode: EAccountModalMode;
+}
+
+type TAccountModal = IModal & IAccountModal;
+
+/**
+ * Компонент модального окна управления аккаунтами. Работает в режиме добавления и редактирования.
+ */
+export const AccountModal: FunctionComponent<TAccountModal> = observer((props) => {
     /** mobx store of main page */
     const main = useMainStore();
     /** Интернационализация*/
     const {formatMessage} = useIntl();
-
+    /** Имя выбранной текущей категории. Нужно для интернационализации */
     const categoryName = useMemo<string>((): string => {
         const name = main.categories.find((category) => category.id === main.accountPrototype.categoryId)?.name || '';
         const id = `categoryName:${name}`;
@@ -35,13 +48,16 @@ export const AddAccountModal: FunctionComponent<IModal> = observer(({onClose, is
         [main.accountPrototype.categoryId, main.categories]
     );
 
-    // eslint-disable-next-line
-    useEffect(main.resetAccountPrototype, []);
-
     useEffect(() => {
-        !isOpen && main.resetAccountPrototype();
+        if (props.isOpen) {
+            const [firstSelectedAccount] = main.selectedAccounts;
+            // в случае, если модалка открыта в режиме редактирования - заполним прототип выбранным аккаунтом.
+            if (props.mode === EAccountModalMode.EDIT && firstSelectedAccount) {
+                main.setAccountPrototype(firstSelectedAccount);
+            }
+        } else main.resetAccountPrototype();
         // eslint-disable-next-line
-    }, [isOpen]);
+    }, [props.isOpen, props.mode, main.selectedAccounts[0]]);
 
     /**
      * Метод установки значения в прототип нового аккаунта в свойство data.
@@ -77,14 +93,21 @@ export const AddAccountModal: FunctionComponent<IModal> = observer(({onClose, is
      */
     const addAccount = async (): Promise<void> => {
         await main.addAccount();
-        onClose();
+        props.onClose();
     };
 
     /**
-     * Метод, определяющий доступность кнопки добавления аккаунта.
-     * Должны быть категория, имя, а так же все поля указанные как обязательные.
+     * Метод редактирования аккаунта. Так же закрывает модальное окно.
      */
-    const availableAddButton = (): boolean => {
+    const editAccount = async (): Promise<void> => {
+        await main.editAccount(main.accountPrototype);
+        props.onClose();
+    };
+
+    /**
+     * Метод, проверяющий заполненность всех обязательных полей.
+     */
+    const checkFilledRequiresFields = (): boolean => {
         // Проверяется самая база: категория, пароль и имя. Без этого смысла нет дальше что-то смотреть.
         if (main.accountPrototype.categoryId && main.accountPrototype.name && main.accountPrototype.data.password) {
             for (let field of requiredFields) {
@@ -97,9 +120,15 @@ export const AddAccountModal: FunctionComponent<IModal> = observer(({onClose, is
         return true;
     };
 
+    /**
+     * Метод, определяющий доступность кнопки сохранения изменённых данных аккаунта.
+     * Должны быть заполнены все обязательные поля и должна быть разница между текущими данными и изменёнными.
+     */
+    const availableEditButton = (): boolean => checkFilledRequiresFields() && !isEqual(main.accountPrototype, main.selectedAccounts[0]);
+
     return (
-        <Modal isOpen={isOpen} onClose={onClose} size={ESizes.MD}>
-            <ModalHeader onClose={onClose}>{formatMessage({id: 'MAIN__MODAL_ADD_FORM_NAME'})}</ModalHeader>
+        <Modal isOpen={props.isOpen} onClose={props.onClose} size={ESizes.MD}>
+            <ModalHeader onClose={props.onClose}>{formatMessage({id: 'MAIN__MODAL_ADD_FORM_NAME'})}</ModalHeader>
             <ModalBody>
                 <Select onChange={setCategory} value={categoryName} placeholder={formatMessage({id: 'MAIN__MODAL_ADD_SELECT_CATEGORY'})}>
                     {main.categories.map((category) => (
@@ -145,9 +174,15 @@ export const AddAccountModal: FunctionComponent<IModal> = observer(({onClose, is
                 )}
             </ModalBody>
             <ModalFooter>
-                <Button disabled={!availableAddButton()} onClick={addAccount} icon={<SVGIcon icon={faDownload} />}>
-                    {formatMessage({id: 'MAIN__MODAL_ADD_ACTION_ADD_ACCOUNT'})}
-                </Button>
+                {props.mode === EAccountModalMode.ADD ? (
+                    <Button disabled={!checkFilledRequiresFields()} onClick={addAccount} icon={<SVGIcon icon={faDownload} />}>
+                        {formatMessage({id: 'MAIN__MODAL_ADD_ACTION_ADD_ACCOUNT'})}
+                    </Button>
+                ) : (
+                    <Button disabled={!availableEditButton()} onClick={editAccount} icon={<SVGIcon icon={faSave} />}>
+                        {formatMessage({id: 'COMMON__ACTION_SAVE'})}
+                    </Button>
+                )}
             </ModalFooter>
         </Modal>
     );

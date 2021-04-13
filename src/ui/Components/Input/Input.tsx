@@ -16,7 +16,7 @@ import {go} from 'fuzzysort';
 import {InputPlaceholder} from 'ui/Common/InnerComponents/InputPlaceholder/InputPlaceholder';
 import {InputFilled} from 'ui/Common/InnerComponents/InputFilled/InputFilled';
 import {InputMessage} from 'ui/Common/InnerComponents/InputMessage/InputMessage';
-import {useHiddenListFromWindow, useRemoteScrollControl} from 'ui/Common/Hooks';
+import {useHiddenListFromWindow, usePrevious, useRemoteScrollControl} from 'ui/Common/Hooks';
 import {isFunction, getPositionProps} from 'ui/Utils';
 import {EKeyCode} from 'ui/Common/Enums';
 import {Highlight} from 'ui/Components/Highlight/Highlight';
@@ -76,6 +76,8 @@ const InputComp: FunctionComponent<IInput> = ({
     const [style, setStyle] = useState<IPositionProps>();
     /** Флаг использования навигационных кнопок в автокомплите */
     const [usedKey, setUsedKey] = useState<boolean>(false);
+    /** Предыдущее значение инпута */
+    const prevValue = usePrevious<string | undefined>(value);
 
     /**
      * Отслеживание смены выбранного элемента и установка значения инпута, если не используются навигационные клавиши.
@@ -89,7 +91,7 @@ const InputComp: FunctionComponent<IInput> = ({
      * Отслеживание текущего value с целью раскрытия автокомплита, когда он ранее уже был скрыт, но возобновился ввод.
      */
     useEffect(() => {
-        if (autoCompleteList.length && !autoCompleteIsOpen && !usedKey && value) {
+        if (autoCompleteList.length && !autoCompleteIsOpen && !usedKey && value && prevValue !== undefined) {
             setAutoCompleteIsOpen(true);
         }
         // eslint-disable-next-line

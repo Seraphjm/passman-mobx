@@ -14,3 +14,14 @@ export enum ENotificationPeriodUpdate {
     SIX_MOUTH = 15552000000,
     ONE_YEAR = 31536000000,
 }
+
+/**
+ * Перечисление режимов работы модального окна управления аккаунтами.
+ *
+ * ADD Добавление нового аккаунта.
+ * EDIT Редактирование выбранного аккаунта.
+ */
+export enum EAccountModalMode {
+    ADD,
+    EDIT,
+}

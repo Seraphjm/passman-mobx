@@ -193,9 +193,11 @@ export const AccountCard: FunctionComponent<IProps> = observer(({account}) => {
                                 <Badge type={badge.type}>{badge.text}</Badge>
                             ))}
                         </div>
-                        <Button onClick={toggleModal} icon={<SVGIcon size={ESizes.SM} icon={faRecycle} />} size={ESizes.SM}>
-                            {formatMessage({id: 'COMMON__ACTION_UPDATE_PASSWORD'})}
-                        </Button>
+                        {main.selectedAccounts.length === 1 && (
+                            <Button onClick={toggleModal} icon={<SVGIcon size={ESizes.SM} icon={faRecycle} />} size={ESizes.SM}>
+                                {formatMessage({id: 'COMMON__ACTION_UPDATE_PASSWORD'})}
+                            </Button>
+                        )}
                     </label>
                 </CardHeader>
 
