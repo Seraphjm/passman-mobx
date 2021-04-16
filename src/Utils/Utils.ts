@@ -112,3 +112,15 @@ export const uuid = (): string => {
 
     return key;
 };
+
+/**
+ * Функция, реализующая аналог Array.prototype.filter, но мутабельно (изменяя исходный массив).
+ *
+ * @param array Входящий изменяемый массив.
+ * @param callback callback, отрабатываемый на каждой итерации по массиву.
+ */
+export const mutableFilter = <T>(array: T[], callback: (item: T) => boolean) => {
+    for (let i = array.length - 1; i >= 0; --i) {
+        if (!callback(array[i])) array.splice(i, 1);
+    }
+};

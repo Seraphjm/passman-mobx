@@ -1,10 +1,9 @@
 import {makeAutoObservable, runInAction, toJS} from 'mobx';
 import {ICategory, IMainStore} from './Models';
-import {IRootStore} from 'Store/Models';
 import {EEncryptionStatus} from 'Utils/Crypto/Enums';
 import {IEncryptionResponse} from 'Utils/Crypto/Models';
 import {EResponseStatus, ESetMode} from 'Services/Enums';
-import {set} from 'Utils/Utils';
+import {mutableFilter, set} from 'Utils/Utils';
 import {IMainService} from '../Services/Models';
 import {IAccount} from '../Models/Account';
 import {getDefaultAccountPrototype} from './Consts';
@@ -16,10 +15,6 @@ import {getSortedSubcategoriesFromAccounts} from '../Utils';
  * Стор главной страницы приложеия.
  */
 export class MainStore implements IMainStore {
-    /**
-     * @inheritDoc
-     */
-    rootStore: IRootStore;
     /**
      * @inheritDoc
      */
@@ -53,13 +48,11 @@ export class MainStore implements IMainStore {
      */
     selectedAccounts: IAccount[] = [];
 
-    constructor(rootStore: IRootStore, serviceLayer: IMainService) {
+    constructor(serviceLayer: IMainService) {
         this.serviceLayer = serviceLayer;
-        this.rootStore = rootStore;
 
         makeAutoObservable(this, {
             serviceLayer: false,
-            rootStore: false,
         });
 
         this.addAccount = this.addAccount.bind(this);
@@ -216,7 +209,7 @@ export class MainStore implements IMainStore {
             payload.passwordLastUpdate = updateDate;
         }
 
-        return this.serviceLayer.editAccount(payload, this.rootStore.authStore.password).then((response: IEncryptionResponse<IAccount>) => {
+        return this.serviceLayer.editAccount(payload).then((response: IEncryptionResponse<IAccount>) => {
             if (response.status === EEncryptionStatus.SUCCESS && response.data) {
                 runInAction(() => {
                     //@ts-ignore ложноположительное срабатывание. Проверка response.data сделана выше.
@@ -239,7 +232,7 @@ export class MainStore implements IMainStore {
      * @inheritDoc
      */
     loadAccounts = (): Promise<EEncryptionStatus> =>
-        this.serviceLayer.getAccounts(this.rootStore.authStore.password).then((response) => {
+        this.serviceLayer.getAccounts().then((response) => {
             if (response.status === EEncryptionStatus.SUCCESS && response.data) {
                 runInAction(() => {
                     //@ts-ignore ложноположительное срабатывание. Проверка response.data сделана выше.
@@ -272,13 +265,31 @@ export class MainStore implements IMainStore {
      * @inheritDoc
      */
     *addAccount(): Generator<Promise<IEncryptionResponse<IAccount[]>>, void, IEncryptionResponse<IAccount[]>> {
-        const response = yield this.serviceLayer.addAccount(this.accountPrototype, this.rootStore.authStore.password);
+        const response = yield this.serviceLayer.addAccount(this.accountPrototype);
 
         if (response.status === EEncryptionStatus.SUCCESS) {
             this.accounts.push(toJS(this.accountPrototype));
         } else {
             // todo.NOTIFICATION
         }
+
+        this.accountPrototype = getDefaultAccountPrototype();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    *removeAccounts(accounts: IAccount[]): Generator<Promise<IEncryptionResponse<IAccount[]>>, void, IEncryptionResponse<IAccount[]>> {
+        const response = yield this.serviceLayer.removeAccounts(accounts);
+
+        if (response.status === EEncryptionStatus.SUCCESS && response.data) {
+            //@ts-ignore ложноположительное срабатывание. Проверка response.data сделана выше.
+            yield mutableFilter<IAccount>(this.accounts, (account) => response.data.some(({_id}) => _id === account._id));
+        } else {
+            // todo.NOTIFICATION
+        }
+
+        this.setSelectedAccounts(ESetMode.CLEAR);
 
         this.accountPrototype = getDefaultAccountPrototype();
     }

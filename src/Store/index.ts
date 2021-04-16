@@ -41,7 +41,7 @@ class RootStore implements IRootStore {
     constructor() {
         this.settingsStore = new SettingsStore();
         this.authStore = new AuthStore(this, ServiceLayer);
-        this.mainStore = new MainStore(this, new MainService(ServiceLayer));
+        this.mainStore = new MainStore(new MainService(this, ServiceLayer));
     }
 }
 

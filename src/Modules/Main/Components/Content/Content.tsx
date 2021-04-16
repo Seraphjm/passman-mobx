@@ -24,10 +24,8 @@ export const Content: FunctionComponent = observer(() => {
                 </div>
             ) : (
                 <div className="nothing-found v-center">
-                    {main.search && (
-                        <img className="image-not-found" alt={formatMessage({id: 'MAIN__ACCOUNT_NOTHING_FOUND'})} src={notFoundCat} />
-                    )}
-                    {formatMessage({id: 'MAIN__ACCOUNT_NOTHING_FOUND'})}
+                    {main.search && <img className="image-not-found" alt={formatMessage({id: 'TEXT__NOTHING_FOUND'})} src={notFoundCat} />}
+                    {formatMessage({id: 'TEXT__NOTHING_FOUND'})}
                 </div>
             )}
         </div>

@@ -1,0 +1,71 @@
+.deleted-accounts {
+    border-collapse: collapse;
+}
+
+.deleted-accounts__row {
+    &:hover {
+        background: rgba(0, 0, 0, 0.15);
+
+        .deleted-accounts__control-icon {
+            visibility: visible;
+        }
+    }
+
+    &:not(:last-child) {
+        border-bottom: 1px solid #bbb;
+    }
+
+    .deleted-accounts__col {
+        padding: 0.75rem;
+    }
+
+    .deleted-accounts__icon,
+    .deleted-accounts__control {
+        min-width: 50px;
+        text-align: center;
+    }
+    .deleted-accounts__name {
+        width: 40%;
+    }
+    .deleted-accounts__category {
+        width: 30%;
+    }
+    .deleted-accounts__subcategory {
+        width: 30%;
+    }
+    .deleted-accounts__control {
+        cursor: pointer;
+
+        &:hover {
+            .deleted-accounts__control-icon {
+                color: red;
+            }
+        }
+    }
+}
+
+.deleted-accounts__control-icon {
+    transition: color 350ms;
+    visibility: hidden;
+}
+
+.deleted-accounts__thead th {
+    padding: 0.5rem;
+    padding-bottom: 1rem;
+    text-transform: uppercase;
+    text-align: left;
+}
+
+.deleted-accounts__empty-list {
+    text-align: center;
+    padding: 1rem;
+}
+
+.deleted-accounts__empty-icon {
+    height: 5rem;
+}
+
+.deleted-accounts__empty-text {
+    font-size: 1.5rem;
+    line-height: 2;
+}

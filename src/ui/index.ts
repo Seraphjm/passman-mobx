@@ -2,6 +2,7 @@ import {EBadgeCounterPosition} from './Components/Badge/Enums';
 import {EMessageType, EPositions, EColors, ESizes} from 'ui/Common/Enums';
 import {Input} from './Components/Input/Input';
 import {Button} from './Components/Button/Button';
+import {TimeoutButton} from './Components/Button/TimeoutButton';
 import {Modal} from './Components/Modal/Modal';
 import {SVGIcon} from './Components/Icon';
 import {EModalContentPosition} from './Components/Modal/Enums';
@@ -23,6 +24,7 @@ export {EColors, ESizes, EBadgeCounterPosition, EMessageType, EPositions, EModal
 export {
     Input,
     Button,
+    TimeoutButton,
     Modal,
     ModalBody,
     ModalFooter,
