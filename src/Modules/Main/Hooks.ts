@@ -10,9 +10,11 @@ export function useCategoryName(categoryId: string): string {
     const main = useMainStore();
 
     return useMemo<string>((): string => {
+        if (!categoryId) return '';
         const name = main.categories.find((category) => category.id === categoryId)?.name || '';
         const id = `categoryName:${name}`;
         const message = formatMessage({id});
+
         return message === id ? name : message;
         // eslint-disable-next-line
     }, [main.categories, categoryId]);

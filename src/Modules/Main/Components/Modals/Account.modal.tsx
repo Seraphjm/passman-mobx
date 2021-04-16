@@ -50,7 +50,9 @@ export const AccountModal: FunctionComponent<TAccountModal> = observer((props) =
             if (props.mode === EAccountModalMode.EDIT && firstSelectedAccount) {
                 main.setAccountPrototype(firstSelectedAccount);
             }
-        } else main.resetAccountPrototype();
+        }
+
+        return () => main.resetAccountPrototype();
         // eslint-disable-next-line
     }, [props.isOpen, props.mode, main.selectedAccounts[0]]);
 
