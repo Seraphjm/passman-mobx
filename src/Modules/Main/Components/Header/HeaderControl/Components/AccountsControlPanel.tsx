@@ -1,10 +1,11 @@
-import {BaseSyntheticEvent, FunctionComponent, useEffect, useState} from 'react';
+import {BaseSyntheticEvent, FunctionComponent, useState} from 'react';
 import {observer} from 'mobx-react';
 import {useIntl} from 'react-intl';
 import classNames from 'classnames';
 import {faKeycdn} from '@fortawesome/free-brands-svg-icons';
 import {ESizes, SVGIcon} from 'ui';
 import {ESetMode} from 'Services/Enums';
+import {ELanguage} from 'Modules/Settings/Enums';
 import {useMainStore} from '../../../../Store/Hooks';
 import {AccountModal} from '../../../Modals/Account.modal';
 import {DeleteAccountsModal} from '../../../Modals/DeleteAccounts.modal';
@@ -17,7 +18,7 @@ export const AccountsControlPanel: FunctionComponent = observer(() => {
     /** mobx-store главной страницы */
     const main = useMainStore();
     /** Интернационализация */
-    const {formatMessage} = useIntl();
+    const {formatMessage, locale} = useIntl();
     /** Состояние активности модального управления аккаунтами */
     const [isOpenAccountModal, setIsOpenAccountModal] = useState<boolean>(false);
     /** Состояние активности модального управления аккаунтами */
@@ -62,21 +63,21 @@ export const AccountsControlPanel: FunctionComponent = observer(() => {
                             accounts_is_empty: !main.accounts.length && !isOpenAccountModal,
                         })}
                     >
-                        {formatMessage({id: 'COMMON__ACTION_ADD'})}
+                        {formatMessage({id: 'ACTION__ADD'})}
                     </li>
                 )}
                 {selectedAccountsLength === 1 && (
                     <li onClick={openAccountModal} data-mode={EAccountModalMode.EDIT} className="header__item">
-                        {formatMessage({id: 'COMMON__ACTION_EDIT'})}
+                        {formatMessage({id: locale !== ELanguage.ru_RU ? 'ACTION__EDIT' : 'ACTION__CHANGE'})}
                     </li>
                 )}
                 {Boolean(selectedAccountsLength) && (
                     <>
                         <li className="header__item" onClick={toggleDeleteAccountsModal}>
-                            {formatMessage({id: 'COMMON__ACTION_DELETE_COUNT'}, {count: selectedAccountsLength})}
+                            {formatMessage({id: 'TEXT__DELETE_$COUNT'}, {count: selectedAccountsLength})}
                         </li>
                         <li className="header__item" onClick={cancelSelected}>
-                            {formatMessage({id: 'COMMON__ACTION_CANCEL'})}
+                            {formatMessage({id: 'ACTION__CANCEL'})}
                         </li>
                     </>
                 )}

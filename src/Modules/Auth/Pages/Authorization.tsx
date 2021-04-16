@@ -16,15 +16,15 @@ export const AuthorizationPage: FunctionComponent = ({children}) => {
     const {formatMessage} = useIntl();
     const {current} = useRef<ILocationMap>({
         [AUTH_ROUTE_NAMES.ENTER_PASSWORD]: {
-            translation: 'AUTH__LINK_TO_CHANGE_MASTER_KEY',
+            translation: 'TEXT__CHANGE_MASTER_PASSWORD',
             to: AUTH_ROUTE_NAMES.CHANGE_PASSWORD,
         },
         [AUTH_ROUTE_NAMES.CHANGE_PASSWORD]: {
-            translation: 'AUTH__LINK_TO_ENTER_PASSWORD',
+            translation: 'TEXT__COME_BACK_TO_AUTHORIZATION',
             to: AUTH_ROUTE_NAMES.ENTER_PASSWORD,
         },
         [AUTH_ROUTE_NAMES.ROOT]: {
-            translation: 'AUTH__LINK_TO_ENTER_PASSWORD',
+            translation: 'TEXT__COME_BACK_TO_AUTHORIZATION',
             to: AUTH_ROUTE_NAMES.ENTER_PASSWORD,
         },
     });

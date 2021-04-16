@@ -5,7 +5,8 @@
     "scripts": {
         "build": "node scripts/build.js",
         "start": "node scripts/start.js",
-        "test": "node scripts/test.js"
+        "test": "node scripts/test.js",
+        "sort-json": "sort-json"
     },
     "husky": {
         "hooks": {
@@ -188,5 +189,8 @@
         "webpack-dev-server": "3.11.0",
         "webpack-manifest-plugin": "2.2.0",
         "workbox-webpack-plugin": "5.1.4"
+    },
+    "optionalDependencies": {
+        "sort-json": "^2.0.0"
     }
 }

@@ -92,7 +92,7 @@ export const AccountCard: FunctionComponent<IProps> = observer(({account}) => {
     const fields = useMemo(() => getPreparedAccountField(account.data), [account.data]);
     /** Для избегания вызова при каждом рендере одной и той же текстовки для всех value полей, записываю в useRef */
     // todo.REFACTOR возможно будет потребность переписать на useMemo из-за смен локализаций
-    const {current: title} = useRef(formatMessage({id: 'MAIN__ACCOUNT_CARD_CLICK_FOR_COPY'}));
+    const {current: title} = useRef(formatMessage({id: 'TEXT__CLICK_FOR_COPY'}));
 
     /** Состояние активности карточки (выделено пользователем) */
     const isActive: boolean = main.selectedAccounts.includes(account);
@@ -195,7 +195,7 @@ export const AccountCard: FunctionComponent<IProps> = observer(({account}) => {
                         </div>
                         {main.selectedAccounts.length === 1 && (
                             <Button onClick={toggleModal} icon={<SVGIcon size={ESizes.SM} icon={faRecycle} />} size={ESizes.SM}>
-                                {formatMessage({id: 'COMMON__ACTION_UPDATE_PASSWORD'})}
+                                {formatMessage({id: 'TEXT__UPDATE_PASSWORD'})}
                             </Button>
                         )}
                     </label>
@@ -213,7 +213,7 @@ export const AccountCard: FunctionComponent<IProps> = observer(({account}) => {
                             </td>
                             <td
                                 className="account-card__field-value account-card__field-password"
-                                title={formatMessage({id: 'MAIN__ACCOUNT_CARD_CLICK_FOR_COPY'})}
+                                title={formatMessage({id: 'TEXT__CLICK_FOR_COPY'})}
                             >
                                 {hidePassword(account.data.password, hiddenPassword)}
                             </td>
@@ -228,14 +228,14 @@ export const AccountCard: FunctionComponent<IProps> = observer(({account}) => {
                     {lastUpdate.count >= 1
                         ? formatMessage(
                               {
-                                  id: 'MAIN__ACCOUNT_CARD_LAST_UPDATE',
+                                  id: 'TEXT__LAST_PASSWORD_UPDATE_$COUNT_$PERIOD',
                               },
                               {
                                   count: lastUpdate.count,
                                   period: lastUpdate.period,
                               }
                           )
-                        : formatMessage({id: 'MAIN__ACCOUNT_CARD_LAST_UPDATE_TODAY'})}
+                        : formatMessage({id: 'TEXT__LAST_PASSWORD_UPDATE_TODAY'})}
                 </CardFooter>
             </Card>
 
@@ -243,7 +243,7 @@ export const AccountCard: FunctionComponent<IProps> = observer(({account}) => {
                 <ModalHeader onClose={toggleModal}>
                     {formatMessage(
                         {
-                            id: 'MAIN__ACCOUNT_CARD_UPDATE_PASSWORD_FOR',
+                            id: 'TEXT__UPDATE_PASSWORD_FOR_$NAME',
                         },
                         {
                             name: account.name,
@@ -263,7 +263,7 @@ export const AccountCard: FunctionComponent<IProps> = observer(({account}) => {
                         size={ESizes.SM}
                         icon={<SVGIcon icon={faSave} />}
                     >
-                        {formatMessage({id: 'COMMON__ACTION_SAVE'})}
+                        {formatMessage({id: 'ACTION__SAVE'})}
                     </Button>
                 </ModalFooter>
             </Modal>

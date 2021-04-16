@@ -45,7 +45,7 @@ export const DeleteAccountsModal: FunctionComponent<IModal> = observer((props) =
 
     return (
         <Modal isOpen={props.isOpen} onClose={props.onClose}>
-            <ModalHeader onClose={props.onClose}>{formatMessage({id: 'MAIN__MODAL_DELETE_HEADER'})}</ModalHeader>
+            <ModalHeader onClose={props.onClose}>{formatMessage({id: 'TEXT__CONFIRM_DELETE_ACCOUNTS'})}</ModalHeader>
             <ModalBody>
                 <table className="deleted-accounts">
                     <thead className="deleted-accounts__thead">
@@ -91,7 +91,7 @@ export const DeleteAccountsModal: FunctionComponent<IModal> = observer((props) =
             <ModalFooter>
                 {!deletedListIsEmpty ? (
                     <TimeoutButton icon={<SVGIcon icon={faTrash} />} onClick={deleteAccounts} type={EColors.DANGER} timeout={5}>
-                        {formatMessage({id: 'COMMON__ACTION_DELETE'})}
+                        {formatMessage({id: 'ACTION__DELETE'})}
                     </TimeoutButton>
                 ) : (
                     <Button type={EColors.SUCCESS} onClick={props.onClose}>

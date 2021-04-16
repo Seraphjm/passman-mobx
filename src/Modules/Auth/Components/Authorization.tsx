@@ -35,7 +35,7 @@ export const Authorization: FunctionComponent = observer(() => {
         if (auth.dbIsEmpty) {
             setMessage({
                 type: EMessageType.ERROR,
-                text: formatMessage({id: 'AUTH__FORM_ERR_STORE_IS_EMPTY'}),
+                text: formatMessage({id: 'TEXT__MAIN_STORE_IS_EMPTY'}),
             });
         }
         // eslint-disable-next-line
@@ -59,7 +59,7 @@ export const Authorization: FunctionComponent = observer(() => {
             },
             () => {
                 setAnimate(true);
-                setMessage({type: EMessageType.ERROR, text: formatMessage({id: 'AUTH__FORM_ERR_AUTH'})});
+                setMessage({type: EMessageType.ERROR, text: formatMessage({id: 'TEXT__ERROR_AUTHORIZATION'})});
                 //@ts-ignore
                 ref.current?.focus();
             }
@@ -78,12 +78,12 @@ export const Authorization: FunctionComponent = observer(() => {
                 password: auth.password,
             });
             auth.setPassword('');
-            setMessage({type: EMessageType.INFO, text: formatMessage({id: 'AUTH__FORM_CH_MK_REPEAT'})});
+            setMessage({type: EMessageType.INFO, text: formatMessage({id: 'TEXT__REPEAT_PASSWORD'})});
             // Если повторно ввели правильно..
         } else if (auth.password === createPassword.password) {
             await auth.createDB();
             auth.setPassword('');
-            setMessage({type: EMessageType.SUCCESS, text: formatMessage({id: 'AUTH__FORM_CH_MK_SUCCESS'})});
+            setMessage({type: EMessageType.SUCCESS, text: formatMessage({id: 'TEXT__PASSWORD_SET_SUCCESS'})});
             // если при повторе произошла ошибка
         } else {
             setCreatePassword({
@@ -92,7 +92,7 @@ export const Authorization: FunctionComponent = observer(() => {
             });
             auth.setPassword('');
             setAnimate(true);
-            setMessage({type: EMessageType.ERROR, text: formatMessage({id: 'AUTH__FORM_CH_MK_ERR_COINCIDENCE'})});
+            setMessage({type: EMessageType.ERROR, text: formatMessage({id: 'TEXT__PASSWORDS_DIDNT_MATCH'})});
         }
 
         //@ts-ignore
@@ -102,7 +102,7 @@ export const Authorization: FunctionComponent = observer(() => {
     return (
         <TemplateAuthForm>
             <AuthorizationHeader>
-                <h4>{formatMessage({id: 'AUTH__FORM_NAME'})}</h4>
+                <h4>{formatMessage({id: 'LABEL__AUTHORIZATION'})}</h4>
             </AuthorizationHeader>
 
             <AuthorizationBody position={EPositions.CENTER}>
@@ -111,7 +111,7 @@ export const Authorization: FunctionComponent = observer(() => {
                     inputRef={ref}
                     value={auth.password}
                     type="password"
-                    placeholder={formatMessage({id: 'AUTH__PLACEHOLDER_ENTER_PASS'})}
+                    placeholder={formatMessage({id: 'TEXT__ENTER_PASSWORD'})}
                     disabled={auth.isChecking}
                     autoFocus={true}
                     onInput={auth.setPassword}

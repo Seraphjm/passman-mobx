@@ -37,7 +37,7 @@ export const SideBar: FunctionComponent = observer(() => {
                     );
                 })
             ) : (
-                <SideBarItem active={true} id="search" icon={faLongArrowAltLeft} text={formatMessage({id: 'COMMON__ACTION_CANCEL'})} />
+                <SideBarItem active={true} id="search" icon={faLongArrowAltLeft} text={formatMessage({id: 'ACTION__CANCEL'})} />
             )}
         </Container>
     );

@@ -47,27 +47,27 @@ const ChangeMasterKey: FunctionComponent = observer(() => {
                 <Link style={{marginRight: '.75rem'}} to={AUTH_ROUTE_NAMES.ENTER_PASSWORD}>
                     <SVGIcon icon={faLongArrowAltLeft} />
                 </Link>
-                <h4>{formatMessage({id: 'AUTH__FORM_CHANGE_PASSWORD'})}</h4>
+                <h4>{formatMessage({id: 'TEXT__CHANGES_MASTER_PASSWORD'})}</h4>
             </AuthorizationHeader>
 
             <AuthorizationBody position={EPositions.CENTER}>
                 <input
                     value={fields.currentPassword.value}
                     type="password"
-                    placeholder={formatMessage({id: 'AUTH__PLACEHOLDER_ENTER_PASS'})}
+                    placeholder={formatMessage({id: 'TEXT__ENTER_PASSWORD'})}
                     onInput={changeField}
                 />
                 <input
                     value={fields.newPassword.value}
                     type="password"
-                    placeholder={formatMessage({id: 'AUTH__PLACEHOLDER_ENTER_PASS'})}
+                    placeholder={formatMessage({id: 'TEXT__ENTER_PASSWORD'})}
                     disabled={!fields.currentPassword.value}
                     onInput={changeField}
                 />
                 <input
                     value={fields.repeateNewPassword.value}
                     type="password"
-                    placeholder={formatMessage({id: 'AUTH__PLACEHOLDER_ENTER_PASS'})}
+                    placeholder={formatMessage({id: 'TEXT__ENTER_PASSWORD'})}
                     disabled={!fields.newPassword.value}
                     onInput={changeField}
                 />
@@ -75,12 +75,12 @@ const ChangeMasterKey: FunctionComponent = observer(() => {
 
             <AuthorizationFooter position={EPositions.CENTER}>
                 <label>
-                    {formatMessage({id: 'COMMON__LABEL_HIDE_SYMBOLS'})}
+                    {formatMessage({id: 'TEXT__HIDE_SYMBOLS'})}
                     <input onChange={hideSymbols} type="checkbox" />
                 </label>
 
                 <button onClick={changeMasterPassword} disabled={!auth.password}>
-                    {formatMessage({id: 'COMMON__ACTION_CHANGE'})}
+                    {formatMessage({id: 'ACTION__CHANGE'})}
                 </button>
             </AuthorizationFooter>
         </TemplateAuthForm>

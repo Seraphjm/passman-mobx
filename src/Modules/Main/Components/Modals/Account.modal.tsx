@@ -123,9 +123,9 @@ export const AccountModal: FunctionComponent<TAccountModal> = observer((props) =
 
     return (
         <Modal isOpen={props.isOpen} onClose={props.onClose} size={ESizes.MD}>
-            <ModalHeader onClose={props.onClose}>{formatMessage({id: 'MAIN__MODAL_ADD_FORM_NAME'})}</ModalHeader>
+            <ModalHeader onClose={props.onClose}>{formatMessage({id: 'TEXT__ADD_AN_ACCOUNT'})}</ModalHeader>
             <ModalBody>
-                <Select onChange={setCategory} value={categoryName} placeholder={formatMessage({id: 'MAIN__MODAL_ADD_SELECT_CATEGORY'})}>
+                <Select onChange={setCategory} value={categoryName} placeholder={formatMessage({id: 'TEXT__SELECT_CATEGORY'})}>
                     {main.categories.map((category) => (
                         <Option key={category.id} value={category.id} icon={<SVGIcon size={ESizes.MD} icon={category.icon} />}>
                             {formatMessage({id: `categoryName:${category.name}`})}
@@ -135,7 +135,7 @@ export const AccountModal: FunctionComponent<TAccountModal> = observer((props) =
 
                 {main.accountPrototype.categoryId && (
                     <Input
-                        placeholder={formatMessage({id: 'MAIN__MODAL_ADD_ENTER_SUBCATEGORY'})}
+                        placeholder={formatMessage({id: 'TEXT__ENTER_SUBCATEGORY'})}
                         autoComplete={main.subcategories}
                         value={main.accountPrototype.subcategory}
                         onInput={setSubcategory}
@@ -165,17 +165,17 @@ export const AccountModal: FunctionComponent<TAccountModal> = observer((props) =
                         </div>
                     </div>
                 ) : (
-                    <div className="select-category-text">{formatMessage({id: 'MAIN__MODAL_ADD_SELECT_SOME_ITEM'})}</div>
+                    <div className="select-category-text">{formatMessage({id: 'TEXT__SELECT_SOMETHING_FROM_LIST'})}</div>
                 )}
             </ModalBody>
             <ModalFooter>
                 {props.mode === EAccountModalMode.ADD ? (
                     <Button disabled={!checkFilledRequiresFields()} onClick={addAccount} icon={<SVGIcon icon={faDownload} />}>
-                        {formatMessage({id: 'MAIN__MODAL_ADD_ACTION_ADD_ACCOUNT'})}
+                        {formatMessage({id: 'TEXT__ADD_ACCOUNT'})}
                     </Button>
                 ) : (
                     <Button disabled={!availableEditButton()} onClick={editAccount} icon={<SVGIcon icon={faSave} />}>
-                        {formatMessage({id: 'COMMON__ACTION_SAVE'})}
+                        {formatMessage({id: 'ACTION__SAVE'})}
                     </Button>
                 )}
             </ModalFooter>

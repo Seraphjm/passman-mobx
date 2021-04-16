@@ -137,7 +137,7 @@ export const PassGen: FunctionComponent<IPassGen> = observer((props) => {
             </div>
 
             <div className="pass-gen__length">
-                <div className="pass-gen__length-text">{formatMessage({id: 'COMMON__PASSWORD_LENGTH'})}:</div>
+                <div className="pass-gen__length-text">{formatMessage({id: 'TEXT__PASSWORD_LENGTH'})}:</div>
                 <input type="number" className="pass-gen__length-control" onInput={setPassLength} value={length} />
             </div>
         </div>
