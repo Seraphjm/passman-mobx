@@ -64,6 +64,13 @@
     "MAIN__MODAL_ADD_ENTER_SUBCATEGORY": "Enter subcategory",
     "MAIN__MODAL_ADD_ACTION_ADD_ACCOUNT": "Add account",
 
+    "MAIN__MODAL_DELETE_HEADER": "Confirm delete accounts",
+    "LABEL__NAME": "Name",
+    "LABEL__CATEGORY": "Category",
+    "LABEL__SUBCATEGORY": "Subcategory",
+    "TEXT__EMPTY_LIST": "The list is empty!",
+    "ACTION__CLOSE": "Close",
+
     "MAIN__ACCOUNT_CARD_UPDATE_PASSWORD_FOR": "Update password for {name}",
     "MAIN__ACCOUNT_CARD_CLICK_FOR_COPY": "Click for copy!",
     "MAIN__ACCOUNT_CARD_LAST_UPDATE": "Last password update: {count} {period} ago",

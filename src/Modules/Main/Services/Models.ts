@@ -3,11 +3,16 @@ import {IDBServiceLayer} from 'Services/Models';
 import {IEncryptionResponse} from 'Utils/Crypto/Models';
 import {IAccount} from '../Models/Account';
 import {ICategory} from '../Store/Models';
+import {IRootStore} from 'Store/Models';
 
 /**
  * Интерфейс сервисного слоя главной страницы.
  */
 export interface IMainService {
+    /**
+     * Экземпляр корневого store.
+     */
+    rootStore: IRootStore;
     /**
      * Сервисный слой приложения.
      */
@@ -15,34 +20,29 @@ export interface IMainService {
 
     /**
      * Экшн, возвращающий сохранённые в базе аккаунты.
-     *
-     * @param password Пароль пользователя.
      */
-    getAccounts(password: string): Promise<IEncryptionResponse<IAccount[]>>;
+    getAccounts(): Promise<IEncryptionResponse<IAccount[]>>;
 
     /**
      * Экшн, добавляющий новый аккаунт в базу аккаунтов пользователя.
      *
      * @param account Аккаунты, которые необходимо изменить/добавить.
-     * @param password Пароль пользователя.
      */
-    addAccount(account: IAccount, password: string): Promise<IEncryptionResponse<IAccount[]>>;
+    addAccount(account: IAccount): Promise<IEncryptionResponse<IAccount[]>>;
 
     /**
      * Экшн, изменяющий сохранённые в базе аккаунты пользователя.
      *
      * @param account Аккаунты, которые необходимо изменить/добавить.
-     * @param password Пароль пользователя.
      */
-    editAccount(account: IAccount, password: string): Promise<IEncryptionResponse<IAccount>>;
+    editAccount(account: IAccount): Promise<IEncryptionResponse<IAccount>>;
 
     /**
-     * Экшн, изменяющий сохранённые в базе аккаунты пользователя.
+     * Экшн, удаляющий аккаунты пользователя из базы данных.
      *
      * @param accounts Аккаунты, которые необходимо изменить/добавить.
-     * @param password Пароль пользователя.
      */
-    removeAccounts(accounts: IAccount[], password: string): Promise<IEncryptionResponse<IAccount[]>>;
+    removeAccounts(accounts: IAccount[]): Promise<IEncryptionResponse<IAccount[]>>;
 
     /**
      * Экшн, возвращающий дефолтные категории.
@@ -52,10 +52,10 @@ export interface IMainService {
     /**
      * TODO: in progress
      */
-    getUserCategories(password: string): any[];
+    getUserCategories(): any[];
 
     /**
      * TODO: in progress
      */
-    setUserCategories(categories: any[], password: string): any;
+    setUserCategories(categories: any[]): any;
 }

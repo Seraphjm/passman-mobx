@@ -64,6 +64,13 @@
     "MAIN__MODAL_ADD_ENTER_SUBCATEGORY": "Введите подкатегорию",
     "MAIN__MODAL_ADD_ACTION_ADD_ACCOUNT": "Добавить аккаунт",
 
+    "MAIN__MODAL_DELETE_HEADER": "Подтверждение удаления аккаунтов",
+    "LABEL__NAME": "Имя",
+    "LABEL__CATEGORY": "Категория",
+    "LABEL__SUBCATEGORY": "Подкатегория",
+    "TEXT__EMPTY_LIST": "Список пуст!",
+    "ACTION__CLOSE": "Закрыть",
+
     "MAIN__ACCOUNT_CARD_UPDATE_PASSWORD_FOR": "Обновление пароля для {name}",
     "MAIN__ACCOUNT_CARD_CLICK_FOR_COPY": "Нажмите для копирования!",
     "MAIN__ACCOUNT_CARD_LAST_UPDATE": "Последнее обновление пароля: {count} {period} назад",

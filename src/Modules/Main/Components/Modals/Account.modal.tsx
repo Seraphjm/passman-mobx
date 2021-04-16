@@ -9,7 +9,8 @@ import isEqual from 'lodash.isequal';
 import {useMainStore} from '../../Store/Hooks';
 import {IFieldsCategory} from '../../Store/Models';
 import {EAccountModalMode} from '../../Enums';
-import './AddAccount.style.scss';
+import {useCategoryName} from '../../Hooks';
+import './AccountModal.style.scss';
 
 /**
  * Интерфейс компонента.
@@ -31,13 +32,7 @@ export const AccountModal: FunctionComponent<TAccountModal> = observer((props) =
     /** Интернационализация*/
     const {formatMessage} = useIntl();
     /** Имя выбранной текущей категории. Нужно для интернационализации */
-    const categoryName = useMemo<string>((): string => {
-        const name = main.categories.find((category) => category.id === main.accountPrototype.categoryId)?.name || '';
-        const id = `categoryName:${name}`;
-        const message = formatMessage({id});
-        return message === id ? name : message;
-        // eslint-disable-next-line
-    }, [main.accountPrototype.categoryId, main.categories]);
+    const categoryName = useCategoryName(main.accountPrototype.categoryId);
 
     // Находим соответствующую категорию из списка категорий, и выбираем оттуда обязательные поля.
     const requiredFields = useMemo<IFieldsCategory[]>(

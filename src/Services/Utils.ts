@@ -21,7 +21,7 @@ export function addItemToArray<T>(targetArray: T[], item: T): T[] {
  * @param by Ключ, по которому необходимо удалить элемент. По умолчанию, используется _id.
  */
 export function removeItemsFromArray<T>(targetArray: T[], items: T[], by: string = '_id'): T[] {
-    return targetArray.filter((sourceItem: T | any) => items.find((item: T | any) => item[by] === sourceItem[by]));
+    return targetArray.filter((sourceItem: T | any) => items.some((item: T | any) => item[by] !== sourceItem[by]));
 }
 
 /**

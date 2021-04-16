@@ -66,7 +66,40 @@ export const useHiddenListFromWindow = (callback: (event: any) => void): void =>
             window.removeEventListener('scroll', callback, true);
             window.removeEventListener('resize', callback);
         };
-        // didMount
         // eslint-disable-next-line
     }, []);
+};
+
+/**
+ * Хук, дающий возможность использовать интервальную логику в рендере. Поддерживает сигнал остановки.
+ *
+ * @description Реализован через setTimeout с рекурсией. В отличие от setInterval, не ломится через стек вызовов,
+ * и выполняется по принципу <<как только - так сразу>>. Поэтому хук должен использоваться только там, где погрешность
+ * исполнения в заданную задержку не имеет принципиального значения.
+ * @description Нельзя использовать там, где точность исполнения в установленную задержку имеет значение. Для этого
+ * необходимо использовать похожую реализацию, но на setInterval.
+ *
+ * @param callback CB который необходимо выполнить истечению по задержки.
+ * @param delay Время задержки в миллисекундах.
+ * @param [stopSignal] Сигнал остановки рекурсии.
+ */
+export const useRecursionTimeout = (callback: () => void, delay: number, stopSignal?: boolean): void => {
+    const savedCallback = useRef<() => void>();
+
+    useEffect((): void => {
+        savedCallback.current = callback;
+    });
+
+    useEffect(() => {
+        let id = setTimeout(function t() {
+            if (stopSignal) {
+                clearTimeout(id);
+            } else {
+                savedCallback.current && savedCallback.current();
+                id = setTimeout(t, delay);
+            }
+        }, delay);
+
+        return () => clearTimeout(id);
+    }, [delay, stopSignal]);
 };

@@ -1,10 +1,8 @@
 import {EEncryptionStatus} from 'Utils/Crypto/Enums';
 import {ISVGIcon} from 'Services/Models';
-import {EResponseStatus} from 'Services/Enums';
+import {EResponseStatus, ESetMode} from 'Services/Enums';
 import {IEncryptionResponse} from 'Utils/Crypto/Models';
 import {IAccount} from '../Models/Account';
-import {ESetMode} from '../../../Services/Enums';
-import {getSortedSubcategoriesFromAccounts} from '../Utils';
 
 /**
  * Модель состояния главной страницы.
@@ -123,6 +121,11 @@ export interface IMainStore {
      * Экшн, добавляющий новый аккаунт в базу данных.
      */
     addAccount(): Generator<Promise<IEncryptionResponse<IAccount[]>>>;
+
+    /**
+     * Экшн, удаляющий аккаунты из базы данных.
+     */
+    removeAccounts(accounts: IAccount[]): Generator<Promise<IEncryptionResponse<IAccount[]>>>;
 
     /**
      * Экшн, редактирующий аккаунт в БД.

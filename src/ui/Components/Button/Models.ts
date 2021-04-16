@@ -24,3 +24,7 @@ export interface IButton {
     additionalContent?: JSX.Element;
     animate?: boolean;
 }
+
+export interface ITimeoutButton extends IButton {
+    timeout: number;
+}
