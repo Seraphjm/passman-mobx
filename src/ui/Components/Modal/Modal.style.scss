@@ -21,12 +21,12 @@
 
 .ui-lib-modal {
     @extend %fixed_fill_placement;
+    @include opacity-background(0.5);
     display: flex;
     align-items: flex-start;
     justify-content: center;
     padding: $modal-container-padding-top 0;
     overflow-y: auto;
-    background: rgba(0, 0, 0, 0.5);
 }
 
 .ui-lib-modal__background {
@@ -35,7 +35,7 @@
 }
 
 .ui-lib-modal__container {
-    background: #fff;
+    background: var(--color-background);
     width: 66vw;
     min-height: 160px;
     border-radius: 5px;

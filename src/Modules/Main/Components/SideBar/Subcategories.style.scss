@@ -1,5 +1,7 @@
+@import "ui/Styles/mixins";
+
 .subcategory-list {
-    background: #e7e7e7;
+    background: var(--color-background-2);
     transform-origin: left top;
     animation: show-subcategory-list 300ms ease;
 }
@@ -17,7 +19,7 @@
     transition: background 400ms;
 
     &:hover {
-        background: rgba(0, 0, 0, 0.3);
+        @include opacity-background(0.3);
     }
 }
 

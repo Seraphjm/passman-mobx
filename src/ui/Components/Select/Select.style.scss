@@ -77,7 +77,7 @@
 
 .ui-lib-select__value {
     border: 1px dashed;
-    border-bottom: 2px solid #b5b5b5;
+    border-bottom: 2px solid var(--color-border);
     padding: 0.2rem 0.5rem;
     height: 2rem;
     text-align: left;
@@ -99,6 +99,6 @@
 
     &:hover,
     &.active {
-        background: rgba(0, 0, 0, 0.15);
+        @include opacity-background(0.15);
     }
 }

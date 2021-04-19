@@ -42,7 +42,7 @@ $z-index: 9999;
 
 .spin-success {
     position: absolute;
-    background: #0ca400;
+    background: var(--color-success);
 }
 
 .spinner-block,

@@ -12,7 +12,7 @@
             background: var(--color-info);
 
             .ui-lib-svg-icon {
-                color: #f6f6f6;
+                color: var(--color-font-inverse-2);
                 transform: translate(calc(1.5em - 3px), 0.1em);
             }
         }

@@ -1,8 +1,8 @@
 @import "ui/Styles/mixins";
 
 .sidebar-item {
-    background: #fff;
-    border-bottom: 1px solid #606060;
+    background: var(--color-background);
+    border-bottom: 1px solid var(--color-border-3);
     padding: 0.75rem 1rem;
     font-size: 1.25rem;
     transition-property: background, color, text-shadow;
@@ -11,7 +11,7 @@
     user-select: none;
     min-height: 65px;
     position: relative;
-    color: #2c3e50;
+    color: var(--color-font);
 
     pointer-events: all;
     display: grid;
@@ -19,9 +19,9 @@
     grid-column-gap: 0.5rem;
 
     &:hover {
-        background: #bbb;
-        color: #fff;
-        text-shadow: 1px 1px 4px #000;
+        background: var(--color-background-2);
+        color: var(--color-font-inverse);
+        text-shadow: 1px 1px 4px rgba(var(--color-rgba-opacity), var(--color-rgba-opacity), var(--color-rgba-opacity), 1);
     }
 
     &:active {

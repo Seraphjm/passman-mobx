@@ -40,6 +40,14 @@
 }
 
 /**
+ * Перекрывает ширину стандартной адаптивности.
+ * Например, для установки в ручном режиме максимальной ширины модального окна.
+ */
+@mixin opacity-background($transparent) {
+    background: rgba(var(--color-rgba-opacity), var(--color-rgba-opacity), var(--color-rgba-opacity), $transparent);
+}
+
+/**
  * Базовые типо-размеры для flat компонентов.
  */
 @mixin flat-es {
@@ -76,7 +84,7 @@
 }
 
 @mixin active-item {
-    background: #777;
-    color: #fff;
+    background: var(--color-background-3);
+    color: var(--color-font-inverse);
     transition: background 200ms;
 }

@@ -1,3 +1,5 @@
+@import "Common/Styles/Variables";
+
 .authorization {
     position: relative;
 
@@ -6,8 +8,8 @@
     }
 
     .authorization__container {
-        background: #fff;
-        border: 1px solid #aaa;
+        background: var(--color-background);
+        border: $border;
         border-radius: 5px;
         width: 400px;
         min-height: 230px;
@@ -35,7 +37,7 @@
 
 .authorization__header,
 .authorization__footer {
-    border-bottom: 1px solid #bbb;
+    border-bottom: $border;
 }
 
 .authorization__header,
@@ -51,7 +53,7 @@
 }
 
 .authorization__footer {
-    border-top: 1px solid #bbb;
+    border-top: $border;
     text-align: center;
 }
 

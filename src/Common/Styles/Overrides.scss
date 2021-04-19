@@ -1,0 +1,11 @@
+#root {
+    > .ui-lib {
+        &.ui-lib-theme-light {
+            background: linear-gradient(-55deg, #373739 5px, #a9aeb7, #a2a3a6, #cacaca, rgb(130, 128, 131));
+        }
+
+        &.ui-lib-theme-dark {
+            background: linear-gradient(-55deg, #47474a 5px, #393c40, #6e6f71, #3a3939, #454446);
+        }
+    }
+}
