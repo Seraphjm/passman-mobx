@@ -1,10 +1,13 @@
+@import "Common/Styles/Variables";
+@import "ui/Styles/mixins";
+
 .deleted-accounts {
     border-collapse: collapse;
 }
 
 .deleted-accounts__row {
     &:hover {
-        background: rgba(0, 0, 0, 0.15);
+        @include opacity-background(0.15);
 
         .deleted-accounts__control-icon {
             visibility: visible;
@@ -12,7 +15,7 @@
     }
 
     &:not(:last-child) {
-        border-bottom: 1px solid #bbb;
+        border-bottom: $border;
     }
 
     .deleted-accounts__col {

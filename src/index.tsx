@@ -5,8 +5,9 @@ import {createAppRouter} from 'Router/AppRouterCreator';
 import {ROUTER_CONFIG} from 'Router/Routes';
 import {RootStoreContext, stores} from 'Store';
 import {IntlWrapper} from 'i18n';
-import 'Common/Styles/Common.scss';
 import {UiProvider} from './ui/UiProvider';
+import 'Common/Styles/Common.scss';
+import 'Common/Styles/Overrides.scss';
 // TODO: [разделение ui]
 // TODO: утащить в соответствующий провайдер при вынесении ui части в отдельный пакет.
 

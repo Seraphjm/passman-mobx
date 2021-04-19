@@ -1,8 +1,23 @@
 @import "ui/Styles/extends";
+@import "ui/Styles/mixins";
+
+@mixin hover {
+    @include opacity-background(0.2);
+}
+
+@mixin active {
+    @include opacity-background(0.4);
+}
+
+.ui-lib-theme-dark .header {
+    --color-header-background: #000;
+}
 
 .header {
-    background: #678cab;
-    color: #fff;
+    --color-header-background: #678cab;
+
+    background: var(--color-header-background);
+    color: var(--color-font-inverse);
     border-bottom: 1px;
     justify-content: space-between;
 }
@@ -39,11 +54,11 @@
 }
 
 .header__item:hover {
-    background: #4f708b;
+    @include hover;
 }
 
 .header__item:active {
-    background: #2c4259;
+    @include active;
     transition: background 200ms;
 }
 
@@ -57,12 +72,12 @@
 
 @keyframes active-item-animation {
     0% {
-        background: #678cab;
+        background: var(--color-header-background);
     }
     50% {
-        background: #2c4259;
+        @include active;
     }
     100% {
-        background: #678cab;
+        background: var(--color-header-background);
     }
 }

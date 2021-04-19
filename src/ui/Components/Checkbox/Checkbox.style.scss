@@ -61,7 +61,7 @@
     .ui-lib-svg-icon {
         transition: transform 400ms;
         transform: scale(0);
-        color: #fff;
+        color: var(--color-font-inverse);
         position: absolute;
         top: 3px;
     }

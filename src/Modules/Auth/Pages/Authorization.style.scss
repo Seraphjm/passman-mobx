@@ -1,3 +1,5 @@
+@import "Common/Styles/Variables";
+
 #authorization {
     height: 100vh;
     align-items: center;
@@ -28,8 +30,8 @@
     top: 0.5rem;
     border-radius: 4px;
     right: 1rem;
-    border: 1px solid #bbb;
-    color: #3d3d3d;
+    border: $border;
+    color: var(--color-font-saturated);
     z-index: 1;
     padding: 4px 8px;
     font-size: 0.75rem;
@@ -53,8 +55,8 @@
 
     &:hover {
         box-shadow: 0 0 8px rgba(0, 0, 0, 0);
-        border: 1px solid #666;
-        color: #fff;
+        border: 1px solid var(--color-font-saturated-2);
+        color: var(--color-background);
         text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
 
         &:before {

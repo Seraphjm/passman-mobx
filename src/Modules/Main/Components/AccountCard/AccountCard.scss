@@ -1,3 +1,5 @@
+@import "Common/Styles/Variables";
+
 .account-card {
     position: relative;
     display: grid;
@@ -99,7 +101,7 @@
     border-collapse: collapse;
 
     .account-card__table-tr:not(:last-child) {
-        border-bottom: 1px solid #ccc;
+        border-bottom: $border;
     }
 
     .account-card__table-td {

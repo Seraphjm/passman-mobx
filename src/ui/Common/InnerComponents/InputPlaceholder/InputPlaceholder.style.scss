@@ -1,5 +1,5 @@
 .ui-lib__input-placeholder {
-    color: #bbb;
+    color: var(--color-font-inverse-3);
     user-select: none;
     position: absolute;
     top: 1.9rem;
@@ -18,7 +18,7 @@
 
 .ui-lib__input--controller:focus + .ui-lib__input-placeholder,
 .ui-lib__input--controller:not(:placeholder-shown) + .ui-lib__input-placeholder {
-    color: #2d2b27;
+    color: var(--color-font-saturated);
     transform: translate(0.25rem, -1.9rem);
 }
 

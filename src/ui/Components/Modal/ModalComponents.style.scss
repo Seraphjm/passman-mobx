@@ -21,7 +21,7 @@
     top: -$modal-container-padding-top;
     background: inherit;
     border-radius: 5px 5px 0 0;
-    border-bottom: 1px solid $container-border-color;
+    border-bottom: 1px solid var(--color-border);
     display: grid;
     grid-template-columns: 1fr 1.5rem;
     z-index: 10;
@@ -44,7 +44,7 @@
 }
 
 .ui-lib-modal__footer {
-    border-top: 1px solid $container-border-color;
+    border-top: 1px solid var(--color-border);
     justify-content: flex-end;
 }
 
